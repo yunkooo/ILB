@@ -7,6 +7,7 @@ import KakaoProvider from 'next-auth/providers/kakao';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 const CLIENT_ID = process.env.DB_NAME;
+const AUTH_SECRET = process.env.AUTH_SECRET;
 
 // OAuth2.0
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -67,6 +68,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     pages: {
         signIn: '/login', // default '/auth/signin'
     },
+    secret: AUTH_SECRET,
     callbacks: {
         // 로그인 처리를 계속 할지 여부 결정
         // true를 리턴하면 로그인 처리를 계속하고 false를 리턴하거나 Error를 throw하면 로그인 흐름을 중단
