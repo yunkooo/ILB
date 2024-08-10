@@ -2,6 +2,8 @@ import Image from 'next/image';
 import SubItemList from './SubItemList';
 
 export default function Subscribe() {
+    // 현재 구독중인 Step을 유저 정보에서 가져와 넣어주어야한다.
+    const currentStep = 2;
     return (
         <section>
             <Image
@@ -60,7 +62,7 @@ export default function Subscribe() {
                     </span>
                 </div>
             </div>
-            <SubItemList />
+            <SubItemList currentStep={currentStep} />
         </section>
     );
 }
