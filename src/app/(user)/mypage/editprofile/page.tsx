@@ -13,7 +13,9 @@ import { Input } from '@/components/ui/input';
 import { Toaster } from '@/components/ui/toaster';
 import { toast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -40,6 +42,15 @@ const FormSchema = z.object({
 });
 
 export default function EditProfile() {
+    const session = useSession();
+    const userData = session.data;
+
+    const [inputValue, setInputValue] = useState({
+        name: userData?.user.name,
+        email: userData?.user.email,
+        phone: userData?.user.phone,
+    });
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -66,133 +77,148 @@ export default function EditProfile() {
     }
 
     return (
-        <div>
-            <section>
-                <Image
-                    src={'/logo_M.svg'}
-                    alt='ILB'
-                    width={60}
-                    height={60}
-                    className='mb-2 mx-auto'
-                />
-                <h1 className='text-center mb-[34px] font-bold'>
-                    내 정보 수정
-                </h1>
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className='w-full'>
-                        <FormField
-                            control={form.control}
-                            name='name'
-                            render={({ field }) => (
-                                <FormItem className='mb-8'>
-                                    <FormLabel className='text-txt-foreground'>
-                                        이름
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
-                                            type='email'
-                                            placeholder='이름을 입력해주세요'
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='--destructive' />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name='email'
-                            render={({ field }) => (
-                                <FormItem className='mb-8'>
-                                    <FormLabel className='text-txt-foreground'>
-                                        이메일
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
-                                            type='email'
-                                            placeholder='이메일을 입력해주세요'
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='--destructive' />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name='password'
-                            render={({ field }) => (
-                                <FormItem className='mb-8'>
-                                    <FormLabel className='text-txt-foreground'>
-                                        비밀번호
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
-                                            type='password'
-                                            placeholder='비밀번호를 입력해주세요'
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name='passwordCheck'
-                            render={({ field }) => (
-                                <FormItem className='mb-8'>
-                                    <FormLabel className='text-txt-foreground'>
-                                        비밀번호 확인
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
-                                            type='password'
-                                            placeholder='비밀번호를 한번 더 입력해주세요'
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name='passwordCheck'
-                            render={({ field }) => (
-                                <FormItem className='mb-8'>
-                                    <FormLabel className='text-txt-foreground'>
-                                        휴대폰 번호
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
-                                            type='text'
-                                            placeholder='휴대폰 번호를 입력해주세요'
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+        <section>
+            <Image
+                src={'/logo_M.svg'}
+                alt='ILB'
+                width={60}
+                height={60}
+                className='mb-2 mx-auto'
+            />
+            <h1 className='text-center mb-[34px] font-bold'>내 정보 수정</h1>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
+                    <FormField
+                        control={form.control}
+                        name='name'
+                        render={({ field }) => (
+                            <FormItem className='mb-8'>
+                                <FormLabel className='text-txt-foreground'>
+                                    이름
+                                </FormLabel>
+                                <FormControl>
+                                    <Input
+                                        className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
+                                        type='email'
+                                        placeholder='이름을 입력해주세요'
+                                        {...field}
+                                        value={inputValue.name}
+                                        onChange={e =>
+                                            setInputValue({
+                                                ...inputValue,
+                                                name: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </FormControl>
+                                <FormMessage className='--destructive' />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='email'
+                        render={({ field }) => (
+                            <FormItem className='mb-8'>
+                                <FormLabel className='text-txt-foreground'>
+                                    이메일
+                                </FormLabel>
+                                <FormControl>
+                                    <Input
+                                        className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
+                                        type='email'
+                                        placeholder='이메일을 입력해주세요'
+                                        {...field}
+                                        value={inputValue.email}
+                                        onChange={e =>
+                                            setInputValue({
+                                                ...inputValue,
+                                                email: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </FormControl>
+                                <FormMessage className='--destructive' />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='password'
+                        render={({ field }) => (
+                            <FormItem className='mb-8'>
+                                <FormLabel className='text-txt-foreground'>
+                                    비밀번호
+                                </FormLabel>
+                                <FormControl>
+                                    <Input
+                                        className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
+                                        type='password'
+                                        placeholder='비밀번호를 입력해주세요'
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='passwordCheck'
+                        render={({ field }) => (
+                            <FormItem className='mb-8'>
+                                <FormLabel className='text-txt-foreground'>
+                                    비밀번호 확인
+                                </FormLabel>
+                                <FormControl>
+                                    <Input
+                                        className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
+                                        type='password'
+                                        placeholder='비밀번호를 한번 더 입력해주세요'
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='phone'
+                        render={({ field }) => (
+                            <FormItem className='mb-8'>
+                                <FormLabel className='text-txt-foreground'>
+                                    휴대폰 번호
+                                </FormLabel>
+                                <FormControl>
+                                    <Input
+                                        className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
+                                        type='text'
+                                        placeholder='휴대폰 번호를 입력해주세요'
+                                        {...field}
+                                        value={inputValue.phone}
+                                        onChange={e =>
+                                            setInputValue({
+                                                ...inputValue,
+                                                phone: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
-                        <Button
-                            type='submit'
-                            className='font-notoSansKr mt-[60px] mb-[60px] box-border'
-                            variant={'default'}>
-                            수정하기
-                        </Button>
-                    </form>
-                </Form>
-                <Toaster />
-            </section>
-        </div>
+                    <Button
+                        type='submit'
+                        className='font-notoSansKr mt-[60px] mb-[60px] box-border'
+                        variant={'default'}>
+                        수정하기
+                    </Button>
+                </form>
+            </Form>
+            <Toaster />
+        </section>
     );
 }

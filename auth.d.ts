@@ -9,12 +9,27 @@ export declare module '@auth/core/types' {
   */
 
     interface User {
+        phone?: string;
+        address?: string;
         type: string;
         accessToken: string;
         refreshToken: string;
     }
 
     interface Session {
+        user: {
+            _id: number;
+            email: string;
+            name: string;
+            phone?: string;
+            address?: string;
+            type: string;
+            loginType?: string;
+            profileImage?: string;
+            profile?: string;
+            createdAt: string;
+            updatedAt: string;
+        };
         accessToken: string;
         refreshToken: string;
     }
