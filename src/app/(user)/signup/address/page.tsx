@@ -42,7 +42,7 @@ export default function Address() {
         setRoadAddress(data.roadAddress); // 추가
     };
 
-    const handleClick = () => {
+    const openAddressPopup = () => {
         open({ onComplete: handleComplete });
     };
 
@@ -78,13 +78,11 @@ export default function Address() {
                         size={'sm'}
                         fontSize={'sm'}
                         fontWeight={'sm'}
-                        onClick={handleClick}>
+                        onClick={openAddressPopup}>
                         검색
                     </Button>
                 </div>
-                <Label
-                    className='text-base text-txt-foreground sr-only'
-                    htmlFor='roadAddress'>
+                <Label className='sr-only' htmlFor='roadAddress'>
                     도로명 주소
                 </Label>
                 <Input
@@ -95,9 +93,7 @@ export default function Address() {
                     value={roadAddress}
                     onChange={e => setRoadAddress(e.target.value)}
                 />
-                <Label
-                    className='text-base text-txt-foreground sr-only'
-                    htmlFor='detailAddress'>
+                <Label className='sr-only' htmlFor='detailAddress'>
                     상세 주소
                 </Label>
                 <Input
