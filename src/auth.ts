@@ -32,10 +32,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     console.log(user);
                     return {
                         id: user._id,
-                        name: user.name,
                         email: user.email,
+                        name: user.name,
                         type: user.type,
+                        phone: user.phone,
+                        address: user.address,
+                        createdAt: user.createdAt,
+                        updatedAt: user.updatedAt,
                         image: user.profileImage && SERVER + user.profileImage,
+                        extra: user.extra,
                         accessToken: user.token.accessToken,
                         refreshToken: user.token.refreshToken,
                     };
@@ -89,6 +94,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if (user) {
                 token.id = user.id;
                 token.type = user.type;
+                token.email = user.email;
+                token.phone = user.phone;
+                token.address = user.address;
                 token.accessToken = user.accessToken;
                 token.refreshToken = user.refreshToken;
             }
@@ -101,6 +109,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             console.log('session.user', session.user);
             session.user.id = token.id as string;
             session.user.type = token.type as string;
+            session.user.email = token.email as string;
+            session.user.phone = token.phone as string;
+            session.user.address = token.address as string;
             session.accessToken = token.accessToken;
             session.refreshToken = token.refreshToken;
             return session;

@@ -1,9 +1,15 @@
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import useMenuStore from '@/zustand/menuStore';
 import { PiXBold } from 'react-icons/pi';
+import LogoutButton from '../LogoutButton';
 
 export default function Nav() {
+    const session = useSession();
+    const userData = session.data;
+
     const router = useRouter();
+
     //# 메뉴 상태 전역 관리
     const { setIsOpen } = useMenuStore();
 
@@ -23,13 +29,25 @@ export default function Nav() {
                 className='absolute top-[18px] right-5 w-6 h-6 text-[#4C4646]'
                 onClick={handleOnClick}
             />
-            <div className='pt-[56px] px-[18px] mb-8'>
-                <span className='font-bold'>소보로</span>
-                님,
-                <p className='mt-1'>
-                    소중한 우리 아이와 행복한 순간을 함께하세요!
-                </p>
-            </div>
+            {userData ? (
+                <div className='pt-[56px] px-[18px] mb-8'>
+                    <span className='font-bold'>{userData.user?.name}</span>
+                    님,
+                    <p className='mt-1'>
+                        소중한 우리 아이와 행복한 순간을 함께하세요!
+                    </p>
+                </div>
+            ) : (
+                <div className='pt-[56px] px-[18px] mb-8'>
+                    <button
+                        className='font-bold'
+                        onClick={() => handleLinkClick('/login')}>
+                        로그인
+                    </button>
+                    이 필요합니다.
+                </div>
+            )}
+
             <button
                 className='py-[19px] px-[19px] text-left'
                 onClick={() => handleLinkClick('/')}>
@@ -61,6 +79,7 @@ export default function Nav() {
                 onClick={() => handleLinkClick('/')}>
                 설정
             </button>
+            {userData && <LogoutButton />}
         </nav>
     );
 }
