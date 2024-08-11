@@ -1,8 +1,12 @@
+import { auth } from '@/auth';
 import ChartCard from './ChartCard';
 import DeliveryCard from './DeliveryCard';
 import LinkCard from './LinkCard';
 
-export default function MyPage() {
+export default async function MyPage() {
+    const session = await auth();
+    const user = session?.user;
+
     return (
         <section className='py-7'>
             <div className='flex gap-5 items-center mb-14'>
@@ -11,7 +15,7 @@ export default function MyPage() {
                 </div>
                 <div>
                     <h3 className='text-lg font-bold'>
-                        소보로
+                        {user?.name}
                         <span className='text-sm font-normal'>
                             님의 아이는 지금
                         </span>
