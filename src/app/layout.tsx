@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
+import AuthSession from './AuthSession';
 
 const notoSansKr = Noto_Sans_KR({
     preload: false,
@@ -21,8 +22,10 @@ export default function RootLayout({
     return (
         <html lang='ko'>
             <body className={notoSansKr.className}>
-                <Header />
-                {children}
+                <AuthSession>
+                    <Header />
+                    {children}
+                </AuthSession>
             </body>
         </html>
     );
