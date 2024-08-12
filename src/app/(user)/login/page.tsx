@@ -21,6 +21,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -59,16 +60,24 @@ export default function Login() {
         //@ TODO : 로그인 처리
         toast({
             title: `로그인 성공!`,
-            description: (
-                <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-                    <code className='text-white'>
-                        {JSON.stringify(data, null, 2)}
-                    </code>
-                </pre>
-            ),
+            // description: (
+            //     <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+            //         <code className='text-white'>
+            //             {JSON.stringify(data, null, 2)}
+            //         </code>
+            //     </pre>
+            // ),
             duration: 1500, // Toast의 delay를 3000ms로 설정
         });
     }
+
+    useEffect(() => {
+        const toastMessage = localStorage.getItem('toastMessage');
+        if (toastMessage) {
+            toast({ title: toastMessage });
+            localStorage.removeItem('toastMessage');
+        }
+    }, []);
 
     return (
         <section>

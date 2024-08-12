@@ -25,7 +25,12 @@ export async function signInWithGithub(formData: FormData) {
 }
 
 export async function signInWithGoogle(formData: FormData) {
-    await signIn('google', { redirectTo: '/' });
+    await signIn('google', {
+        email: formData.get('email') || '',
+        password: formData.get('password') || '',
+
+        redirectTo: '/',
+    });
 }
 
 export async function signInWithNaver(formData: FormData) {

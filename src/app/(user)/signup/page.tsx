@@ -10,11 +10,10 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Toaster } from '@/components/ui/toaster';
-import { toast } from '@/components/ui/use-toast';
 import { signup } from '@/data/actions/userAction';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -85,6 +84,7 @@ type Address = {
 };
 
 export default function Signup() {
+    const router = useRouter();
     // zod resolver - react-hook-form과 zod를 이어주는 다리 역할
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -125,11 +125,19 @@ export default function Signup() {
         const resData = await signup(filteredData);
 
         if (resData.ok) {
-            toast({
-                title: `회원가입 성공!
-            		반갑습니다 ${formData.name}님`,
-                duration: 3000,
-            });
+            localStorage.setItem(
+                'toastMessage',
+                `회원가입 성공! 반갑습니다 ${formData.name}님`,
+            );
+            router.push('/login');
+            // window.location.href = '/login';
+            // navigate('/login');
+            // router.push('/login');
+            // toast({
+            //     title: `회원가입 성공!
+            // 		반갑습니다 ${formData.name}님`,
+            //     duration: 3000,
+            // });
         } else {
             // API 서버의 에러 메시지 처리
             if ('errors' in resData) {
@@ -141,6 +149,16 @@ export default function Signup() {
             }
         }
     }
+
+    const isFormValid =
+        form.watch().name &&
+        form.watch().email &&
+        form.watch().password &&
+        form.watch().passwordCheck &&
+        form.watch().phone &&
+        form.watch().roadAddress &&
+        form.watch().detailAddress &&
+        form.watch().zoneCode;
 
     return (
         <section>
@@ -323,13 +341,13 @@ export default function Signup() {
                     />
                     <Button
                         type='submit'
-                        className='font-notoSansKr my-[60px] box-border'
-                        variant={'default'}>
+                        className={`font-notoSansKr my-[60px] box-border ${!isFormValid ? 'bg-gray-400' : ''}`}
+                        variant={'default'}
+                        disabled={!isFormValid}>
                         다음
                     </Button>
                 </form>
             </Form>
-            <Toaster />
         </section>
     );
 }

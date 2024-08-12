@@ -5,7 +5,7 @@ export interface UserData {
     phone?: string;
     address?: string;
     type: 'user' | 'seller' | 'admin';
-    loginType?: 'email' | 'kakao';
+    loginType?: 'email' | 'kakao' | 'google' | 'naver';
     profileImage?: string;
     profile?: string;
     token?: {
