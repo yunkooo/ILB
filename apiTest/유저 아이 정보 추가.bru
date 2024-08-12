@@ -1,0 +1,21 @@
+meta {
+  name: 유저 아이 정보 추가
+  type: http
+  seq: 1
+}
+
+patch {
+  url: {{url}}/users/8
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "babyBirthData": "dsaf",  
+    "babyBodyData": "asdf/asdf",
+    "babyGenderData": "man",
+    "babyMonthData": 2,
+    "babyNameData":"a"
+  }
+}
