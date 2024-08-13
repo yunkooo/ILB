@@ -1,20 +1,24 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { BabyInfoData, Gender } from './page';
+import { Gender } from '@/types/baby';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 type Props = {
-    form: any;
-    babyInfoData: BabyInfoData;
-    onNext: (babyInfoData?: BabyInfoData) => void;
+    onNext: () => void;
 };
-export default function BabyGender({ form, babyInfoData, onNext }: Props) {
+export default function BabyGender({ onNext }: Props) {
     const [selectedGender, setSelectedGender] = useState<Gender>('man');
 
     const handleButtonClick = (gender: Gender) => {
         setSelectedGender(gender);
     };
+    const { setValue } = useFormContext();
+
+    useEffect(() => {
+        setValue('gender', selectedGender);
+    }, [selectedGender]);
 
     return (
         <>
@@ -46,12 +50,7 @@ export default function BabyGender({ form, babyInfoData, onNext }: Props) {
                     type='button'
                     className='font-notoSansKr mb-[60px] box-border bottom-0'
                     variant={'default'}
-                    onClick={() =>
-                        onNext({
-                            ...babyInfoData,
-                            gender: selectedGender,
-                        })
-                    }>
+                    onClick={() => onNext()}>
                     다음
                 </Button>
             </article>

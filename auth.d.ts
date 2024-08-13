@@ -18,7 +18,7 @@ export declare module '@auth/core/types' {
 
     interface Session {
         user: {
-            _id: number;
+            id: string;
             email: string;
             name: string;
             phone?: string;

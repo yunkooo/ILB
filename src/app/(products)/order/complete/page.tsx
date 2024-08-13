@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function CompletePage() {
     return (
-        <main>
+        <>
             <section className='flex flex-col items-center'>
                 <Image
                     width={100}
@@ -73,6 +73,6 @@ export default function CompletePage() {
                     </div>
                 </article>
             </section>
-        </main>
+        </>
     );
 }
