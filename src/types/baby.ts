@@ -1,17 +1,15 @@
-export interface BabyData {}
-
-export interface BabyForm {
+export interface BabyInputForm {
     name: string;
     month: string;
     birth: string;
     height: string;
     weight: string;
-    gender: string;
+    gender: Gender;
 }
 
 export interface RemakeBabyForm {
     extra: {
-        baby: BabyForm;
+        baby: BabyInfoData;
     };
 }
 

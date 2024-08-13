@@ -27,7 +27,7 @@ export default function BabyMonth({ onNext }: Props) {
     };
 
     useEffect(() => {
-        setValue('month', selectedIndex);
+        setValue('month', selectedIndex.toString());
     }, [selectedIndex]);
     return (
         <>
