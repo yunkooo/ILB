@@ -3,17 +3,18 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { BabyInfoData } from './page';
-import { useRef } from 'react';
+
+import { useFormContext } from 'react-hook-form';
 
 type Props = {
-    form: any;
-    babyInfoData: BabyInfoData;
-    onNext: (babyInfoData?: BabyInfoData) => void;
+    onNext: () => void;
 };
 
-export default function BabyBirth({ form, babyInfoData, onNext }: Props) {
-    const birthdayInput = useRef<HTMLInputElement | null>(null);
+export default function BabyBirth({ onNext }: Props) {
+    const {
+        register,
+        formState: { errors, isValid },
+    } = useFormContext();
     return (
         <>
             <h1 className='text-lg text-center font-medium mb-40'>
@@ -27,20 +28,25 @@ export default function BabyBirth({ form, babyInfoData, onNext }: Props) {
                 className='text-xl border-0 border-b-[1px] rounded-none p-[5px] sborder-txt-foreground mr-28 mt-6 mb-60'
                 type='text'
                 placeholder='20240407'
-                ref={birthdayInput}
+                {...register('birth', {
+                    required: true,
+                    pattern: {
+                        value: /^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/,
+                        message: '올바른 형식이 아닙니다.',
+                    },
+                })}
             />
+            {errors.birth && (
+                <p className='text-red-500'>
+                    {errors.birth.message?.toString()}
+                </p>
+            )}
             <Button
                 type='button'
                 className='font-notoSansKr mb-[60px] box-border bottom-0'
                 variant={'default'}
-                onClick={() => {
-                    if (birthdayInput.current?.value) {
-                        onNext({
-                            ...babyInfoData,
-                            birth: birthdayInput.current?.value,
-                        });
-                    }
-                }}>
+                onClick={() => onNext()}
+                disabled={!isValid}>
                 다음
             </Button>
         </>
