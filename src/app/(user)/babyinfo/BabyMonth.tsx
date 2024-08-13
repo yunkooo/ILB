@@ -1,8 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { BabyInfoData } from './page';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 const dummyMonth = [
     '0 ~ 4개월',
@@ -15,18 +15,20 @@ const dummyMonth = [
 ];
 
 type Props = {
-    form: any;
-    babyInfoData: BabyInfoData;
-    onNext: (babyInfoData?: BabyInfoData) => void;
+    onNext: () => void;
 };
 
-export default function BabyMonth({ form, babyInfoData, onNext }: Props) {
+export default function BabyMonth({ onNext }: Props) {
     const [selectedIndex, setSelectedIndex] = useState<number>(0);
+    const { setValue } = useFormContext();
 
     const buttonClicked = (index: number) => {
         setSelectedIndex(index);
     };
 
+    useEffect(() => {
+        setValue('month', selectedIndex);
+    }, [selectedIndex]);
     return (
         <>
             <h1 className='text-lg text-center font-medium'>
@@ -54,12 +56,7 @@ export default function BabyMonth({ form, babyInfoData, onNext }: Props) {
                 type='button'
                 className='font-notoSansKr mb-[60px] box-border bottom-0'
                 variant={'default'}
-                onClick={() =>
-                    onNext({
-                        ...babyInfoData,
-                        month: selectedIndex,
-                    })
-                }>
+                onClick={() => onNext()}>
                 다음
             </Button>
         </>

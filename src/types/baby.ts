@@ -9,6 +9,12 @@ export interface BabyForm {
     gender: string;
 }
 
+export interface RemakeBabyForm {
+    extra: {
+        baby: BabyForm;
+    };
+}
+
 export type Gender = 'man' | 'girl';
 
 export interface GrowType {
