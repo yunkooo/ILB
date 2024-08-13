@@ -10,11 +10,11 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Toaster } from '@/components/ui/toaster';
-import { toast } from '@/components/ui/use-toast';
 import { signup } from '@/data/actions/userAction';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -57,10 +57,11 @@ const FormSchema = z
                 message: '핸드폰 번호는 숫자 형식이어야 합니다.',
             }),
 
-        /* 인증번호 
-				certificationCode: z.string().min(2, {
-            message: '아직 구현되지 않았습니다.',
-        }), */
+        zoneCode: z.string(),
+
+        roadAddress: z.string(),
+
+        detailAddress: z.string(),
 
         type: z.literal('user'),
     })
@@ -70,7 +71,20 @@ const FormSchema = z
         message: '비밀번호가 일치하지 않습니다.',
     });
 
+type Address = {
+    zonecode: string;
+    address: string;
+    addressEnglish: string;
+    addressType: 'R' | 'J';
+    userSelectedType: 'R' | 'J';
+    noSelected: 'Y' | 'N';
+    userLanguageType: 'K' | 'E';
+    roadAddress: string;
+    bname: string;
+};
+
 export default function Signup() {
+    const router = useRouter();
     // zod resolver - react-hook-form과 zod를 이어주는 다리 역할
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -80,29 +94,50 @@ export default function Signup() {
             password: '',
             passwordCheck: '',
             phone: '',
+            zoneCode: '',
+            roadAddress: '',
+            detailAddress: '',
             type: 'user',
-            // certificationCode: '',
         },
     });
 
-    //& FIXME : toast 모바일 상에서 위치 수정
+    // 주소 API 팝업
+    const open = useDaumPostcodePopup(
+        'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js',
+    );
+
+    // 주소 API 값 선택시 함수 호출
+    const openAddressPopup = () => {
+        open({ onComplete: handleComplete });
+    };
+
+    // 주소 선택시 form에 값 삽입
+    const handleComplete = (data: Address) => {
+        form.setValue('zoneCode', data.zonecode);
+        form.setValue('roadAddress', data.roadAddress);
+    };
+
+    // 회원가입시 formData 전송
     async function onSubmit(formData: z.infer<typeof FormSchema>) {
-        // passwordCheck 데이터를 제외하기 위한 객체복사
+        // passwordCheck 데이터를 제외를 위한 객체복사
         const { passwordCheck, ...filteredData } = formData;
 
         const resData = await signup(filteredData);
 
         if (resData.ok) {
-            toast({
-                title: `회원가입 성공!
-            		반갑습니다 ${formData.name}님`,
-                duration: 1500,
-                // description: (
-                //     <pre className='mt-2 w-[340px] rounded-md bg-primary p-4'>
-                //         <code>{JSON.stringify(formData, null, 2)}</code>
-                //     </pre>
-                // ),
-            });
+            localStorage.setItem(
+                'toastMessage',
+                `회원가입 성공! 반갑습니다 ${formData.name}님`,
+            );
+            router.push('/login');
+            // window.location.href = '/login';
+            // navigate('/login');
+            // router.push('/login');
+            // toast({
+            //     title: `회원가입 성공!
+            // 		반갑습니다 ${formData.name}님`,
+            //     duration: 3000,
+            // });
         } else {
             // API 서버의 에러 메시지 처리
             if ('errors' in resData) {
@@ -114,6 +149,16 @@ export default function Signup() {
             }
         }
     }
+
+    const isFormValid =
+        form.watch().name &&
+        form.watch().email &&
+        form.watch().password &&
+        form.watch().passwordCheck &&
+        form.watch().phone &&
+        form.watch().roadAddress &&
+        form.watch().detailAddress &&
+        form.watch().zoneCode;
 
     return (
         <section>
@@ -208,59 +253,101 @@ export default function Signup() {
                                     휴대폰 번호
                                 </FormLabel>
                                 <FormControl className='flex'>
-                                    <div className='relative'>
-                                        <Input
-                                            id='phone'
-                                            className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
-                                            type='text'
-                                            placeholder='휴대폰 번호를 입력해주세요'
-                                            {...field}
-                                        />
-                                        {/* <Button
-                                            //@ TODO : 버튼 클릭시 인증번호 요청
-                                            type='button'
-                                            className='font-notoSansKr absolute right-0 bottom-[0.0625rem]'
-                                            size={'sm'}
-                                            fontSize={'sm'}
-                                            fontWeight={'sm'}>
-                                            인증번호 요청
-                                        </Button> */}
-                                    </div>
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    {/* <FormField
-                    //@ TODO : 인증코드 입력창
-                        control={form.control}
-                        name='certificationCode'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className='sr-only'>
-                                    휴대폰 인증번호
-                                </FormLabel>
-                                <FormControl>
                                     <Input
+                                        id='phone'
                                         className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
                                         type='text'
-                                        placeholder='인증번호를 입력해주세요'
+                                        placeholder='휴대폰 번호를 입력해주세요'
                                         {...field}
                                     />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
-                    /> */}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='zoneCode'
+                        render={({ field }) => (
+                            <FormItem className='mb-6'>
+                                <FormLabel htmlFor='zoneCode'>
+                                    우편 번호
+                                </FormLabel>
+                                <FormControl className='flex'>
+                                    <div>
+                                        <Input
+                                            id='zoneCode'
+                                            className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                            type='text'
+                                            placeholder='우편번호를 검색하세요'
+                                            {...field}
+                                        />
+                                        <Button
+                                            type='button'
+                                            className='font-notoSansKr right-0 bottom-[0.0625rem]'
+                                            size={'sm'}
+                                            fontSize={'sm'}
+                                            fontWeight={'sm'}
+                                            onClick={openAddressPopup}>
+                                            검색
+                                        </Button>
+                                    </div>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='roadAddress'
+                        render={({ field }) => (
+                            <FormItem className='mb-6'>
+                                <FormLabel htmlFor='roadAddress'>
+                                    도로명 주소
+                                </FormLabel>
+                                <FormControl className='flex'>
+                                    <Input
+                                        id='roadAddress'
+                                        className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                        type='text'
+                                        placeholder='주소를 입력하세요'
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='detailAddress'
+                        render={({ field }) => (
+                            <FormItem className='mb-6'>
+                                <FormLabel htmlFor='detailAddress'>
+                                    상세 주소
+                                </FormLabel>
+                                <FormControl className='flex'>
+                                    <Input
+                                        id='detailAddress'
+                                        className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                        type='text'
+                                        placeholder='상세 주소를 입력하세요'
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <Button
                         type='submit'
-                        className='font-notoSansKr my-[60px] box-border'
-                        variant={'default'}>
+                        className={`font-notoSansKr my-[60px] box-border ${!isFormValid ? 'bg-gray-400' : ''}`}
+                        variant={'default'}
+                        disabled={!isFormValid}>
                         다음
                     </Button>
                 </form>
             </Form>
-            <Toaster />
         </section>
     );
 }
