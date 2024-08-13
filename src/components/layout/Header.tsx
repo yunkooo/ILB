@@ -6,8 +6,11 @@ import { useEffect } from 'react';
 import useMenuStore from '@/zustand/menuStore';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import Nav from './Nav';
+import useScrollPosition from '@/hooks/useScroll';
 
 export default function Header() {
+    const { scrollPosition } = useScrollPosition();
+
     //# 메뉴 상태 전역 관리
     const { isOpen, setIsOpen } = useMenuStore();
 
@@ -32,7 +35,8 @@ export default function Header() {
     }, [isOpen]);
 
     return (
-        <header className='fixed py-2.5 px-5 w-[375px] top-0 bg-transparent z-10'>
+        <header
+            className={`${scrollPosition ? 'bg-white' : 'bg-transparent'} fixed py-2.5 px-5 w-[375px] top-0  z-10`}>
             <nav className='flex justify-between items-center'>
                 <Link href={'/'}>
                     <Image
