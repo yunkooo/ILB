@@ -71,7 +71,13 @@ export default function Nav() {
             <hr className='my-6 border-[#CDC5C5]' />
             <button
                 className='py-[19px] px-[19px] text-left'
-                onClick={() => handleLinkClick('/mypage')}>
+                onClick={() => {
+                    if (userData) {
+                        handleLinkClick('/mypage');
+                    } else {
+                        handleLinkClick('/login');
+                    }
+                }}>
                 마이 페이지
             </button>
             <button
