@@ -3,18 +3,15 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { BabyInfoData } from './page';
-import { useRef } from 'react';
 
-type Props = {
-    form: any;
-    babyInfoData: BabyInfoData;
-    onNext: (babyInfoData?: BabyInfoData) => void;
-};
+import { useFormContext } from 'react-hook-form';
 
-export default function BabyBody({ form, babyInfoData, onNext }: Props) {
-    const heightInput = useRef<HTMLInputElement | null>(null);
-    const weightInput = useRef<HTMLInputElement | null>(null);
+export default function BabyBody() {
+    const {
+        register,
+        formState: { errors, isValid },
+    } = useFormContext();
+
     return (
         <>
             <h1 className='text-lg text-center font-medium mb-40'>
@@ -27,7 +24,13 @@ export default function BabyBody({ form, babyInfoData, onNext }: Props) {
                         className='border-0 border-b-[1px] rounded-none p-[5px] text-xl border-txt-foreground font-light placeholder:text-lg'
                         type='text'
                         placeholder='키'
-                        ref={heightInput}
+                        {...register('height', {
+                            required: true,
+                            pattern: {
+                                value: /^\d+$/,
+                                message: '올바른 형식이 아닙니다.',
+                            },
+                        })}
                     />
                     <Label htmlFor='babyHeight' className='text-xl'>
                         cm
@@ -39,39 +42,34 @@ export default function BabyBody({ form, babyInfoData, onNext }: Props) {
                         className='border-0 border-b-[1px] rounded-none text-xl p-[5px] border-txt-foreground font-light placeholder:text-lg'
                         type='text'
                         placeholder='몸무게'
-                        ref={weightInput}
+                        {...register('weight', {
+                            required: true,
+                            pattern: {
+                                value: /^\d+$/,
+                                message: '올바른 형식이 아닙니다.',
+                            },
+                        })}
                     />
                     <Label htmlFor='babyWeight' className='text-xl'>
                         kg
                     </Label>
                 </article>
             </div>
+            {errors.weight && (
+                <p className='text-red-500'>
+                    {errors.weight.message?.toString()}
+                </p>
+            )}
+            {errors.height && (
+                <p className='text-red-500'>
+                    {errors.height.message?.toString()}
+                </p>
+            )}
             <Button
                 type='submit'
                 className='font-notoSansKr mb-[60px] box-border bottom-0'
                 variant={'default'}
-                onClick={() => {
-                    if (
-                        heightInput.current?.value &&
-                        weightInput.current?.value
-                    ) {
-                        onNext({
-                            ...babyInfoData,
-                            grow: [
-                                ...babyInfoData.grow,
-                                {
-                                    weight: parseInt(
-                                        weightInput.current?.value,
-                                    ),
-                                    height: parseInt(
-                                        heightInput.current?.value,
-                                    ),
-                                    date: '20240101',
-                                },
-                            ],
-                        });
-                    }
-                }}>
+                disabled={!isValid}>
                 다음
             </Button>
         </>

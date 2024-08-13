@@ -1,3 +1,5 @@
+import { BabyForm, BabyInfoData } from '@/types';
+
 export declare module '@auth/core/types' {
     /*
   export interface User {
@@ -12,13 +14,14 @@ export declare module '@auth/core/types' {
         phone?: string;
         address?: string;
         type: string;
+        extra?: { baby: BabyInfoData | undefined; subscribe: boolean };
         accessToken: string;
         refreshToken: string;
     }
 
     interface Session {
         user: {
-            _id: number;
+            id: string;
             email: string;
             name: string;
             phone?: string;
@@ -29,6 +32,7 @@ export declare module '@auth/core/types' {
             profile?: string;
             createdAt: string;
             updatedAt: string;
+            extra: { baby: BabyInfoData; subscribe: boolean };
         };
         accessToken: string;
         refreshToken: string;

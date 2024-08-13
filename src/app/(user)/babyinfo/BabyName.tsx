@@ -3,26 +3,17 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { BabyInfoData } from './page';
-import { useRef } from 'react';
-
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form';
+import { useFormContext } from 'react-hook-form';
 
 type Props = {
-    form: any;
-    babyInfoData: BabyInfoData;
-    onNext: (babyInfoData?: BabyInfoData) => void;
+    onNext: () => void;
 };
 
-export default function BabyName({ form, babyInfoData, onNext }: Props) {
-    const babyNameInput = useRef<HTMLInputElement | null>(null);
+export default function BabyName({ onNext }: Props) {
+    const {
+        register,
+        formState: { errors, isValid },
+    } = useFormContext();
 
     return (
         <>
@@ -41,40 +32,19 @@ export default function BabyName({ form, babyInfoData, onNext }: Props) {
                 className='border-0 border-b-[1px] rounded-none p-[5px] text-xl border-txt-foreground mr-28 mt-6 mb-60'
                 type='text'
                 placeholder='닉네임을 입력해주세요'
-                ref={babyNameInput}
+                {...register('name', { required: true })}
             />
-            {/* <FormField
-                control={form.control}
-                name='name'
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>이름</FormLabel>
-                        <FormControl>
-                            <Input
-                                className='border-0 border-b-[1px] rounded-none p-[5px] text-xl border-txt-foreground mr-28 mt-6 mb-60'
-                                type='text'
-                                placeholder='닉네임을 입력해주세요'
-                                {...field}
-                            />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )}
-            /> */}
+            {errors.name && (
+                <p className='text-red-500'>
+                    {errors.name.message?.toString()}
+                </p>
+            )}
             <Button
                 type='button'
                 className='font-notoSansKr mb-[60px] box-border bottom-0'
                 variant={'default'}
-                onClick={() => {
-                    if (babyNameInput.current?.value) {
-                        onNext({
-                            ...babyInfoData,
-                            name: babyNameInput.current?.value,
-                        });
-                    }
-                }}
-                // onClick={() => onNext()}
-            >
+                onClick={() => onNext()}
+                disabled={!isValid}>
                 다음
             </Button>
         </>
