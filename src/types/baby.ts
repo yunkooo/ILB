@@ -2,7 +2,7 @@ export interface BabyData {}
 
 export interface BabyForm {
     name: string;
-    month: number;
+    month: string;
     birth: string;
     height: string;
     weight: string;

@@ -1,3 +1,5 @@
+import { BabyInfoData } from './baby';
+
 export interface UserData {
     _id: number;
     email: string;
@@ -8,6 +10,9 @@ export interface UserData {
     loginType?: 'email' | 'kakao';
     profileImage?: string;
     profile?: string;
+    extra: {
+        baby: BabyInfoData;
+    };
     token?: {
         accessToken: string;
         refreshToken: string;

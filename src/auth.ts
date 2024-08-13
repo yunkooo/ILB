@@ -4,6 +4,7 @@ import github from 'next-auth/providers/github';
 import google from 'next-auth/providers/google';
 import NaverProvider from 'next-auth/providers/naver';
 import KakaoProvider from 'next-auth/providers/kakao';
+import { BabyInfoData } from './types';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 const CLIENT_ID = process.env.DB_NAME;
@@ -97,6 +98,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.email = user.email;
                 token.phone = user.phone;
                 token.address = user.address;
+                token.extra = user.extra;
                 token.accessToken = user.accessToken;
                 token.refreshToken = user.refreshToken;
             }
@@ -106,14 +108,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // 클라이언트에서 세션 정보 요청시 호출
         // token 객체 정보로 session 객체 설정
         async session({ session, token }) {
-            console.log('session.user', session.user);
-            session.user.id = token.id as string;
-            session.user.type = token.type as string;
-            session.user.email = token.email as string;
-            session.user.phone = token.phone as string;
-            session.user.address = token.address as string;
-            session.accessToken = token.accessToken;
-            session.refreshToken = token.refreshToken;
+            if (session && token) {
+                console.log('session.user', session.user);
+                session.user.id = token.id as string;
+                session.user.type = token.type as string;
+                session.user.email = token.email as string;
+                session.user.phone = token.phone as string;
+                session.user.address = token.address as string;
+                const extra = token.extra as {
+                    baby: BabyInfoData;
+                    subscribe: boolean;
+                };
+
+                session.user.extra = {
+                    baby: extra?.baby,
+                    subscribe: extra?.subscribe || false,
+                };
+                session.accessToken = token.accessToken;
+                session.refreshToken = token.refreshToken;
+            }
             return session;
         },
     },
