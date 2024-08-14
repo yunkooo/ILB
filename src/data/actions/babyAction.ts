@@ -56,12 +56,12 @@ export async function actionBabyBodyInfo(formData: {
                 gender: userExtra.baby.gender,
                 birth: userExtra?.baby.birth,
                 grow: [
-                    ...userExtra.baby.grow,
                     {
                         weight: formData.weight,
                         height: formData.height,
                         date: formattedDate,
                     },
+                    ...userExtra.baby.grow,
                 ],
             },
         },
@@ -80,4 +80,26 @@ export async function actionBabyBodyInfo(formData: {
     const resData = await res.json();
     console.log('server', resData);
     return resData;
+}
+
+export async function getBabyData() {
+    const session = await auth();
+    const userId = session?.user.id;
+
+    if (session) {
+        const res = await fetch(`${SERVER}/users/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'client-id': '05-ILB',
+                Authorization: `Bearer ${session?.accessToken}`,
+            },
+        });
+        if (!res.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        const resData = await res.json();
+
+        return resData;
+    }
 }
