@@ -13,7 +13,7 @@ import BabyBirth from './BabyBirth';
 import BabyBody from './BabyBody';
 import BabyGender from './BabyGender';
 import BabyName from './BabyName';
-import { BabyForm } from '@/types/baby';
+import { BabyInputForm } from '@/types/baby';
 import { useRouter } from 'next/navigation';
 
 const steps = ['BabyName', 'BabyMonth', 'BabyGender', 'BabyBirth', 'BabyBody'];
@@ -22,10 +22,10 @@ export default function Babyinfo({ params }: { params: { id: string } }) {
     const router = useRouter();
     const { step, onNextStep } = useFunnel({ steps });
 
-    const methods = useForm({
+    const methods = useForm<BabyInputForm>({
         defaultValues: {
             name: '',
-            month: 0,
+            month: '0',
             birth: '',
             height: '',
             weight: '',
@@ -35,13 +35,32 @@ export default function Babyinfo({ params }: { params: { id: string } }) {
     });
 
     //& FIXME : toast 모바일 상에서 위치 수정
-    async function onSubmit(formData: BabyForm) {
-        console.log(formData);
+    async function onSubmit(formData: BabyInputForm) {
         if (step !== 'BabyBody') return;
         // DB 형시에 맞추기 위해서 수정
+
+        const newDay = new Date();
+
+        const year = newDay.getFullYear();
+        const month = String(newDay.getMonth() + 1).padStart(2, '0');
+        const day = String(newDay.getDate()).padStart(2, '0');
+
+        const formattedDate = `${year}${month}${day}`;
         const remakeFormData = {
             extra: {
-                baby: { ...formData },
+                baby: {
+                    name: formData.name,
+                    month: formData.month,
+                    birth: formData.birth,
+                    grow: [
+                        {
+                            weight: formData.weight,
+                            height: formData.height,
+                            date: formattedDate,
+                        },
+                    ],
+                    gender: formData.gender,
+                },
             },
         };
 
