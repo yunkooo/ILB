@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { GoChevronRight, GoArrowLeft } from 'react-icons/go';
 import useScrollPosition from '@/hooks/useScroll';
