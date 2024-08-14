@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { GoChevronRight, GoArrowLeft } from 'react-icons/go';
+import useScrollPosition from '@/hooks/useScroll';
 
 interface PaymentStatus {
     label: string;
@@ -26,8 +27,11 @@ const PaymentStatuses: PaymentStatus[] = [
 ];
 
 export default function StepHeader() {
+    const { scrollPosition } = useScrollPosition();
+
     return (
-        <header className='fixed py-2.5 px-5 w-[375px] top-0 bg-transparent z-10'>
+        <header
+            className={`${scrollPosition ? 'bg-white' : 'bg-transparent'} fixed py-2.5 px-5 w-[375px] top-0  z-10`}>
             <nav className='flex items-center'>
                 <Link href={'/'}>
                     <GoArrowLeft className='w-6 h-6 ' />
