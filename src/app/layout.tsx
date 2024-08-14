@@ -3,6 +3,8 @@ import { Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import AuthSession from './AuthSession';
+import { headers } from 'next/headers';
+import HeaderSelector from '@/components/layout/HeaderSelector';
 
 const notoSansKr = Noto_Sans_KR({
     preload: false,
@@ -19,11 +21,14 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const headerList = headers();
+    const pathname = headerList.get('x-current-path');
+    console.log(pathname);
     return (
         <html lang='ko'>
             <body className={notoSansKr.className}>
                 <AuthSession>
-                    <Header />
+                    <HeaderSelector />
                     {children}
                 </AuthSession>
             </body>

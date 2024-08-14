@@ -30,8 +30,8 @@ export default function ChartCard({ grow }: { grow?: GrowType[] }) {
         date: chartDateCaculate(data.date),
         heightValue: `${data.height}cm`,
         weightValue: `${data.weight}kg`,
-        height: Math.log(data.height + 1) * 100,
-        weight: Math.log(data.weight + 1) * 100,
+        height: Math.log(parseInt(data.height) + 1) * 100,
+        weight: Math.log(parseInt(data.weight) + 1) * 100,
     }));
 
     return (
