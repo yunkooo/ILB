@@ -1,5 +1,11 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import {
     Form,
@@ -10,46 +16,65 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Toaster } from '@/components/ui/toaster';
 import { toast } from '@/components/ui/use-toast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { actionDataFetch } from '@/data/actions/fetchAction';
+import { useRouter } from 'next/navigation';
 
-//& 수정 필요 (zod) : destructive 글로벌 css 넣어주면 됨
-const FormSchema = z.object({
-    name: z.string().min(2, {
-        message: '올바른 이메일 형식이 아닙니다.',
-    }),
-    email: z.string().min(2, {
-        message: '비밀번호 제대로 가자',
-    }),
-    password: z.string().min(2, {
-        message: '비밀번호 제대로 가자',
-    }),
-    passwordCheck: z.string().min(2, {
-        message: '비밀번호 제대로 가자',
-    }),
-    phone: z.string().min(2, {
-        message: '비밀번호 제대로 가자',
-    }),
-    certificationCode: z.string().min(2, {
-        message: '비밀번호 제대로 가자',
-    }),
-});
+// 비밀번호 조건 정규표현식
+const passwordRegex =
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$#&*?!%])[A-Za-z\d!@$#%&*?]{8,15}$/;
+
+// zod Form 스키마 (유효성 검사 조건)
+const FormSchema = z
+    .object({
+        name: z
+            .string()
+            .min(2, { message: '2글자 이상 입력해 주세요.' })
+            .max(10, { message: '10글자 이하 입력해 주세요.' }),
+
+        email: z
+            .string()
+            .email({ message: '이메일을 올바르게 입력해 주세요.' }),
+
+        password: z
+            .string()
+            .min(8, { message: '8자리 이상 입력해 주세요.' })
+            .max(15, { message: '15자리 이하 입력해 주세요.' })
+            .regex(passwordRegex, {
+                message:
+                    '비밀번호는 8~15글자이어야합니다.\n영문, 숫자, 특수문자(~!@#$ %^&*)를 조합해 주세요.',
+            }),
+
+        passwordCheck: z
+            .string()
+            .nonempty({ message: '비밀번호를 재입력해 주세요.' }),
+
+        phone: z
+            .string()
+            .length(11, { message: '핸드폰 번호는 11자리여야 합니다.' })
+            .regex(/^010/, {
+                message: "핸드폰 번호는 '010'으로 시작해야 합니다.",
+            })
+            .refine(value => !isNaN(Number(value)), {
+                message: '핸드폰 번호는 숫자 형식이어야 합니다.',
+            }),
+
+        type: z.literal('user'),
+    })
+
+    .refine(data => data.password === data.passwordCheck, {
+        path: ['passwordCheck'],
+        message: '비밀번호가 일치하지 않습니다.',
+    });
 
 export default function EditProfile() {
+    const router = useRouter();
+
     const session = useSession();
     const userData = session.data;
-
-    const [inputValue, setInputValue] = useState({
-        name: userData?.user.name,
-        email: userData?.user.email,
-        phone: userData?.user.phone,
-    });
+    const status = session.status;
+    const userId = userData?.user.id;
+    const accessToken = userData?.accessToken;
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -59,22 +84,75 @@ export default function EditProfile() {
             password: '',
             passwordCheck: '',
             phone: '',
-            certificationCode: '',
+            type: 'user',
         },
     });
 
-    //& 수정 필요 (toast) & 수정하기 버튼 클릭 이벤트
-    function onSubmit(data: z.infer<typeof FormSchema>) {
-        toast({
-            //   title: `로그인 성공!
-            // 반갑습니다 000님`,
-            description: (
-                <pre className='mt-2 w-[340px] rounded-md bg-primary p-4'>
-                    반갑다능
-                </pre>
-            ),
-        });
+    //& 수정하기 버튼 클릭 이벤트
+    async function editProfile(formData: z.infer<typeof FormSchema>) {
+        const { passwordCheck, ...filteredData } = formData;
+
+        // API 통신
+        const resData = await actionDataFetch(
+            'PATCH',
+            filteredData,
+            userId,
+            accessToken,
+        );
+
+        if (resData.ok) {
+            localStorage.setItem(
+                'toastMessage',
+                '회원정보 수정이 완료되었습니다.',
+            );
+            router.push('/mypage');
+            toast({
+                title: '회원정보 수정이 완료되었습니다.',
+                duration: 3000,
+            });
+        } else {
+            // API 서버의 에러 메시지 처리
+            if ('errors' in resData) {
+                resData.errors.forEach((error: any) =>
+                    form.setError(error.path, { message: error.msg }),
+                );
+            } else if (resData.message) {
+                alert(resData.message);
+            }
+        }
     }
+
+    // 회원 정보 불러오기
+    useEffect(() => {
+        async function getUserData(data: z.infer<typeof FormSchema>) {
+            if (userData) {
+                try {
+                    // const resData = await actionDataFetch('GET');
+                    const userId = userData.user.id;
+                    const accessToken = userData?.accessToken;
+
+                    const resData = await actionDataFetch(
+                        'GET',
+                        null,
+                        userId,
+                        accessToken,
+                    );
+                    form.setValue('name', resData.item.name);
+                    form.setValue('email', resData.item.email);
+                    form.setValue('phone', resData.item.phone);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }
+
+        if (status !== 'loading') {
+            getUserData(form.getValues());
+        }
+    }, [session, status, form.setValue]);
+
+    const isFormValid =
+        form.watch().name && form.watch().email && form.watch().phone;
 
     return (
         <section>
@@ -87,7 +165,9 @@ export default function EditProfile() {
             />
             <h1 className='text-center mb-[34px] font-bold'>내 정보 수정</h1>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
+                <form
+                    onSubmit={form.handleSubmit(editProfile)}
+                    className='w-full'>
                     <FormField
                         control={form.control}
                         name='name'
@@ -99,16 +179,9 @@ export default function EditProfile() {
                                 <FormControl>
                                     <Input
                                         className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
-                                        type='email'
+                                        type='text'
                                         placeholder='이름을 입력해주세요'
                                         {...field}
-                                        value={inputValue.name}
-                                        onChange={e =>
-                                            setInputValue({
-                                                ...inputValue,
-                                                name: e.target.value,
-                                            })
-                                        }
                                     />
                                 </FormControl>
                                 <FormMessage className='--destructive' />
@@ -129,13 +202,6 @@ export default function EditProfile() {
                                         type='email'
                                         placeholder='이메일을 입력해주세요'
                                         {...field}
-                                        value={inputValue.email}
-                                        onChange={e =>
-                                            setInputValue({
-                                                ...inputValue,
-                                                email: e.target.value,
-                                            })
-                                        }
                                     />
                                 </FormControl>
                                 <FormMessage className='--destructive' />
@@ -196,29 +262,20 @@ export default function EditProfile() {
                                         type='text'
                                         placeholder='휴대폰 번호를 입력해주세요'
                                         {...field}
-                                        value={inputValue.phone}
-                                        onChange={e =>
-                                            setInputValue({
-                                                ...inputValue,
-                                                phone: e.target.value,
-                                            })
-                                        }
                                     />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-
                     <Button
                         type='submit'
-                        className='font-notoSansKr mt-[60px] mb-[60px] box-border'
-                        variant={'default'}>
+                        className={`${!isFormValid ? 'bg-gray-400' : ''}`}
+                        disabled={!isFormValid}>
                         수정하기
                     </Button>
                 </form>
             </Form>
-            <Toaster />
         </section>
     );
 }
