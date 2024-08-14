@@ -1,4 +1,5 @@
 'use server';
+import { format } from 'date-fns';
 
 import { auth } from '@/auth';
 import { RemakeBabyForm } from '@/types/baby';
@@ -31,13 +32,7 @@ export async function actionBabyBodyInfo(formData: {
     const session = await auth();
     const userId = session?.user.id;
 
-    const newDay = new Date();
-
-    const year = newDay.getFullYear();
-    const month = String(newDay.getMonth() + 1).padStart(2, '0');
-    const day = String(newDay.getDate()).padStart(2, '0');
-
-    const formattedDate = `${year}${month}${day}`;
+    const formattedDate = format(new Date(), 'yyyyMMdd');
 
     // 아이 정보 가져오기
     const resBaby = await fetch(`${SERVER}/users/${userId}`, {

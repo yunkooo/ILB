@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { format } from 'date-fns';
 
 import Funnel from '@/lib/funnel/Funnel';
 import useFunnel from '@/lib/funnel/useFunnel';
@@ -39,13 +40,8 @@ export default function Babyinfo({ params }: { params: { id: string } }) {
         if (step !== 'BabyBody') return;
         // DB 형시에 맞추기 위해서 수정
 
-        const newDay = new Date();
+        const formattedDate = format(new Date(), 'yyyyMMdd');
 
-        const year = newDay.getFullYear();
-        const month = String(newDay.getMonth() + 1).padStart(2, '0');
-        const day = String(newDay.getDate()).padStart(2, '0');
-
-        const formattedDate = `${year}${month}${day}`;
         const remakeFormData = {
             extra: {
                 baby: {
