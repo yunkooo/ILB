@@ -16,8 +16,8 @@ export interface RemakeBabyForm {
 export type Gender = 'man' | 'girl';
 
 export interface GrowType {
-    weight: number;
-    height: number;
+    weight: string;
+    height: string;
     date: string;
 }
 
