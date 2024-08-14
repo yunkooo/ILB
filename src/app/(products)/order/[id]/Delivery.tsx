@@ -13,101 +13,153 @@ import { Input } from '@/components/ui/input';
 import { Toaster } from '@/components/ui/toaster';
 import { toast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useEffect } from 'react';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-//& 수정 필요 (zod) : destructive 글로벌 css 넣어주면 됨
+const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
+
 const FormSchema = z.object({
-    name: z.string().min(2, {
-        message: '올바른 이메일 형식이 아닙니다.',
-    }),
-    email: z.string().min(2, {
-        message: '비밀번호 제대로 가자',
-    }),
-    password: z.string().min(2, {
-        message: '비밀번호 제대로 가자',
-    }),
-    passwordCheck: z.string().min(2, {
-        message: '비밀번호 제대로 가자',
-    }),
-    phone: z.string().min(2, {
-        message: '비밀번호 제대로 가자',
-    }),
-    certificationCode: z.string().min(2, {
-        message: '비밀번호 제대로 가자',
-    }),
+    name: z
+        .string()
+        .min(2, { message: '2글자 이상 입력해 주세요.' })
+        .max(10, { message: '10글자 이하 입력해 주세요.' }),
+
+    phone: z
+        .string()
+        .length(11, { message: '핸드폰 번호는 11자리여야 합니다.' })
+        .regex(/^010/, {
+            message: "핸드폰 번호는 '010'으로 시작해야 합니다.",
+        })
+        .refine(value => !isNaN(Number(value)), {
+            message: '핸드폰 번호는 숫자 형식이어야 합니다.',
+        }),
+
+    zoneCode: z.string(),
+
+    roadAddress: z.string(),
+
+    detailAddress: z.string(),
 });
 
+type Address = {
+    zonecode: string;
+    address: string;
+    addressEnglish: string;
+    addressType: 'R' | 'J';
+    userSelectedType: 'R' | 'J';
+    noSelected: 'Y' | 'N';
+    userLanguageType: 'K' | 'E';
+    roadAddress: string;
+    bname: string;
+};
+
 export default function DeliveryInfo() {
+    const { data: session, status } = useSession();
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             name: '',
-            email: '',
-            password: '',
-            passwordCheck: '',
             phone: '',
-            certificationCode: '',
+            zoneCode: '',
+            roadAddress: '',
+            detailAddress: '',
         },
     });
 
-    //& 수정 필요 (toast)
-    function onSubmit(data: z.infer<typeof FormSchema>) {
-        toast({
-            //   title: `로그인 성공!
-            // 반갑습니다 000님`,
-            description: (
-                <pre className='mt-2 w-[340px] rounded-md bg-primary p-4'>
-                    반갑다능
-                </pre>
-            ),
+    const open = useDaumPostcodePopup(
+        'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js',
+    );
+
+    // 주소 API 값 선택시 함수 호출
+    const openAddressPopup = () => {
+        open({ onComplete: handleComplete });
+    };
+
+    // 주소 선택시 form에 값 삽입
+    const handleComplete = (data: Address) => {
+        form.setValue('zoneCode', data.zonecode);
+        form.setValue('roadAddress', data.roadAddress);
+    };
+
+    async function checkDelivery(data: z.infer<typeof FormSchema>) {
+        const userId = session?.user.id;
+
+        const res = await fetch(`${SERVER}/users/${userId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'client-id': '05-ILB',
+                Authorization: `Bearer ${session?.accessToken}`,
+            },
+            body: JSON.stringify(data),
         });
+        console.log(res);
     }
+
+    useEffect(() => {
+        async function userDelivery(data: z.infer<typeof FormSchema>) {
+            if (session) {
+                try {
+                    const userId = session?.user.id;
+
+                    const res = await fetch(`${SERVER}/users/${userId}`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'client-id': '05-ILB',
+                            Authorization: `Bearer ${session?.accessToken}`,
+                        },
+                    });
+                    const resData = await res.json();
+
+                    form.setValue('name', resData.item.name);
+                    form.setValue('phone', resData.item.phone);
+                    form.setValue('zoneCode', resData.item.zoneCode);
+                    form.setValue('roadAddress', resData.item.roadAddress);
+                    form.setValue('detailAddress', resData.item.detailAddress);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }
+
+        if (status !== 'loading') {
+            userDelivery(form.getValues());
+        }
+    }, [session, status, form.setValue]);
+
+    const isFormValid =
+        form.watch().name &&
+        form.watch().phone &&
+        form.watch().zoneCode &&
+        form.watch().roadAddress &&
+        form.watch().detailAddress;
 
     return (
         <div>
             <section>
                 <h1 className='text-center mb-10 font-bold text-[28px]'>
-                    배송정보를 입력하세요
+                    배송정보를 확인해주세요
                 </h1>
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit(onSubmit)}
+                        onSubmit={form.handleSubmit(checkDelivery)}
                         className='w-full'>
                         <FormField
                             control={form.control}
                             name='name'
                             render={({ field }) => (
                                 <FormItem className='mb-8'>
-                                    <FormLabel className='text-txt-foreground'>
-                                        받는 사람
-                                    </FormLabel>
+                                    <FormLabel>받는 사람</FormLabel>
                                     <FormControl>
                                         <Input
-                                            className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
-                                            type='email'
+                                            className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                            type='text'
                                             placeholder='이름을 입력해주세요'
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage className='--destructive' />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name='email'
-                            render={({ field }) => (
-                                <FormItem className='mb-8'>
-                                    <FormLabel className='text-txt-foreground'>
-                                        연락처
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
-                                            type='email'
-                                            placeholder='이메일을 입력해주세요'
                                             {...field}
                                         />
                                     </FormControl>
@@ -120,25 +172,46 @@ export default function DeliveryInfo() {
                             name='phone'
                             render={({ field }) => (
                                 <FormItem className='mb-6'>
-                                    <FormLabel
-                                        htmlFor='address'
-                                        className='text-txt-foreground'>
-                                        주소
+                                    <FormLabel htmlFor='phone'>
+                                        휴대폰 번호
                                     </FormLabel>
                                     <FormControl className='flex'>
-                                        <div className='relative'>
+                                        <Input
+                                            id='phone'
+                                            className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                            type='text'
+                                            placeholder='휴대폰 번호를 입력해주세요'
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name='zoneCode'
+                            render={({ field }) => (
+                                <FormItem className='mb-6'>
+                                    <FormLabel htmlFor='zoneCode'>
+                                        우편 번호
+                                    </FormLabel>
+                                    <FormControl className='flex'>
+                                        <div>
                                             <Input
-                                                id='address'
-                                                className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground mr-28'
-                                                type='password'
+                                                id='zoneCode'
+                                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                                type='text'
+                                                placeholder='우편번호를 검색하세요'
                                                 {...field}
                                             />
                                             <Button
-                                                type='submit'
-                                                className='font-notoSansKr absolute right-0 bottom-[0.0625rem]'
+                                                type='button'
+                                                className='font-notoSansKr right-0 bottom-[0.0625rem]'
                                                 size={'sm'}
                                                 fontSize={'sm'}
-                                                fontWeight={'sm'}>
+                                                fontWeight={'sm'}
+                                                onClick={openAddressPopup}>
                                                 검색
                                             </Button>
                                         </div>
@@ -149,17 +222,18 @@ export default function DeliveryInfo() {
                         />
                         <FormField
                             control={form.control}
-                            name='certificationCode'
+                            name='roadAddress'
                             render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className='sr-only'>
-                                        상세 주소
+                                <FormItem className='mb-6'>
+                                    <FormLabel htmlFor='roadAddress'>
+                                        도로명 주소
                                     </FormLabel>
-                                    <FormControl>
+                                    <FormControl className='flex'>
                                         <Input
-                                            className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
-                                            type='password'
-                                            placeholder='상세 주소를 입력해주세요'
+                                            id='roadAddress'
+                                            className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                            type='text'
+                                            placeholder='주소를 입력하세요'
                                             {...field}
                                         />
                                     </FormControl>
@@ -167,12 +241,33 @@ export default function DeliveryInfo() {
                                 </FormItem>
                             )}
                         />
-                        {/* <Button
+                        <FormField
+                            control={form.control}
+                            name='detailAddress'
+                            render={({ field }) => (
+                                <FormItem className='mb-6'>
+                                    <FormLabel htmlFor='detailAddress'>
+                                        상세 주소
+                                    </FormLabel>
+                                    <FormControl className='flex'>
+                                        <Input
+                                            id='detailAddress'
+                                            className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                            type='text'
+                                            placeholder='상세 주소를 입력하세요'
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <Button
                             type='submit'
-                            className='font-notoSansKr mt-[133px]'
-                            variant={'default'}>
-                            수정하기
-                        </Button> */}
+                            className={`${!isFormValid ? 'bg-gray-400' : ''}`}
+                            disabled={!isFormValid}>
+                            버버법트트트튼
+                        </Button>
                     </form>
                 </Form>
                 <Toaster />
