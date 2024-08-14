@@ -44,6 +44,7 @@ export default function OrderPage({ params }: { params: { id: string } }) {
     return (
         <section>
             {content?.component}
+            {/* FIXME - 버튼 mt 수정 (통일) */}
             <Button
                 className='mt-60 mb-[60px] font-notoSansKr'
                 variant={'default'}

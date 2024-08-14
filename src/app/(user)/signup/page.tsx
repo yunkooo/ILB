@@ -119,34 +119,30 @@ export default function Signup() {
 
     // 회원가입시 formData 전송
     async function onSubmit(formData: z.infer<typeof FormSchema>) {
-        // passwordCheck 데이터를 제외를 위한 객체복사
-        const { passwordCheck, ...filteredData } = formData;
+        try {
+            // passwordCheck 데이터를 제외를 위한 객체복사
+            const { passwordCheck, ...filteredData } = formData;
 
-        const resData = await signup(filteredData);
+            const resData = await signup(filteredData);
 
-        if (resData.ok) {
-            localStorage.setItem(
-                'toastMessage',
-                `회원가입 성공! 반갑습니다 ${formData.name}님`,
-            );
-            router.push('/login');
-            // window.location.href = '/login';
-            // navigate('/login');
-            // router.push('/login');
-            // toast({
-            //     title: `회원가입 성공!
-            // 		반갑습니다 ${formData.name}님`,
-            //     duration: 3000,
-            // });
-        } else {
-            // API 서버의 에러 메시지 처리
-            if ('errors' in resData) {
-                resData.errors.forEach((error: any) =>
-                    form.setError(error.path, { message: error.msg }),
+            if (resData.ok) {
+                localStorage.setItem(
+                    'toastMessage',
+                    `회원가입 성공! 반갑습니다 ${formData.name}님`,
                 );
-            } else if (resData.message) {
-                alert(resData.message);
+                router.push('/login');
+            } else {
+                // API 서버의 에러 메시지 처리
+                if ('errors' in resData) {
+                    resData.errors.forEach((error: any) =>
+                        form.setError(error.path, { message: error.msg }),
+                    );
+                } else if (resData.message) {
+                    alert(resData.message);
+                }
             }
+        } catch (error) {
+            console.error(error);
         }
     }
 
