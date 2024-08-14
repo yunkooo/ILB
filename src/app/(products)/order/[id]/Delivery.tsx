@@ -15,6 +15,7 @@ import { toast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useEffect } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -57,7 +58,7 @@ type Address = {
 };
 
 export default function DeliveryInfo() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -85,22 +86,7 @@ export default function DeliveryInfo() {
         form.setValue('roadAddress', data.roadAddress);
     };
 
-    //& 수정 필요 (toast)
-    function onSubmit(data: z.infer<typeof FormSchema>) {
-        toast({
-            //   title: `로그인 성공!
-            // 반갑습니다 000님`,
-            description: (
-                <pre className='mt-2 w-[340px] rounded-md bg-primary p-4'>
-                    반갑다능
-                </pre>
-            ),
-        });
-    }
-
-    //@ FIXME - 여기서 부터
     async function checkDelivery(data: z.infer<typeof FormSchema>) {
-        console.log(session?.user.id);
         const userId = session?.user.id;
 
         const res = await fetch(`${SERVER}/users/${userId}`, {
@@ -113,21 +99,45 @@ export default function DeliveryInfo() {
             body: JSON.stringify(data),
         });
         console.log(res);
-        // const userId = session?.user.id;
-        // console.log(formData);
-        // // 아이 정보 입력
-        // const res = await fetch(`${SERVER}/users/${userId}`, {
-        //     method: 'PATCH',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'client-id': '05-ILB',
-        //         Authorization: `Bearer ${session?.accessToken}`,
-        //     },
-        //     body: JSON.stringify(formData),
-        // });
-        // const resData = await res.json();
-        // return resData;
     }
+
+    useEffect(() => {
+        async function userDelivery(data: z.infer<typeof FormSchema>) {
+            if (session) {
+                try {
+                    const userId = session?.user.id;
+
+                    const res = await fetch(`${SERVER}/users/${userId}`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'client-id': '05-ILB',
+                            Authorization: `Bearer ${session?.accessToken}`,
+                        },
+                    });
+                    const resData = await res.json();
+
+                    form.setValue('name', resData.item.name);
+                    form.setValue('phone', resData.item.phone);
+                    form.setValue('zoneCode', resData.item.zoneCode);
+                    form.setValue('roadAddress', resData.item.roadAddress);
+                    form.setValue('detailAddress', resData.item.detailAddress);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }
+
+        if (status !== 'loading') {
+            userDelivery(form.getValues());
+        }
+    }, [session, status, form.setValue]);
+
+    const isFormValid =
+        form.watch().name &&
+        form.watch().phone &&
+        form.watch().zoneCode &&
+        form.watch().roadAddress &&
+        form.watch().detailAddress;
 
     return (
         <div>
@@ -147,7 +157,7 @@ export default function DeliveryInfo() {
                                     <FormLabel>받는 사람</FormLabel>
                                     <FormControl>
                                         <Input
-                                            className='border-0 border-b-[1px] rounded-none p-[5px] text-[12px] border-txt-foreground'
+                                            className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
                                             type='text'
                                             placeholder='이름을 입력해주세요'
                                             {...field}
@@ -252,7 +262,12 @@ export default function DeliveryInfo() {
                                 </FormItem>
                             )}
                         />
-                        <Button type='submit'>버버법트트트튼</Button>
+                        <Button
+                            type='submit'
+                            className={`${!isFormValid ? 'bg-gray-400' : ''}`}
+                            disabled={!isFormValid}>
+                            버버법트트트튼
+                        </Button>
                     </form>
                 </Form>
                 <Toaster />
