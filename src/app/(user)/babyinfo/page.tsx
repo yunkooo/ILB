@@ -54,8 +54,8 @@ export default function Babyinfo({ params }: { params: { id: string } }) {
                     birth: formData.birth,
                     grow: [
                         {
-                            weight: parseInt(formData.weight),
-                            height: parseInt(formData.height),
+                            weight: formData.weight,
+                            height: formData.height,
                             date: formattedDate,
                         },
                     ],
