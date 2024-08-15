@@ -12,6 +12,10 @@ import {
 } from '@/components/ui/chart';
 import { GrowType } from '@/types';
 import { chartDateCaculate } from '@/util/calculate';
+import { Great_Vibes } from 'next/font/google';
+
+import { useEffect, useState } from 'react';
+import { getBabyData } from '@/data/actions/babyAction';
 
 const chartConfig = {
     height: {
@@ -24,16 +28,46 @@ const chartConfig = {
     },
 } satisfies ChartConfig;
 
-export default function ChartCard({ grow }: { grow?: GrowType[] }) {
+export default function ChartCard() {
+    const [growData, setGrowData] = useState<GrowType[]>([]);
     // height, weight 차이값 비율 조정 스케일링
-    const convertedChartData = grow?.map(data => ({
-        date: chartDateCaculate(data.date),
-        heightValue: `${data.height}cm`,
-        weightValue: `${data.weight}kg`,
-        height: Math.log(parseInt(data.height) + 1) * 100,
-        weight: Math.log(parseInt(data.weight) + 1) * 100,
-    }));
+    let remakeGrowArray: GrowType[] = [];
+    // grow 배열의 요소가 5개 미만이 일 경우 그래프 틀(5개)을 만들어 주기 위해
+    // grow 배열을 넣고 나머지 요소들은 빈 grow를 넣어준다.
+    if (growData !== undefined) {
+        remakeGrowArray = Array.from({ length: 5 }, (_, index) =>
+            index < growData.length
+                ? growData[index]
+                : { weight: '', height: '', date: '' },
+        );
+    }
 
+    const convertedChartData = remakeGrowArray?.map(data => {
+        if (data.height === '' && data.weight === '') {
+            return null;
+        }
+        return {
+            date: chartDateCaculate(data.date),
+            heightValue: `${data.height}cm`,
+            weightValue: `${data.weight}kg`,
+            height: Math.log(parseInt(data.height) + 1) * 100,
+            weight: Math.log(parseInt(data.weight) + 1) * 100,
+        };
+    });
+    console.log('convertedChartData', convertedChartData);
+
+    useEffect(() => {
+        const resGrowData = async () => {
+            try {
+                const response = await getBabyData();
+                setGrowData(response.item.extra.baby.grow);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        resGrowData();
+    }, []);
     return (
         <>
             <div className='flex justify-between items-end mb-4 text-sm'>
@@ -46,7 +80,7 @@ export default function ChartCard({ grow }: { grow?: GrowType[] }) {
             </div>
             <ChartContainer
                 config={chartConfig}
-                className='mb-5 p-4 h-[230px] w-full bg-card rounded-2xl'>
+                className='mb-5 p-4 h-[250px] w-full bg-card rounded-2xl'>
                 <BarChart accessibilityLayer data={convertedChartData}>
                     <XAxis
                         className='text-xs'
@@ -65,7 +99,6 @@ export default function ChartCard({ grow }: { grow?: GrowType[] }) {
                         />
                     </Bar>
                     <Bar dataKey='weight' fill='var(--color-weight)' radius={4}>
-                        className='text-[11px]'
                         <LabelList
                             dataKey='weightValue'
                             position='top'

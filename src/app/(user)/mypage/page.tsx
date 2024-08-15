@@ -6,7 +6,6 @@ import LinkCard from './LinkCard';
 export default async function MyPage() {
     const session = await auth();
     const user = session?.user;
-    const baby = user?.extra?.baby;
 
     return (
         <section className='py-7'>
@@ -31,7 +30,7 @@ export default async function MyPage() {
                     </p>
                 </div>
             </div>
-            <ChartCard grow={baby?.grow} />
+            <ChartCard />
             <DeliveryCard />
             <LinkCard title={'내정보 수정'} link={'/mypage/editprofile'} />
             <LinkCard title={'구독 상품 조회'} link={'/mypage/subscribe'} />
