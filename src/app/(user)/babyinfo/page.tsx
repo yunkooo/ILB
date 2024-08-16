@@ -2,26 +2,29 @@
 
 import Image from 'next/image';
 import { format } from 'date-fns';
-
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { FormProvider, useForm } from 'react-hook-form';
 import Funnel from '@/lib/funnel/Funnel';
 import useFunnel from '@/lib/funnel/useFunnel';
-
-import { FormProvider, useForm } from 'react-hook-form';
-import { actionBabyInfo } from '@/data/actions/babyAction';
-
+import { actionDataFetch } from '@/data/actions/fetchAction';
+import { BabyInputForm } from '@/types/baby';
 import BabyMonth from './BabyMonth';
 import BabyBirth from './BabyBirth';
 import BabyBody from './BabyBody';
 import BabyGender from './BabyGender';
 import BabyName from './BabyName';
-import { BabyInputForm } from '@/types/baby';
-import { useRouter } from 'next/navigation';
 
 const steps = ['BabyName', 'BabyMonth', 'BabyGender', 'BabyBirth', 'BabyBody'];
 
 export default function Babyinfo({ params }: { params: { id: string } }) {
     const router = useRouter();
     const { step, onNextStep } = useFunnel({ steps });
+
+    const session = useSession();
+    const userData = session.data;
+    const userId = userData?.user.id;
+    const accessToken = userData?.accessToken;
 
     const methods = useForm<BabyInputForm>({
         defaultValues: {
@@ -60,7 +63,13 @@ export default function Babyinfo({ params }: { params: { id: string } }) {
             },
         };
 
-        const resData = await actionBabyInfo(remakeFormData);
+        const resData = await actionDataFetch(
+            'PATCH',
+            userId,
+            accessToken,
+            remakeFormData,
+        );
+
         if (resData.ok) {
             router.push('/login');
         } else {

@@ -6,6 +6,7 @@ import DeliveryInfo from './Delivery';
 import PaymentInfo from './Payment';
 import { Button } from '@/components/ui/button';
 import SelectMonth from './SelectMonth';
+import PaymentButton from './PaymentButton';
 
 interface PageComponent {
     id: string;
@@ -31,8 +32,6 @@ export default function OrderPage({ params }: { params: { id: string } }) {
         //% /order/1 페이지에서 선택한 버튼에 따른 route 설정해야 함.
         if (params.id === '1.5') {
             route.push('/order/2');
-        } else if (params.id === '3') {
-            route.push('/order/complete');
         } else {
             setPageNum(nextPage);
             route.push(`/order/${pageNum}`);
@@ -45,12 +44,19 @@ export default function OrderPage({ params }: { params: { id: string } }) {
         <section>
             {content?.component}
             {/* FIXME - 버튼 mt 수정 (통일) */}
-            <Button
-                className='mt-60 mb-[60px] font-notoSansKr'
-                variant={'default'}
-                onClick={handleNextPage}>
-                다음
-            </Button>
+            {/* /page/3 결제 페이지에서는 결제 버튼 컴포넌트
+                다른페이지에서는 다음 버튼
+            */}
+            {params.id === '3' ? (
+                <PaymentButton />
+            ) : (
+                <Button
+                    className='mt-60 mb-[60px] font-notoSansKr'
+                    variant={'default'}
+                    onClick={handleNextPage}>
+                    다음
+                </Button>
+            )}
         </section>
     );
 }
