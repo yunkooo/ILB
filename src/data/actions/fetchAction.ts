@@ -1,13 +1,13 @@
 import { UserForm } from './../../types/user';
-import { Method, BabyInputForm } from '@/types';
+import { Method, RemakeBabyForm } from '@/types';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 
 export async function actionDataFetch(
     method: Method,
-    body?: UserForm | BabyInputForm | string | null,
     userId?: string,
     accessToken?: string,
+    body?: UserForm | RemakeBabyForm | string | null,
 ) {
     const options: RequestInit = {
         method: method,
@@ -21,13 +21,18 @@ export async function actionDataFetch(
         options.body = typeof body === 'string' ? body : JSON.stringify(body);
     }
 
-    const res = await fetch(`${SERVER}/users/${userId}`, options);
+    try {
+        const res = await fetch(`${SERVER}/users/${userId}`, options);
 
-    if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.message || 'API 요청에 실패하였습니다.');
+        if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData.message || 'API 요청에 실패하였습니다.');
+        }
+
+        const resData = await res.json();
+        return resData;
+    } catch (error) {
+        console.error('Fetch error', error);
+        throw error;
     }
-
-    const resData = await res.json();
-    return resData;
 }
