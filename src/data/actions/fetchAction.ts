@@ -1,4 +1,4 @@
-import { UserForm } from './../../types/user';
+import { UserEdit } from './../../types/user';
 import { Method, RemakeBabyForm } from '@/types';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
@@ -7,7 +7,7 @@ export async function actionDataFetch(
     method: Method,
     userId?: string,
     accessToken?: string,
-    body?: UserForm | RemakeBabyForm | string | null,
+    body?: UserEdit | RemakeBabyForm | string | null,
 ) {
     const options: RequestInit = {
         method: method,
