@@ -97,16 +97,16 @@ export default function Babyinfo({ params }: { params: { id: string } }) {
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
                     <Funnel step={step}>
                         <Funnel.Step name='BabyName'>
-                            <BabyName onNext={onNextStep} />
+                            <BabyName />
                         </Funnel.Step>
                         <Funnel.Step name='BabyMonth'>
-                            <BabyMonth onNext={onNextStep} />
+                            <BabyMonth />
                         </Funnel.Step>
                         <Funnel.Step name='BabyGender'>
-                            <BabyGender onNext={onNextStep} />
+                            <BabyGender />
                         </Funnel.Step>
                         <Funnel.Step name='BabyBirth'>
-                            <BabyBirth onNext={onNextStep} />
+                            <BabyBirth />
                         </Funnel.Step>
                         <Funnel.Step name='BabyBody'>
                             <BabyBody />

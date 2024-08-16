@@ -14,11 +14,7 @@ const dummyMonth = [
     '19 ~ 24개월',
 ];
 
-type Props = {
-    onNext: () => void;
-};
-
-export default function BabyMonth({ onNext }: Props) {
+export default function BabyMonth() {
     const [selectedIndex, setSelectedIndex] = useState<number>(0);
     const { setValue } = useFormContext();
 
@@ -52,13 +48,6 @@ export default function BabyMonth({ onNext }: Props) {
                     </Button>
                 ))}
             </article>
-            <Button
-                type='button'
-                className='font-notoSansKr mb-[60px] box-border bottom-0'
-                variant={'default'}
-                onClick={() => onNext()}>
-                다음
-            </Button>
         </>
     );
 }
