@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
@@ -27,7 +26,7 @@ export default function BabyBody() {
                         {...register('height', {
                             required: true,
                             pattern: {
-                                value: /^\d+$/,
+                                value: /^\d+(\.\d{1,4})?$/,
                                 message: '올바른 형식이 아닙니다.',
                             },
                         })}
@@ -45,7 +44,7 @@ export default function BabyBody() {
                         {...register('weight', {
                             required: true,
                             pattern: {
-                                value: /^\d+$/,
+                                value: /^\d+(\.\d{1,4})?$/,
                                 message: '올바른 형식이 아닙니다.',
                             },
                         })}

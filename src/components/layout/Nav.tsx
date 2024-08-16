@@ -1,12 +1,14 @@
-import { useSession } from 'next-auth/react';
+'use client';
+
 import { useRouter } from 'next/navigation';
 import useMenuStore from '@/zustand/menuStore';
 import { PiXBold } from 'react-icons/pi';
 import LogoutButton from '../LogoutButton';
+import { useEffect, useState } from 'react';
+import { getUserData } from '@/data/actions/sessionAction';
 
 export default function Nav() {
-    const session = useSession();
-    const userData = session.data;
+    const [userName, setUserName] = useState<string | undefined>('');
 
     const router = useRouter();
 
@@ -16,6 +18,14 @@ export default function Nav() {
     const handleOnClick = () => {
         setIsOpen();
     };
+
+    useEffect(() => {
+        async function fetchUserData() {
+            const res = await getUserData();
+            setUserName(res);
+        }
+        fetchUserData();
+    }, []);
 
     //# 메뉴 버튼 클릭 이벤트
     const handleLinkClick = (path: string) => {
@@ -29,9 +39,9 @@ export default function Nav() {
                 className='absolute top-[18px] right-5 w-6 h-6 text-[#4C4646]'
                 onClick={handleOnClick}
             />
-            {userData ? (
+            {userName ? (
                 <div className='pt-[56px] px-[18px] mb-8'>
-                    <span className='font-bold'>{userData.user?.name}</span>
+                    <span className='font-bold'>{userName}</span>
                     님,
                     <p className='mt-1'>
                         소중한 우리 아이와 행복한 순간을 함께하세요!
@@ -72,7 +82,7 @@ export default function Nav() {
             <button
                 className='py-[19px] px-[19px] text-left'
                 onClick={() => {
-                    if (userData) {
+                    if (userName) {
                         handleLinkClick('/mypage');
                     } else {
                         handleLinkClick('/login');
@@ -85,7 +95,7 @@ export default function Nav() {
                 onClick={() => handleLinkClick('/')}>
                 설정
             </button>
-            {userData && <LogoutButton />}
+            {userName && <LogoutButton />}
         </nav>
     );
 }

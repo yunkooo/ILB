@@ -37,6 +37,7 @@ export type UserInToken = Required<Pick<UserData, '_id' | 'name'>> &
 //     // certificationCode: string;
 // };
 
+// 처음 회원가입 시 입력 받는 formData
 export interface UserSignUpForm {
     type: 'user' | 'seller';
     name: string;
@@ -54,6 +55,7 @@ export interface UserSignUpForm {
     gender: 'man' | 'girl';
 }
 
+// 회원가입시 fetch 전송 할때 사용하는 formData
 export interface UserForm {
     type: 'user' | 'seller';
     name: string;
@@ -76,6 +78,12 @@ export interface UserForm {
         };
     };
 }
+
+// mypage - 회원정보 수정 시 formData
+export type UserEdit = Pick<
+    UserForm,
+    'name' | 'type' | 'email' | 'phone' | 'password'
+>;
 
 export type SellerData = Pick<
     UserData,
