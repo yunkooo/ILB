@@ -9,7 +9,7 @@ import { useFormContext } from 'react-hook-form';
 export default function BabyBody() {
     const {
         register,
-        formState: { errors, isValid },
+        formState: { errors },
     } = useFormContext();
 
     return (
@@ -65,13 +65,6 @@ export default function BabyBody() {
                     {errors.height.message?.toString()}
                 </p>
             )}
-            <Button
-                type='submit'
-                className='font-notoSansKr mb-[60px] box-border bottom-0'
-                variant={'default'}
-                disabled={!isValid}>
-                다음
-            </Button>
         </>
     );
 }
