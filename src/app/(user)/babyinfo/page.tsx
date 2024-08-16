@@ -10,10 +10,10 @@ import useFunnel from '@/lib/funnel/useFunnel';
 import { actionDataFetch } from '@/data/actions/fetchAction';
 import { BabyInputForm } from '@/types/baby';
 import BabyMonth from './BabyMonth';
-import BabyBirth from './BabyBirth';
-import BabyBody from './BabyBody';
-import BabyGender from './BabyGender';
-import BabyName from './BabyName';
+import BabyBirth from '../signup/BabyBirth';
+import BabyBody from '../signup/BabyBody';
+import BabyGender from '../signup/BabyGender';
+import BabyName from '../signup/BabyName';
 
 const steps = ['BabyName', 'BabyMonth', 'BabyGender', 'BabyBirth', 'BabyBody'];
 
