@@ -65,7 +65,7 @@ export default function UpdateBodyInfo() {
                             {...register('height', {
                                 required: true,
                                 pattern: {
-                                    value: /^\d+$/,
+                                    value: /^\d+(\.\d{1,4})?$/,
                                     message: '올바른 형식이 아닙니다.',
                                 },
                             })}
@@ -83,7 +83,7 @@ export default function UpdateBodyInfo() {
                             {...register('weight', {
                                 required: true,
                                 pattern: {
-                                    value: /^\d+$/,
+                                    value: /^\d+(\.\d{1,4})?$/,
                                     message: '올바른 형식이 아닙니다.',
                                 },
                             })}
