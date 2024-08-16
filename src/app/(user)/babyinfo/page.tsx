@@ -10,10 +10,10 @@ import useFunnel from '@/lib/funnel/useFunnel';
 import { actionDataFetch } from '@/data/actions/fetchAction';
 import { BabyInputForm } from '@/types/baby';
 import BabyMonth from './BabyMonth';
-import BabyBirth from './BabyBirth';
-import BabyBody from './BabyBody';
-import BabyGender from './BabyGender';
-import BabyName from './BabyName';
+import BabyBirth from '../signup/BabyBirth';
+import BabyBody from '../signup/BabyBody';
+import BabyGender from '../signup/BabyGender';
+import BabyName from '../signup/BabyName';
 
 const steps = ['BabyName', 'BabyMonth', 'BabyGender', 'BabyBirth', 'BabyBody'];
 
@@ -97,16 +97,16 @@ export default function Babyinfo({ params }: { params: { id: string } }) {
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
                     <Funnel step={step}>
                         <Funnel.Step name='BabyName'>
-                            <BabyName onNext={onNextStep} />
+                            <BabyName />
                         </Funnel.Step>
                         <Funnel.Step name='BabyMonth'>
-                            <BabyMonth onNext={onNextStep} />
+                            <BabyMonth />
                         </Funnel.Step>
                         <Funnel.Step name='BabyGender'>
-                            <BabyGender onNext={onNextStep} />
+                            <BabyGender />
                         </Funnel.Step>
                         <Funnel.Step name='BabyBirth'>
-                            <BabyBirth onNext={onNextStep} />
+                            <BabyBirth />
                         </Funnel.Step>
                         <Funnel.Step name='BabyBody'>
                             <BabyBody />

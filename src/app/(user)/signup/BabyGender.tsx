@@ -5,10 +5,7 @@ import { Gender } from '@/types/baby';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-type Props = {
-    onNext: () => void;
-};
-export default function BabyGender({ onNext }: Props) {
+export default function BabyGender() {
     const [selectedGender, setSelectedGender] = useState<Gender>('man');
 
     const handleButtonClick = (gender: Gender) => {
@@ -46,13 +43,6 @@ export default function BabyGender({ onNext }: Props) {
                         여자
                     </Button>
                 </div>
-                <Button
-                    type='button'
-                    className='font-notoSansKr mb-[60px] box-border bottom-0'
-                    variant={'default'}
-                    onClick={() => onNext()}>
-                    다음
-                </Button>
             </article>
         </>
     );

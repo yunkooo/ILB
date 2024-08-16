@@ -6,14 +6,10 @@ import { Label } from '@/components/ui/label';
 
 import { useFormContext } from 'react-hook-form';
 
-type Props = {
-    onNext: () => void;
-};
-
-export default function BabyBirth({ onNext }: Props) {
+export default function BabyBirth() {
     const {
         register,
-        formState: { errors, isValid },
+        formState: { errors },
     } = useFormContext();
     return (
         <>
@@ -41,14 +37,6 @@ export default function BabyBirth({ onNext }: Props) {
                     {errors.birth.message?.toString()}
                 </p>
             )}
-            <Button
-                type='button'
-                className='font-notoSansKr mb-[60px] box-border bottom-0'
-                variant={'default'}
-                onClick={() => onNext()}
-                disabled={!isValid}>
-                다음
-            </Button>
         </>
     );
 }
