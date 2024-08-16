@@ -46,7 +46,7 @@ export default function OrderPage({ params }: { params: { id: string } }) {
             {/* /page/3 결제 페이지에서는 결제 버튼 컴포넌트
                 다른페이지에서는 다음 버튼
             */}
-            {/* {params.id === '3' ? (
+            {params.id === '3' ? (
                 <PaymentButton />
             ) : (
                 <Button
@@ -55,7 +55,7 @@ export default function OrderPage({ params }: { params: { id: string } }) {
                     onClick={handleNextPage}>
                     다음
                 </Button>
-            )} */}
+            )}
         </>
     );
 }

@@ -101,7 +101,7 @@ export default function DeliveryInfo() {
                 body: JSON.stringify(data),
             });
             //! FIXME - 경로수정
-            router.push('/');
+            // router.push('/');
         } catch {
             console.error('에러 삐--');
         }
