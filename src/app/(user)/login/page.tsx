@@ -186,18 +186,6 @@ export default function Login() {
                         height={60}
                     />
                 </Button>
-                <Button
-                    type='submit'
-                    className='bg-white'
-                    size={'xs'}
-                    formAction={signInWithNaver}>
-                    <Image
-                        src='/icon/icon_naver.svg'
-                        alt='네이버 로그인'
-                        width={60}
-                        height={60}
-                    />
-                </Button>
             </form>
 
             <Toaster />
