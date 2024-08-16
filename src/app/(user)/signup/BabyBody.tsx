@@ -14,14 +14,14 @@ export default function BabyBody() {
 
     return (
         <>
-            <h1 className='text-lg text-center font-medium mb-40'>
+            <h1 className='text-lg text-center font-medium mb-[15vh]'>
                 아이의 몸무게와 키를 알려주세요!
             </h1>
-            <div className='flex justify-between gap-6 mb-60'>
+            <div className='flex justify-between gap-6'>
                 <article className='flex items-end'>
                     <Input
                         id='babyHeight'
-                        className='border-0 border-b-[1px] rounded-none p-[5px] text-xl border-txt-foreground font-light placeholder:text-lg'
+                        className='w-[97%] mx-1 mt-2 border-0 border-b-[1px] rounded-none p-[10px] text-xl border-txt-foreground font-light placeholder:text-lg'
                         type='text'
                         placeholder='키'
                         {...register('height', {
@@ -39,7 +39,7 @@ export default function BabyBody() {
                 <article className='flex items-end'>
                     <Input
                         id='babyWeight'
-                        className='border-0 border-b-[1px] rounded-none text-xl p-[5px] border-txt-foreground font-light placeholder:text-lg'
+                        className='w-[97%] mx-1 mt-2 border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground font-light placeholder:text-lg'
                         type='text'
                         placeholder='몸무게'
                         {...register('weight', {

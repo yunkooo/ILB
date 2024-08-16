@@ -50,7 +50,6 @@ export default function Login() {
         },
     });
 
-    //& FIXME : toast css 모바일 위치 수정
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         const formData = new FormData();
         formData.append('email', data.email);

@@ -6,11 +6,9 @@ export default function OrderLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang='ko'>
-            <body>
-                <StepHeader />
-                {children}
-            </body>
-        </html>
+        <>
+            <StepHeader />
+            {children}
+        </>
     );
 }
