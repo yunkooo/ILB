@@ -5,10 +5,8 @@ import { useRouter } from 'next/navigation';
 import { Form } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
-
 import Funnel from '@/lib/funnel/Funnel';
 import useFunnel from '@/lib/funnel/useFunnel';
-
 import BabyName from './BabyName';
 import BabyGender from './BabyGender';
 import BabyBirth from './BabyBirth';
@@ -47,6 +45,7 @@ export default function Signup() {
     const {
         formState: { isValid },
     } = form;
+
     // 회원가입시 formData 전송
     async function onSubmit(formData: UserSignUpForm) {
         // 버튼이 'submit'이지만 마지막 BabyBody step에서만 전송이 가능하다.
@@ -123,36 +122,42 @@ export default function Signup() {
                 height={60}
                 className='mb-2 mx-auto'
             />
-            <h1 className='text-center mb-[34px] font-bold'>회원가입</h1>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
-                    <Funnel step={step}>
-                        <Funnel.Step name='userSignup'>
-                            <SignupForm />
-                        </Funnel.Step>
-                        <Funnel.Step name='BabyName'>
-                            <BabyName />
-                        </Funnel.Step>
-                        <Funnel.Step name='BabyGender'>
-                            <BabyGender />
-                        </Funnel.Step>
-                        <Funnel.Step name='BabyBirth'>
-                            <BabyBirth />
-                        </Funnel.Step>
-                        <Funnel.Step name='BabyBody'>
-                            <BabyBody />
-                        </Funnel.Step>
-                    </Funnel>
-                    <Button
-                        type='submit'
-                        className={`font-notoSansKr my-[60px] box-border ${!isValid ? 'bg-gray-400' : ''}`}
-                        variant={'default'}
-                        disabled={!isValid}
-                        onClick={onNextStep}>
-                        다음
-                    </Button>
-                </form>
-            </Form>
+            <h1 className='text-center mb-[2vh] font-bold'>회원가입</h1>
+            <div className='overflow-auto h-[60vh]'>
+                <Form {...form}>
+                    <form
+                        id='signup-form'
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className='w-full'>
+                        <Funnel step={step}>
+                            <Funnel.Step name='userSignup'>
+                                <SignupForm />
+                            </Funnel.Step>
+                            <Funnel.Step name='BabyName'>
+                                <BabyName />
+                            </Funnel.Step>
+                            <Funnel.Step name='BabyGender'>
+                                <BabyGender />
+                            </Funnel.Step>
+                            <Funnel.Step name='BabyBirth'>
+                                <BabyBirth />
+                            </Funnel.Step>
+                            <Funnel.Step name='BabyBody'>
+                                <BabyBody />
+                            </Funnel.Step>
+                        </Funnel>
+                    </form>
+                </Form>
+            </div>
+            <Button
+                form='signup-form'
+                type='submit'
+                className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid ? 'bg-gray-400' : ''}`}
+                variant={'default'}
+                disabled={!isValid}
+                onClick={onNextStep}>
+                다음
+            </Button>
         </section>
     );
 }

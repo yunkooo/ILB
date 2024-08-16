@@ -19,13 +19,13 @@ export default function BabyGender() {
 
     return (
         <>
-            <h1 className='text-lg text-center font-medium mb-40'>
+            <h1 className='text-lg text-center font-medium mb-[15vh]'>
                 아이의 성별을 알려주세요!
             </h1>
-            <article className='mb-60'>
+            <article>
                 <div className='flex items-center gap-8'>
                     <Button
-                        className={`text-txt mx-auto hover:bg-primary-foreground ${selectedGender === 'man' ? 'bg-primary-foreground' : ''}`}
+                        className={`text-txt mx-auto hover:bg-primary-foreground ${selectedGender === 'man' ? 'bg-primary-foreground font-bold' : ''}`}
                         type='button'
                         variant={'outline'}
                         size={'md'}
@@ -34,7 +34,7 @@ export default function BabyGender() {
                         남자
                     </Button>
                     <Button
-                        className={`text-txt mx-auto hover:bg-primary-foreground ${selectedGender === 'girl' ? 'bg-primary-foreground' : ''}`}
+                        className={`text-txt mx-auto hover:bg-primary-foreground ${selectedGender === 'girl' ? 'bg-primary-foreground font-bold' : ''}`}
                         type='button'
                         variant={'outline'}
                         size={'md'}

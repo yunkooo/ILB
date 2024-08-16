@@ -8,22 +8,20 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-
 import { Input } from '@/components/ui/input';
-
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useFormContext } from 'react-hook-form';
 
 type Address = {
     zonecode: string;
     address: string;
-    addressEnglish: string;
-    addressType: 'R' | 'J';
-    userSelectedType: 'R' | 'J';
-    noSelected: 'Y' | 'N';
-    userLanguageType: 'K' | 'E';
     roadAddress: string;
-    bname: string;
+    // addressEnglish: string;
+    // addressType: 'R' | 'J';
+    // userSelectedType: 'R' | 'J';
+    // noSelected: 'Y' | 'N';
+    // userLanguageType: 'K' | 'E';
+    // bname: string;
 };
 
 export default function SignupForm() {
@@ -67,7 +65,7 @@ export default function SignupForm() {
                         <FormLabel>이름</FormLabel>
                         <FormControl>
                             <Input
-                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
                                 type='text'
                                 placeholder='이름을 입력해주세요 (2~10글자 이내)'
                                 {...field}
