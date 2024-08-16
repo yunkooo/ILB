@@ -22,6 +22,5 @@ export async function signup(formData: UserForm) {
     });
 
     const resData = await res.json();
-
     return resData;
 }

@@ -1,4 +1,4 @@
-import { BabyInfoData } from './baby';
+import { BabyInfoData, GrowType } from './baby';
 
 export interface UserData {
     _id: number;
@@ -27,15 +27,55 @@ export type UserInToken = Required<Pick<UserData, '_id' | 'name'>> &
         refreshToken: string;
     };
 
-export type UserForm = {
+// export type UserForm = {
+//     type: 'user' | 'seller';
+//     name: string;
+//     email: string;
+//     attach?: string | string[];
+//     profileImage?: string;
+//     password: string;
+//     // certificationCode: string;
+// };
+
+export interface UserSignUpForm {
     type: 'user' | 'seller';
     name: string;
     email: string;
-    attach?: string | string[];
-    profileImage?: string;
     password: string;
-    // certificationCode: string;
-};
+    passwordCheck: string;
+    phone: string;
+    zoneCode: string;
+    roadAddress: string;
+    detailAddress: string;
+    babyName: string;
+    birth: string;
+    height: string;
+    weight: string;
+    gender: 'man' | 'girl';
+}
+
+export interface UserForm {
+    type: 'user' | 'seller';
+    name: string;
+    email: string;
+    password: string;
+    phone: string;
+    zoneCode: string;
+    roadAddress: string;
+    detailAddress: string;
+    extra: {
+        baby: {
+            name: string;
+            gender: string;
+            birth: string;
+            grow: GrowType[];
+        };
+        subscribe: {
+            status: string;
+            date: string;
+        };
+    };
+}
 
 export type SellerData = Pick<
     UserData,
