@@ -38,7 +38,6 @@ export default function Babyinfo({ params }: { params: { id: string } }) {
         mode: 'onChange',
     });
 
-    //& FIXME : toast 모바일 상에서 위치 수정
     async function onSubmit(formData: BabyInputForm) {
         if (step !== 'BabyBody') return;
         // DB 형시에 맞추기 위해서 수정

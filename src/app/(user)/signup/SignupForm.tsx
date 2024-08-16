@@ -90,7 +90,7 @@ export default function SignupForm() {
                         <FormLabel>이메일</FormLabel>
                         <FormControl>
                             <Input
-                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
                                 type='email'
                                 placeholder='이메일을 입력해주세요'
                                 {...field}
@@ -124,7 +124,7 @@ export default function SignupForm() {
                         <FormLabel>비밀번호</FormLabel>
                         <FormControl>
                             <Input
-                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
                                 type='password'
                                 placeholder='8~15글자이고, 영문,숫자,특수문자를 포함하여야합니다.'
                                 {...field}
@@ -148,7 +148,7 @@ export default function SignupForm() {
                         <FormLabel>비밀번호 확인</FormLabel>
                         <FormControl>
                             <Input
-                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
                                 type='password'
                                 placeholder='비밀번호를 한번 더 입력해주세요'
                                 {...field}
@@ -182,7 +182,7 @@ export default function SignupForm() {
                         <FormControl className='flex'>
                             <Input
                                 id='phone'
-                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
                                 type='text'
                                 placeholder='휴대폰 번호를 입력해주세요'
                                 {...field}
@@ -202,10 +202,10 @@ export default function SignupForm() {
                     <FormItem className='mb-6'>
                         <FormLabel htmlFor='zoneCode'>우편 번호</FormLabel>
                         <FormControl className='flex'>
-                            <div>
+                            <div className='flex items-end'>
                                 <Input
                                     id='zoneCode'
-                                    className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                    className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
                                     type='text'
                                     placeholder='우편번호를 검색하세요'
                                     {...field}
@@ -237,7 +237,7 @@ export default function SignupForm() {
                         <FormControl className='flex'>
                             <Input
                                 id='roadAddress'
-                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
                                 type='text'
                                 placeholder='주소를 입력하세요'
                                 {...field}
@@ -259,7 +259,7 @@ export default function SignupForm() {
                         <FormControl className='flex'>
                             <Input
                                 id='detailAddress'
-                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground'
+                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
                                 type='text'
                                 placeholder='상세 주소를 입력하세요'
                                 {...field}
