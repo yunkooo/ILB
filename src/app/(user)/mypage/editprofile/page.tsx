@@ -1,9 +1,10 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
@@ -18,7 +19,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import { actionDataFetch } from '@/data/actions/fetchAction';
-import { useRouter } from 'next/navigation';
 
 // 비밀번호 조건 정규표현식
 const passwordRegex =
@@ -92,32 +92,34 @@ export default function EditProfile() {
     async function editProfile(formData: z.infer<typeof FormSchema>) {
         const { passwordCheck, ...filteredData } = formData;
 
-        // API 통신
-        const resData = await actionDataFetch(
-            'PATCH',
-            filteredData,
-            userId,
-            accessToken,
-        );
-
-        if (resData.ok) {
-            localStorage.setItem(
-                'toastMessage',
-                '회원정보 수정이 완료되었습니다.',
+        try {
+            // API 통신
+            const resData = await actionDataFetch(
+                'PATCH',
+                userId,
+                accessToken,
+                filteredData,
             );
-            router.push('/mypage');
-            toast({
-                title: '회원정보 수정이 완료되었습니다.',
-                duration: 3000,
-            });
-        } else {
+
+            if (resData.ok) {
+                localStorage.setItem(
+                    'toastMessage',
+                    '회원정보 수정이 완료되었습니다.',
+                );
+                router.push('/mypage');
+                toast({
+                    title: '회원정보 수정이 완료되었습니다.',
+                    duration: 3000,
+                });
+            }
+        } catch (error: any) {
             // API 서버의 에러 메시지 처리
-            if ('errors' in resData) {
-                resData.errors.forEach((error: any) =>
+            if (error instanceof Error) {
+                alert(error.message);
+            } else if ('errors' in error) {
+                error.errors.forEach((error: any) =>
                     form.setError(error.path, { message: error.msg }),
                 );
-            } else if (resData.message) {
-                alert(resData.message);
             }
         }
     }
@@ -127,13 +129,8 @@ export default function EditProfile() {
         async function getUserData(data: z.infer<typeof FormSchema>) {
             if (userData) {
                 try {
-                    // const resData = await actionDataFetch('GET');
-                    const userId = userData.user.id;
-                    const accessToken = userData?.accessToken;
-
                     const resData = await actionDataFetch(
                         'GET',
-                        null,
                         userId,
                         accessToken,
                     );
