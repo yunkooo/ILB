@@ -50,7 +50,6 @@ export default function Login() {
         },
     });
 
-    //& FIXME : toast css 모바일 위치 수정
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         const formData = new FormData();
         formData.append('email', data.email);
@@ -170,18 +169,6 @@ export default function Login() {
                     <Image
                         src='/icon/icon_google.svg'
                         alt='구글 로그인'
-                        width={60}
-                        height={60}
-                    />
-                </Button>
-                <Button
-                    type='submit'
-                    className='bg-white'
-                    size={'xs'}
-                    formAction={signInWithNaver}>
-                    <Image
-                        src='/icon/icon_naver.svg'
-                        alt='네이버 로그인'
                         width={60}
                         height={60}
                     />
