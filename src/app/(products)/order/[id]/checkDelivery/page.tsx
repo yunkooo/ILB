@@ -11,15 +11,12 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Toaster } from '@/components/ui/toaster';
+import { actionAddress, actionUserData } from '@/data/actions/userAction';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
-const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 
 const FormSchema = z.object({
     name: z
@@ -57,9 +54,6 @@ type Address = {
 };
 
 export default function CheckDelivery() {
-    const { data: session, status } = useSession();
-    const router = useRouter();
-
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -87,56 +81,31 @@ export default function CheckDelivery() {
         form.setValue('roadAddress', data.roadAddress);
     };
 
-    async function checkDelivery(data: z.infer<typeof FormSchema>) {
+    async function onSubmit(data: z.infer<typeof FormSchema>) {
         try {
-            const userId = session?.user.id;
-
-            const res = await fetch(`${SERVER}/users/${userId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'client-id': '05-ILB',
-                    Authorization: `Bearer ${session?.accessToken}`,
-                },
-                body: JSON.stringify(data),
-            });
-            //! FIXME - 경로수정
-            // router.push('/');
+            const res = await actionAddress(data);
         } catch {
             console.error('에러 삐--');
         }
     }
 
     useEffect(() => {
-        async function checkDelivery(data: z.infer<typeof FormSchema>) {
-            if (session) {
-                try {
-                    const userId = session?.user.id;
+        async function checkDelivery() {
+            try {
+                const { item: userData } = await actionUserData();
 
-                    const res = await fetch(`${SERVER}/users/${userId}`, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'client-id': '05-ILB',
-                            Authorization: `Bearer ${session?.accessToken}`,
-                        },
-                    });
-                    const resData = await res.json();
-
-                    form.setValue('name', resData.item.name);
-                    form.setValue('phone', resData.item.phone);
-                    form.setValue('zoneCode', resData.item.zoneCode);
-                    form.setValue('roadAddress', resData.item.roadAddress);
-                    form.setValue('detailAddress', resData.item.detailAddress);
-                } catch (error) {
-                    console.error(error);
-                }
+                form.setValue('name', userData.name);
+                form.setValue('phone', userData.phone);
+                form.setValue('zoneCode', userData.zoneCode);
+                form.setValue('roadAddress', userData.roadAddress);
+                form.setValue('detailAddress', userData.detailAddress);
+            } catch (error) {
+                console.error(error);
             }
         }
 
-        if (status !== 'loading') {
-            checkDelivery(form.getValues());
-        }
-    }, [session, status, form.setValue]);
+        checkDelivery();
+    }, []);
 
     const isFormValid =
         form.watch().name &&
@@ -155,7 +124,7 @@ export default function CheckDelivery() {
                     <Form {...form}>
                         <form
                             id='checkDelivery'
-                            onSubmit={form.handleSubmit(checkDelivery)}
+                            onSubmit={form.handleSubmit(onSubmit)}
                             className='w-full '>
                             <FormField
                                 control={form.control}

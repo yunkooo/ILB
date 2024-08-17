@@ -25,6 +25,8 @@ export interface BabyBodyInfo {
     grow: GrowType[];
 }
 
+export type BabyBody = Pick<GrowType, 'weight' | 'height'>;
+
 export interface BabyInfoData {
     name: string;
     month: string;
