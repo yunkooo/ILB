@@ -2,7 +2,11 @@
 'use server';
 
 import { signIn } from '@/auth';
+import { OAuthUser, UserData, UserForm } from '@/types';
 import { redirect } from 'next/navigation';
+import { actionDataFetch } from './fetchAction';
+
+const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 
 // email/password 로그인
 export async function signInWithCredentials(formData: FormData) {
@@ -29,7 +33,7 @@ export async function signInWithGoogle(formData: FormData) {
         email: formData.get('email') || '',
         password: formData.get('password') || '',
 
-        redirectTo: '/',
+        redirectTo: '/babyinfo',
     });
 }
 
@@ -39,4 +43,32 @@ export async function signInWithNaver(formData: FormData) {
 
 export async function signInWithKakao(formData: FormData) {
     await signIn('kakao', { redirectTo: '/' });
+}
+
+// auth provider 인증 후 자동 회원 가입
+export async function signupWithOAuth(user: OAuthUser) {
+    const res = await fetch(`${SERVER}/users/signup/oauth`, {
+        method: 'POST',
+        headers: {
+            'client-id': '05-ILB',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+    });
+
+    return res.json();
+}
+
+// auth provider로 인증된 사용자 로그인
+export async function loginOAuth(providerAccountId: string) {
+    const res = await fetch(`${SERVER}/users/login/with`, {
+        method: 'POST',
+        headers: {
+            'client-id': '05-ILB',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ providerAccountId }),
+    });
+
+    return res.json();
 }
