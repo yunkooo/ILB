@@ -21,6 +21,10 @@ export interface GrowType {
     date: string;
 }
 
+export interface BabyBodyInfo {
+    grow: GrowType[];
+}
+
 export interface BabyInfoData {
     name: string;
     month: string;

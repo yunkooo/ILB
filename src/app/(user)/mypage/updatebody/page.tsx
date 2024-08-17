@@ -1,16 +1,23 @@
 'use client';
 
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { actionDataFetch } from '@/data/actions/fetchAction';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
+import { GrowType } from '@/types';
 
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+export default async function UpdateBodyInfo() {
+    const session = useSession();
+    const userData = session.data;
+    const userId = userData?.user.id;
+    const accessToken = userData?.accessToken;
+    const extra = userData?.user.extra;
 
-import { actionBabyBodyInfo } from '@/data/actions/babyAction';
-
-export default function UpdateBodyInfo() {
     const router = useRouter();
 
     const {
@@ -18,7 +25,7 @@ export default function UpdateBodyInfo() {
         handleSubmit,
         setError,
         formState: { errors, isValid },
-    } = useForm({
+    } = useForm<GrowType>({
         defaultValues: {
             height: '',
             weight: '',
@@ -26,22 +33,46 @@ export default function UpdateBodyInfo() {
         mode: 'onChange',
     });
 
-    async function onSubmit(formData: { weight: string; height: string }) {
-        console.log('formdata', formData);
-        const resData = await actionBabyBodyInfo(formData);
-        if (resData.ok) {
-            router.push('/mypage');
-        } else {
-            // API 서버의 에러 메시지 처리
-            if ('errors' in resData) {
-                resData.errors.forEach((error: any) =>
-                    setError(error.path, { message: error.msg }),
-                );
-            } else if (resData.message) {
-                alert(resData.message);
+    async function onSubmit(formData: GrowType) {
+        const formattedDate = format(new Date(), 'yyyyMMdd');
+
+        // 아이 신체 정보 저장
+        const remakeFormData = {
+            height: formData.height,
+            weight: formData.weight,
+            date: formattedDate,
+        };
+
+        try {
+            const resData = await actionDataFetch(
+                'POST',
+                userId,
+                accessToken,
+                remakeFormData,
+            );
+            console.log(resData);
+            if (resData.ok) {
+                // router.push('/mypage');
+            } else {
+                // API 서버의 에러 메시지 처리
+                if ('errors' in resData) {
+                    resData.errors.forEach((error: any) =>
+                        setError(error.path, { message: error.msg }),
+                    );
+                } else if (resData.message) {
+                    alert(resData.message);
+                }
+            }
+        } catch (error: any) {
+            // 네트워크 오류 또는 기타 예외 처리
+            if (error instanceof Error) {
+                alert(`API 호출 중 오류가 발생했습니다: ${error.message}`);
+            } else {
+                alert('알 수 없는 오류가 발생했습니다.');
             }
         }
     }
+
     return (
         <section>
             <Image

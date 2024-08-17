@@ -17,7 +17,7 @@ import BabyName from '../signup/BabyName';
 
 const steps = ['BabyName', 'BabyMonth', 'BabyGender', 'BabyBirth', 'BabyBody'];
 
-export default function Babyinfo({ params }: { params: { id: string } }) {
+export default function Babyinfo() {
     const router = useRouter();
     const { step, onNextStep } = useFunnel({ steps });
 

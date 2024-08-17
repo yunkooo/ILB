@@ -1,5 +1,10 @@
-import { UserEdit } from './../../types/user';
-import { Method, RemakeBabyForm } from '@/types';
+import {
+    BabyBodyInfo,
+    GrowType,
+    Method,
+    RemakeBabyForm,
+    UserEdit,
+} from '@/types';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 
@@ -7,7 +12,7 @@ export async function actionDataFetch(
     method: Method,
     userId?: string,
     accessToken?: string,
-    body?: UserEdit | RemakeBabyForm | string | null,
+    body?: UserEdit | RemakeBabyForm | BabyBodyInfo | string | null,
 ) {
     const options: RequestInit = {
         method: method,

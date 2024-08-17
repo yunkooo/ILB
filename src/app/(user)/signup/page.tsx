@@ -54,7 +54,6 @@ export default function Signup() {
 
         const formattedDate = format(new Date(), 'yyyyMMdd');
 
-        console.log(formData);
         try {
             //passwordCheck 데이터를 제외를 위한 객체복사
             const {
@@ -89,7 +88,6 @@ export default function Signup() {
                 },
             };
 
-            console.log(remakeData);
             const resData = await signup(remakeData);
 
             if (resData.ok) {

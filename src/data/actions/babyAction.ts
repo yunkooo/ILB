@@ -10,6 +10,7 @@ export async function actionBabyInfo(formData: RemakeBabyForm) {
     const session = await auth();
     const userId = session?.user.id;
     // 아이 정보 입력
+
     const res = await fetch(`${SERVER}/users/${userId}`, {
         method: 'PATCH',
         headers: {
