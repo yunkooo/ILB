@@ -7,14 +7,14 @@ import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import Funnel from '@/lib/funnel/Funnel';
 import useFunnel from '@/lib/funnel/useFunnel';
-import BabyName from './BabyName';
-import BabyGender from './BabyGender';
-import BabyBirth from './BabyBirth';
-import BabyBody from './BabyBody';
-import SignupForm from './SignupForm';
+import SignupForm from './(user)/SignupForm';
 import { signup } from '@/data/actions/userAction';
 import { Button } from '@/components/ui/button';
 import { UserSignUpForm } from '@/types';
+import BabyName from './(baby)/BabyName';
+import BabyGender from './(baby)/BabyGender';
+import BabyBirth from './(baby)/BabyBirth';
+import BabyBody from './(baby)/BabyBody';
 
 const steps = ['userSignup', 'BabyName', 'BabyGender', 'BabyBirth', 'BabyBody'];
 

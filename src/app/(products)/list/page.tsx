@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import ProductList from './ProductList';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import StepList from './(stepList)/StepList';
 
 export default function ListPage() {
     return (
@@ -8,7 +8,7 @@ export default function ListPage() {
             <h1 className='text-lg font-medium py-7 px-1'>
                 우리아이를 위해 준비했어요
             </h1>
-            <ProductList />
+            <StepList />
             <Link href={'/order/1'}>
                 <Button
                     type='button'
