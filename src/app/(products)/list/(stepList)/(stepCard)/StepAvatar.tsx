@@ -4,7 +4,7 @@ type Props = {
     month: string;
 };
 
-export default function MonthAvatar({ month }: Props) {
+export default function StepAvatar({ month }: Props) {
     return (
         <div className='flex flex-col items-center'>
             <div className='relative h-[74px] w-[74px] bg-white rounded-full'>

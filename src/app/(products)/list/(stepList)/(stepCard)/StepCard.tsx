@@ -5,11 +5,11 @@ import {
 } from '@/components/ui/Accordion';
 
 import { ChevronDown } from 'lucide-react';
-import MonthAvatar from './MonthAvatar';
+import MonthAvatar from './StepAvatar';
 import ProductItem from '@/components/ProductItem';
-
-import ProductCardText from './ProductCardText';
+import ProductCardText from './StepText';
 import { Product } from '@/types';
+import MonthCheck from './StepChecker';
 type Props = {
     stepInfo: {
         step: number;
@@ -33,7 +33,7 @@ const getData = async () => {
     return res.json();
 };
 
-export default async function ProductCard({
+export default async function StepCard({
     stepInfo: { step, month, characteristic },
 }: Props) {
     const { item }: { item: Product[] } = await getData();

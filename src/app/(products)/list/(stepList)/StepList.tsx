@@ -1,6 +1,6 @@
 import { Accordion } from '@/components/ui/Accordion';
 
-import ProductCard from './ProductCard';
+import ProductCard from './(stepCard)/StepCard';
 
 interface Step {
     step: number;
@@ -8,7 +8,7 @@ interface Step {
     characteristic: string[];
 }
 
-export default function ProductList() {
+export default function StepList() {
     const stepArr: Step[] = [
         {
             step: 1,
@@ -48,7 +48,7 @@ export default function ProductList() {
     ];
 
     return (
-        <Accordion className='flex flex-col gap-5' type='single' collapsible>
+        <Accordion className='flex flex-col gap-5' type='multiple'>
             {stepArr.map((step, idx) => (
                 <ProductCard stepInfo={step} key={idx} />
             ))}

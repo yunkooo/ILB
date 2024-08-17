@@ -56,7 +56,7 @@ type Address = {
     bname: string;
 };
 
-export default function DeliveryInfo() {
+export default function CheckDelivery() {
     const { data: session, status } = useSession();
     const router = useRouter();
 
