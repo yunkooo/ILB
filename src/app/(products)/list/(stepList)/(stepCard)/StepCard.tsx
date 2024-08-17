@@ -12,9 +12,7 @@ import { Product } from '@/types';
 import MonthCheck from './StepChecker';
 type Props = {
     stepInfo: {
-        step: number;
-        month: string;
-        characteristic: string[];
+        category: string[];
     };
 };
 
@@ -22,10 +20,12 @@ const getData = async () => {
     const res = await fetch('https://api.fesp.shop/products', {
         method: 'GET',
         headers: {
-            // 'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
             'client-id': '05-ILB',
         },
     });
+    // const aa = res.json();
+    // console.log('@@@', aa);
 
     if (!res.ok) {
         throw new Error('Failed to fetch data');
@@ -33,24 +33,25 @@ const getData = async () => {
     return res.json();
 };
 
-export default async function StepCard({
-    stepInfo: { step, month, characteristic },
-}: Props) {
+export default async function StepCard({ stepInfo }: Props) {
     const { item }: { item: Product[] } = await getData();
-    const dataFilter: Product[] = item.filter(item => item.step === step);
+    const dataFilter: Product[] = item.filter(
+        item => item.category[0] === 'ST01',
+    );
+    console.log('dataFilter.length', dataFilter[0].category[0]);
     return (
         <AccordionItem
             className='relative bg-[#FFEBEE] rounded-xl border-0'
             // value값 card 마다 다르게 주어야한다.
-            value={`item-${step}`}>
+            value={`item-${dataFilter[0].category[0]}`}>
             {/* <MonthCheck /> */}
             <AccordionTrigger className='py-5 px-4 hover:no-underline flex-col items-start justify-center'>
                 <div className='flex gap-6'>
-                    <MonthAvatar month={month} />
+                    <MonthAvatar month='aa' />
                     <div className='py-2.5'>
-                        {characteristic.map((text, idx) => (
+                        {/* {characteristic.map((text, idx) => (
                             <ProductCardText text={text} key={idx} />
-                        ))}
+                        ))} */}
                     </div>
                 </div>
                 <ChevronDown className='self-center h-4 w-4 transition-transform duration-200' />
