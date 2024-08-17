@@ -1,6 +1,8 @@
 'use server';
 
 import { UserForm } from '@/types';
+import { auth } from '@/auth';
+import { actionDataFetch } from './fetchAction';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 const CLIENT_ID = process.env.DB_NAME;
@@ -22,5 +24,14 @@ export async function signup(formData: UserForm) {
     });
 
     const resData = await res.json();
+    return resData;
+}
+
+export async function actionUserData() {
+    const session = await auth();
+    const userId = session?.user.id;
+
+    const resData = await actionDataFetch('GET', userId, session?.accessToken);
+
     return resData;
 }
