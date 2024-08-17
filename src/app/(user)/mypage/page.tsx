@@ -1,35 +1,24 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import ChartCard from './ChartCard';
 import DeliveryCard from './DeliveryCard';
 import LinkCard from './LinkCard';
-import { actionDataFetch } from '@/data/actions/fetchAction';
 import { UserData } from '@/types';
+import { actionUserData } from '@/data/actions/userAction';
 
-export default async function MyPage() {
-    const session = useSession();
-    const userData = session.data;
-    const status = session.status;
-    const userId = userData?.user.id;
-    const accessToken = userData?.accessToken;
-
+export default function MyPage() {
     const [user, setUser] = useState<UserData>();
 
     // 회원 정보 불러오기
     useEffect(() => {
-        if (userData) {
-            actionDataFetch('GET', userId, accessToken)
-                .then(resData => {
-                    setUser(resData.item);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+        async function fetchUserData() {
+            const { item: userData } = await actionUserData();
+            setUser(userData);
         }
-    }, [session, status]);
 
+        fetchUserData();
+    }, []);
     return (
         <section className='py-7'>
             <div className='flex gap-5 items-center mb-14'>
@@ -53,7 +42,7 @@ export default async function MyPage() {
                     </p>
                 </div>
             </div>
-            <ChartCard />
+            <ChartCard growData={user?.extra.baby.grow} />
             <DeliveryCard />
             <LinkCard title={'내정보 수정'} link={'/mypage/editprofile'} />
             <LinkCard title={'구독 상품 조회'} link={'/mypage/subscribe'} />

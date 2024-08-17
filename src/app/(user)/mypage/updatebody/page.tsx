@@ -2,22 +2,15 @@
 
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { actionDataFetch } from '@/data/actions/fetchAction';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { format } from 'date-fns';
-import { GrowType } from '@/types';
 
-export default async function UpdateBodyInfo() {
-    const session = useSession();
-    const userData = session.data;
-    const userId = userData?.user.id;
-    const accessToken = userData?.accessToken;
-    const extra = userData?.user.extra;
+import { actionBabyBodyInfo } from '@/data/actions/babyAction';
+import { BabyBody, GrowType } from '@/types';
 
+export default function UpdateBodyInfo() {
     const router = useRouter();
 
     const {
@@ -25,7 +18,7 @@ export default async function UpdateBodyInfo() {
         handleSubmit,
         setError,
         formState: { errors, isValid },
-    } = useForm<GrowType>({
+    } = useForm<BabyBody>({
         defaultValues: {
             height: '',
             weight: '',
@@ -33,26 +26,13 @@ export default async function UpdateBodyInfo() {
         mode: 'onChange',
     });
 
-    async function onSubmit(formData: GrowType) {
-        const formattedDate = format(new Date(), 'yyyyMMdd');
-
+    async function onSubmit(formData: BabyBody) {
         // 아이 신체 정보 저장
-        const remakeFormData = {
-            height: formData.height,
-            weight: formData.weight,
-            date: formattedDate,
-        };
-
         try {
-            const resData = await actionDataFetch(
-                'POST',
-                userId,
-                accessToken,
-                remakeFormData,
-            );
+            const resData = await actionBabyBodyInfo(formData);
             console.log(resData);
             if (resData.ok) {
-                // router.push('/mypage');
+                router.push('/mypage');
             } else {
                 // API 서버의 에러 메시지 처리
                 if ('errors' in resData) {
