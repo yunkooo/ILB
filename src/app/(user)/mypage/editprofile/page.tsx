@@ -19,53 +19,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import { actionDataFetch } from '@/data/actions/fetchAction';
+import { UserData, UserSignUpForm } from '@/types';
 
 // 비밀번호 조건 정규표현식
 const passwordRegex =
     /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$#&*?!%])[A-Za-z\d!@$#%&*?]{8,15}$/;
-
-// zod Form 스키마 (유효성 검사 조건)
-const FormSchema = z
-    .object({
-        name: z
-            .string()
-            .min(2, { message: '2글자 이상 입력해 주세요.' })
-            .max(10, { message: '10글자 이하 입력해 주세요.' }),
-
-        email: z
-            .string()
-            .email({ message: '이메일을 올바르게 입력해 주세요.' }),
-
-        password: z
-            .string()
-            .min(8, { message: '8자리 이상 입력해 주세요.' })
-            .max(15, { message: '15자리 이하 입력해 주세요.' })
-            .regex(passwordRegex, {
-                message:
-                    '비밀번호는 8~15글자이어야합니다.\n영문, 숫자, 특수문자(~!@#$ %^&*)를 조합해 주세요.',
-            }),
-
-        passwordCheck: z
-            .string()
-            .nonempty({ message: '비밀번호를 재입력해 주세요.' }),
-
-        phone: z
-            .string()
-            .length(11, { message: '핸드폰 번호는 11자리여야 합니다.' })
-            .regex(/^010/, {
-                message: "핸드폰 번호는 '010'으로 시작해야 합니다.",
-            })
-            .refine(value => !isNaN(Number(value)), {
-                message: '핸드폰 번호는 숫자 형식이어야 합니다.',
-            }),
-
-        type: z.literal('user'),
-    })
-
-    .refine(data => data.password === data.passwordCheck, {
-        path: ['passwordCheck'],
-        message: '비밀번호가 일치하지 않습니다.',
-    });
 
 export default function EditProfile() {
     const router = useRouter();
@@ -76,21 +34,30 @@ export default function EditProfile() {
     const userId = userData?.user.id;
     const accessToken = userData?.accessToken;
 
-    const form = useForm<z.infer<typeof FormSchema>>({
-        resolver: zodResolver(FormSchema),
+    const form = useForm<UserSignUpForm>({
         defaultValues: {
             name: '',
             email: '',
             password: '',
             passwordCheck: '',
             phone: '',
-            type: 'user',
         },
     });
 
+    const {
+        formState: { isValid },
+    } = form;
+
     //& 수정하기 버튼 클릭 이벤트
-    async function editProfile(formData: z.infer<typeof FormSchema>) {
-        const { passwordCheck, ...filteredData } = formData;
+    async function onSubmit(formData: UserSignUpForm) {
+        console.log(formData);
+
+        //passwordCheck 데이터 제외를 위한 객체복사
+        const { password, passwordCheck, ...filteredData } = formData;
+
+        const remakeData = {
+            ...filteredData,
+        };
 
         try {
             // API 통신
@@ -116,37 +83,23 @@ export default function EditProfile() {
             // API 서버의 에러 메시지 처리
             if (error instanceof Error) {
                 alert(error.message);
-            } else if ('errors' in error) {
-                error.errors.forEach((error: any) =>
-                    form.setError(error.path, { message: error.msg }),
-                );
             }
         }
     }
 
-    // 회원 정보 불러오기
     useEffect(() => {
-        async function getUserData(data: z.infer<typeof FormSchema>) {
-            if (userData) {
-                try {
-                    const resData = await actionDataFetch(
-                        'GET',
-                        userId,
-                        accessToken,
-                    );
+        if (userData) {
+            actionDataFetch('GET', userId, accessToken)
+                .then(resData => {
                     form.setValue('name', resData.item.name);
                     form.setValue('email', resData.item.email);
                     form.setValue('phone', resData.item.phone);
-                } catch (error) {
+                })
+                .catch(error => {
                     console.error(error);
-                }
-            }
+                });
         }
-
-        if (status !== 'loading') {
-            getUserData(form.getValues());
-        }
-    }, [session, status, form.setValue]);
+    }, [session, status]);
 
     const isFormValid =
         form.watch().name && form.watch().email && form.watch().phone;
@@ -162,9 +115,7 @@ export default function EditProfile() {
             />
             <h1 className='text-center mb-[34px] font-bold'>내 정보 수정</h1>
             <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(editProfile)}
-                    className='w-full'>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
                     <FormField
                         control={form.control}
                         name='name'

@@ -1,11 +1,34 @@
-import { auth } from '@/auth';
+'use client';
+
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import ChartCard from './ChartCard';
 import DeliveryCard from './DeliveryCard';
 import LinkCard from './LinkCard';
+import { actionDataFetch } from '@/data/actions/fetchAction';
+import { UserData } from '@/types';
 
 export default async function MyPage() {
-    const session = await auth();
-    const user = session?.user;
+    const session = useSession();
+    const userData = session.data;
+    const status = session.status;
+    const userId = userData?.user.id;
+    const accessToken = userData?.accessToken;
+
+    const [user, setUser] = useState<UserData>();
+
+    // 회원 정보 불러오기
+    useEffect(() => {
+        if (userData) {
+            actionDataFetch('GET', userId, accessToken)
+                .then(resData => {
+                    setUser(resData.item);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }, [session, status]);
 
     return (
         <section className='py-7'>

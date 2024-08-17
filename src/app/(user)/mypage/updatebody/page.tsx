@@ -1,16 +1,23 @@
 'use client';
 
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { actionDataFetch } from '@/data/actions/fetchAction';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
+import { UserData } from '@/types';
 
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
-
-import { actionBabyBodyInfo } from '@/data/actions/babyAction';
-
-export default function UpdateBodyInfo() {
+export default async function UpdateBodyInfo() {
+    const session = useSession();
+    const userData = session.data;
+    const userId = userData?.user.id;
+    const accessToken = userData?.accessToken;
+    console.log(userData);
     const router = useRouter();
 
     const {
@@ -27,21 +34,37 @@ export default function UpdateBodyInfo() {
     });
 
     async function onSubmit(formData: { weight: string; height: string }) {
-        console.log('formdata', formData);
-        const resData = await actionBabyBodyInfo(formData);
-        if (resData.ok) {
-            router.push('/mypage');
-        } else {
+        const formattedDate = format(new Date(), 'yyyyMMdd');
+
+        const babyBodyInfo = {
+            grow: [
+                ...(userData?.extra.baby.grow || []),
+                {
+                    weight: formData.weight,
+                    height: formData.height,
+                    date: formattedDate,
+                },
+            ],
+        };
+
+        try {
+            const resData = await actionDataFetch(
+                'POST',
+                userId,
+                accessToken,
+                babyBodyInfo,
+            );
+            if (resData.ok) {
+                router.push('/mypage');
+            }
+        } catch (error: any) {
             // API 서버의 에러 메시지 처리
-            if ('errors' in resData) {
-                resData.errors.forEach((error: any) =>
-                    setError(error.path, { message: error.msg }),
-                );
-            } else if (resData.message) {
-                alert(resData.message);
+            if (error instanceof Error) {
+                alert(error.message);
             }
         }
     }
+
     return (
         <section>
             <Image

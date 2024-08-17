@@ -1,5 +1,4 @@
-import { UserEdit } from './../../types/user';
-import { Method, RemakeBabyForm } from '@/types';
+import { Method, RemakeBabyForm, UserEdit } from '@/types';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 
