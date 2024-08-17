@@ -13,8 +13,8 @@ export default function MyPage() {
     // 회원 정보 불러오기
     useEffect(() => {
         async function fetchUserData() {
-            const res = await actionUserData();
-            setUser(res.item);
+            const { item: userData } = await actionUserData();
+            setUser(userData);
         }
 
         fetchUserData();

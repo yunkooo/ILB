@@ -32,6 +32,20 @@ export async function actionUserData() {
     const userId = session?.user.id;
 
     const resData = await actionDataFetch('GET', userId, session?.accessToken);
+    return resData;
+}
 
+// 주소 정보 입력
+export async function actionAddress(formData: any) {
+    const session = await auth();
+    const userId = session?.user.id;
+
+    // 새로운 주소 정보 입력
+    const resData = await actionDataFetch(
+        'PATCH',
+        userId,
+        session?.accessToken,
+        formData,
+    );
     return resData;
 }
