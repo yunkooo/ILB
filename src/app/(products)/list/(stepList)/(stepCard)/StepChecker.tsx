@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function MonthCheck() {
+export default function StepChecker() {
     return (
         <div className='absolute -top-[45px] right-[5px] flex items-center gap-[7px]'>
             <p className=' px-[15px] py-[4px] text-base border-[1px] rounded-2xl'>

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Button } from '../../components/ui/button';
+import { Button } from '../../../components/ui/button';
 
 export default function ProductTutorial() {
     return (
@@ -45,7 +45,7 @@ export default function ProductTutorial() {
                     </div>
                 </div>
             </div>
-            <Link href={'/order/1'}>
+            <Link href={'/order'}>
                 <Button
                     variant={'default'}
                     size={'lg'}
