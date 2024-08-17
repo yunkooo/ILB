@@ -11,7 +11,8 @@ export interface UserData {
     profileImage?: string;
     profile?: string;
     extra: {
-        baby: BabyInfoData;
+        [key: string]: any;
+        // baby: BabyInfoData;
     };
     token?: {
         accessToken: string;
@@ -66,6 +67,7 @@ export interface UserForm {
     roadAddress: string;
     detailAddress: string;
     extra: {
+        [key: string]: any;
         baby: {
             name: string;
             gender: string;
@@ -89,3 +91,6 @@ export type SellerData = Pick<
     UserData,
     '_id' | 'email' | 'name' | 'profileImage'
 >;
+
+export type OAuthUser = Required<Pick<UserData, 'type' | 'loginType'>> &
+    Partial<Pick<UserData, 'name' | 'email' | 'profileImage' | 'extra'>>;
