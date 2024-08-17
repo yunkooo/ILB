@@ -47,6 +47,8 @@ export default function StepList() {
         },
     ];
 
+    //! FIXME - 데이터를 이 컴포넌트에서 부르고 여기서 부터 리스트 렌더링 해야한다.
+
     return (
         <Accordion className='flex flex-col gap-5' type='multiple'>
             {stepArr.map((step, idx) => (
