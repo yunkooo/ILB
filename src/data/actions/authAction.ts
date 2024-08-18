@@ -2,9 +2,8 @@
 'use server';
 
 import { signIn } from '@/auth';
-import { OAuthUser, UserData, UserForm } from '@/types';
+import { OAuthUser } from '@/types';
 import { redirect } from 'next/navigation';
-import { actionDataFetch } from './fetchAction';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 
@@ -28,13 +27,8 @@ export async function signInWithGithub(formData: FormData) {
     await signIn('github', { redirectTo: '/' });
 }
 
-export async function signInWithGoogle(formData: FormData) {
-    await signIn('google', {
-        email: formData.get('email') || '',
-        password: formData.get('password') || '',
-
-        redirectTo: '/babyinfo',
-    });
+export async function signInWithGoogle() {
+    await signIn('google', { redirectTo: '/checklogin' });
 }
 
 export async function signInWithNaver(formData: FormData) {
