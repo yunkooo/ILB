@@ -1,16 +1,24 @@
 'use client';
 
-import { HashLoader, PuffLoader, ScaleLoader } from 'react-spinners';
+import Image from 'next/image';
+import { HashLoader, PuffLoader } from 'react-spinners';
 
 // 전체 화면 로딩표시
 export function FullScreen() {
     return (
         <div className='fixed inset-0 flex items-center justify-center bg-white bg-opacity-60'>
             <div className='flex flex-col items-center'>
-                <h3 className='mb-4 text-lg font-semibold'>
-                    잠시만 기다려주세요.
-                </h3>
-                <PuffLoader color='#ff8087' size={200} />
+                <h3 className='mb-4 text-lg font-medium text-txt'>로딩중...</h3>
+                <div className='relative flex justify-center items-center h-[200px]'>
+                    <PuffLoader color='#F6BC4C' size={200} />
+                    <Image
+                        src={'/baby_sleep.svg'}
+                        alt='ILB'
+                        width={110}
+                        height={110}
+                        className='absolute mx-auto inset-0 m-auto'
+                    />
+                </div>
             </div>
         </div>
     );
