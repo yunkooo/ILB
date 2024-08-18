@@ -6,18 +6,19 @@ type Props = {
 };
 
 export default function ProductItem({ item }: Props) {
-    const image = item.mainImages[0].path;
+    console.log(item);
+    // const image = item.mainImages[0].path;
     return (
         <div className='flex flex-col items-center'>
             <div>
                 <div className='bg-[#D9D9D9] w-[92px] h-[92px] rounded-xl'>
-                    <Image
+                    {/* <Image
                         src={`https://api.fesp.shop${image}`}
                         width={100}
                         height={100}
                         className='rounded-xl w-full h-full'
                         alt=''
-                    />
+                    /> */}
                 </div>
             </div>
             <p className='text-center mt-2 break-keep'>{item.name}</p>
