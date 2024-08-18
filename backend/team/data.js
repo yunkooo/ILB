@@ -89,12 +89,12 @@ export const initData = async (clientId, nextSeq) => {
 				name: '기저귀',
 				mainImages: [
 					{
-						path: '/files/05-ILB/diaper.png',
+						path: `/files/${clientId}/diaper.png`,
 						name: 'diaper.png',
 						originalname: '기저귀.png',
 					},
 				],
-				category: 'ST01',
+				category: ['ST01'],
 				content: '<div><p>예시 - 설명랑</p></div>',
 				quantity: 1,
 				seller_id: 1,

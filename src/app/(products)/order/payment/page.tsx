@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-
 import { CiCreditCard1 } from 'react-icons/ci';
 import { CiBank } from 'react-icons/ci';
 
