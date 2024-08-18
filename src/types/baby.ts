@@ -33,20 +33,3 @@ export interface BabyInfoData {
     grow: GrowType[];
     gender: Gender;
 }
-
-export interface UserSignUpForm {
-    type: 'user' | 'seller';
-    name: string;
-    email: string;
-    password: string;
-    passwordCheck: string;
-    phone: string;
-    zoneCode: string;
-    roadAddress: string;
-    detailAddress: string;
-    babyName: string;
-    birth: string;
-    height: string;
-    weight: string;
-    gender: 'boy' | 'girl';
-}
