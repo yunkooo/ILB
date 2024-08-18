@@ -4,7 +4,7 @@ import github from 'next-auth/providers/github';
 import google from 'next-auth/providers/google';
 import NaverProvider from 'next-auth/providers/naver';
 import KakaoProvider from 'next-auth/providers/kakao';
-import { BabyInfoData, OAuthUser, UserData } from './types';
+import { OAuthUser, UserData } from './types';
 import { loginOAuth, signupWithOAuth } from './data/actions/authAction';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
@@ -117,14 +117,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                         const result = await signupWithOAuth(newUser);
 
-                        console.log('회원 가입', result);
-
+                        // 자동 로그인
                         const resData = await loginOAuth(
                             account.providerAccountId,
                         );
                         if (resData.ok) {
                             userInfo = resData.item;
-                            console.log('유저', userInfo);
                         } else {
                             throw new Error(resData.message);
                         }
@@ -137,6 +135,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     user.type = userInfo?.type as string;
                     user.accessToken = userInfo?.token!.accessToken as string;
                     user.refreshToken = userInfo?.token!.refreshToken as string;
+                    user.providerAccountId = userInfo?.extra
+                        .providerAccountId as string;
 
                     break;
             }
@@ -146,7 +146,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         // 로그인 성공한 회원 정보로 token 객체 설정
         // 최초 로그인시 user 객체 전달,
-        async jwt({ token, user, account, profile, session, trigger }) {
+        async jwt({ token, user }) {
             console.log('jwt.user', user);
             // 토큰 만료 체크, refreshToken으로 accessToken 갱신
             // refreshToken도 만료되었을 경우 로그아웃 처리
@@ -159,6 +159,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.extra = user.extra;
                 token.accessToken = user.accessToken;
                 token.refreshToken = user.refreshToken;
+                token.providerAccountId = user.providerAccountId ?? null;
             }
 
             return token;
@@ -181,12 +182,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 };
 
                 session.user.extra = {
+                    providerAccountId: token.providerAccountId ?? null,
                     baby: extra?.baby,
                     subscribe: extra?.subscribe || false,
                 };
                 session.accessToken = token.accessToken;
                 session.refreshToken = token.refreshToken;
             }
+
             return session;
         },
     },

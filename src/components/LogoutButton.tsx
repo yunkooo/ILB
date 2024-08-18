@@ -7,7 +7,7 @@ export default function LogoutButton() {
         <button
             className='py-[19px] px-[19px] text-left'
             onClick={() => {
-                signOut();
+                signOut({ callbackUrl: '/' });
             }}>
             로그아웃
         </button>

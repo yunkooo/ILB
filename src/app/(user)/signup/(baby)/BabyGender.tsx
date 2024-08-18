@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 export default function BabyGender() {
-    const [selectedGender, setSelectedGender] = useState<Gender>('man');
+    const [selectedGender, setSelectedGender] = useState<Gender>('boy');
 
     const handleButtonClick = (gender: Gender) => {
         setSelectedGender(gender);
@@ -25,12 +25,12 @@ export default function BabyGender() {
             <article>
                 <div className='flex items-center gap-8'>
                     <Button
-                        className={`text-txt mx-auto hover:bg-primary-foreground ${selectedGender === 'man' ? 'bg-primary-foreground font-bold' : ''}`}
+                        className={`text-txt mx-auto hover:bg-primary-foreground ${selectedGender === 'boy' ? 'bg-primary-foreground font-bold' : ''}`}
                         type='button'
                         variant={'outline'}
                         size={'md'}
                         fontWeight={'sm'}
-                        onClick={() => handleButtonClick('man')}>
+                        onClick={() => handleButtonClick('boy')}>
                         남자
                     </Button>
                     <Button

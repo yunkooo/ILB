@@ -14,9 +14,13 @@ export declare module '@auth/core/types' {
         phone?: string;
         address?: string;
         type: string;
-        extra?: { baby: BabyInfoData | undefined; subscribe: boolean };
+        extra?: {
+            baby: BabyInfoData | undefined;
+            subscribe: boolean;
+        };
         accessToken: string;
         refreshToken: string;
+        providerAccountId?: string | undefined | null;
     }
 
     interface Session {
@@ -32,7 +36,11 @@ export declare module '@auth/core/types' {
             profile?: string;
             createdAt: string;
             updatedAt: string;
-            extra: { baby: BabyInfoData; subscribe: boolean };
+            extra: {
+                providerAccountId?: string | undefined | null;
+                baby: BabyInfoData;
+                subscribe: boolean;
+            };
         };
         accessToken: string;
         refreshToken: string;
@@ -43,5 +51,6 @@ export declare module '@auth/core/jwt' {
     interface JWT {
         accessToken: string;
         refreshToken: string;
+        providerAccountId?: string | undefined | null;
     }
 }
