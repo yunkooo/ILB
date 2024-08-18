@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import ChartCard from './ChartCard';
 import DeliveryCard from './DeliveryCard';
 import LinkCard from './LinkCard';
-import { UserData } from '@/types';
+import { GrowType, UserData } from '@/types';
 import { actionUserData } from '@/data/actions/userAction';
+import { getDayNumbers, getStepNumber } from '@/util/dateCalc';
 
 export default function MyPage() {
     const [user, setUser] = useState<UserData>();
-
     // 회원 정보 불러오기
     useEffect(() => {
         async function fetchUserData() {
@@ -34,11 +34,17 @@ export default function MyPage() {
                     </h3>
 
                     <p className='py-3.5 text-sm font-normal'>
-                        <span className='font-medium'>12</span>개월
+                        <span className='font-medium'>
+                            {getStepNumber(user?.extra.baby.birth)}
+                        </span>
+                        개월
                     </p>
                     <p className='text-sm font-normal'>
-                        세상에 온 지 <span className='font-medium'>00일</span>째
-                        되는 날이에요!
+                        세상에 온 지{' '}
+                        <span className='font-medium'>
+                            {getDayNumbers(user?.extra.baby.birth)}일
+                        </span>
+                        째 되는 날이에요!
                     </p>
                 </div>
             </div>
