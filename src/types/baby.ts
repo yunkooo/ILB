@@ -1,6 +1,6 @@
 export interface BabyInputForm {
-    name: string;
-    month: string;
+    providerAccountId: string;
+    babyName: string;
     birth: string;
     height: string;
     weight: string;
@@ -13,7 +13,7 @@ export interface RemakeBabyForm {
     };
 }
 
-export type Gender = 'man' | 'girl';
+export type Gender = 'boy' | 'girl';
 
 export interface GrowType {
     weight: string;
@@ -29,8 +29,24 @@ export type BabyBody = Pick<GrowType, 'weight' | 'height'>;
 
 export interface BabyInfoData {
     name: string;
-    month: string;
     birth: string;
     grow: GrowType[];
     gender: Gender;
+}
+
+export interface UserSignUpForm {
+    type: 'user' | 'seller';
+    name: string;
+    email: string;
+    password: string;
+    passwordCheck: string;
+    phone: string;
+    zoneCode: string;
+    roadAddress: string;
+    detailAddress: string;
+    babyName: string;
+    birth: string;
+    height: string;
+    weight: string;
+    gender: 'boy' | 'girl';
 }

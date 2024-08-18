@@ -53,7 +53,7 @@ export interface UserSignUpForm {
     birth: string;
     height: string;
     weight: string;
-    gender: 'man' | 'girl';
+    gender: 'boy' | 'girl';
 }
 
 // 회원가입시 fetch 전송 할때 사용하는 formData
