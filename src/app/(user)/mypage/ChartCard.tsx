@@ -34,9 +34,10 @@ export default function ChartCard({ growData }: Props) {
     // grow 배열의 요소가 5개 미만이 일 경우 그래프 틀(5개)을 만들어 주기 위해
     // grow 배열을 넣고 나머지 요소들은 빈 grow를 넣어준다.
     if (growData !== undefined) {
+        const fitGrowData = growData.length > 5 ? growData.slice(-5) : growData;
         remakeGrowArray = Array.from({ length: 5 }, (_, index) =>
-            index < growData.length
-                ? growData[index]
+            index < fitGrowData.length
+                ? fitGrowData[index]
                 : { weight: '', height: '', date: '' },
         );
     }
