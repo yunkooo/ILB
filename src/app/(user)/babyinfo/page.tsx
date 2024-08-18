@@ -93,11 +93,11 @@ export default function BabyInfo() {
             );
 
             if (resData.ok) {
-                localStorage.setItem(
-                    'toastMessage',
-                    `회원가입 성공! 반갑습니다 ${formData.name}님`,
-                );
-                router.push('/login');
+                // localStorage.setItem(
+                //     'toastMessage',
+                //     `회원가입 성공! 반갑습니다 ${formData.name}님`,
+                // );
+                router.push('/');
             } else {
                 // API 서버의 에러 메시지 처리
                 if ('errors' in resData) {

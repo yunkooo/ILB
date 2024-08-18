@@ -33,7 +33,7 @@ export async function signInWithGoogle(formData: FormData) {
         email: formData.get('email') || '',
         password: formData.get('password') || '',
 
-        redirectTo: '/babyinfo',
+        redirectTo: '/protect',
     });
 }
 

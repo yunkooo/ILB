@@ -125,6 +125,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         if (resData.ok) {
                             userInfo = resData.item;
                             console.log('유저', userInfo);
+                            // 회원가입이 성공 했을때
+                            // 아이 정보를 받기위해 true로 넣어준다.
+                            if (!!result.ok) {
+                                user.redirectToBabyInfo = true;
+                                // 회원가입이 실패 했을때
+                            } else {
+                                user.redirectToBabyInfo = false;
+                            }
                         } else {
                             throw new Error(resData.message);
                         }
@@ -159,6 +167,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.extra = user.extra;
                 token.accessToken = user.accessToken;
                 token.refreshToken = user.refreshToken;
+
+                // redirectToBabyInfo가 true 일 경우에만 token에 넣어준다.
+                if (user.redirectToBabyInfo) {
+                    token.redirectToBabyInfo = true;
+                }
             }
 
             return token;
@@ -186,6 +199,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 };
                 session.accessToken = token.accessToken;
                 session.refreshToken = token.refreshToken;
+
+                // redirectToBabyInfo가 true 일 경우에만 session에 넣어준다.
+                if (token.redirectToBabyInfo) {
+                    session.redirectToBabyInfo = true;
+                }
             }
             return session;
         },

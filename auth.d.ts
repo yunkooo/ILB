@@ -17,6 +17,7 @@ export declare module '@auth/core/types' {
         extra?: { baby: BabyInfoData | undefined; subscribe: boolean };
         accessToken: string;
         refreshToken: string;
+        redirectToBabyInfo?: boolean;
     }
 
     interface Session {
@@ -36,6 +37,7 @@ export declare module '@auth/core/types' {
         };
         accessToken: string;
         refreshToken: string;
+        redirectToBabyInfo?: boolean;
     }
 }
 
@@ -43,5 +45,6 @@ export declare module '@auth/core/jwt' {
     interface JWT {
         accessToken: string;
         refreshToken: string;
+        redirectToBabyInfo?: boolean;
     }
 }

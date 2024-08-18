@@ -20,6 +20,7 @@ export interface UserData {
     };
     createdAt: string;
     updatedAt: string;
+    redirectToBabyInfo: boolean;
 }
 
 export type UserInToken = Required<Pick<UserData, '_id' | 'name'>> &
