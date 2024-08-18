@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Toaster } from '@/components/ui/toaster';
 import { actionAddress, actionUserData } from '@/data/actions/userAction';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
@@ -54,6 +55,7 @@ type Address = {
 };
 
 export default function CheckDelivery() {
+    const router = useRouter();
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -84,6 +86,11 @@ export default function CheckDelivery() {
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         try {
             const res = await actionAddress(data);
+            if (res.ok) {
+                router.push('/order/payment');
+            } else {
+                console.error('뭔가 문제있음.');
+            }
         } catch {
             console.error('에러 삐--');
         }
