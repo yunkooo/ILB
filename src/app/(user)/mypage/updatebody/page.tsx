@@ -8,11 +8,12 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 import { actionBabyBodyInfo } from '@/data/actions/babyAction';
-import { BabyBody, GrowType } from '@/types';
+import { BabyBody } from '@/types';
+import { useState } from 'react';
 
 export default function UpdateBodyInfo() {
     const router = useRouter();
-
+    const [throttle, setThrottle] = useState<boolean>(false);
     const {
         register,
         handleSubmit,
@@ -27,7 +28,10 @@ export default function UpdateBodyInfo() {
     });
 
     async function onSubmit(formData: BabyBody) {
-        // 아이 신체 정보 저장
+        if (throttle) return; // 이미 throttle 중이면 바로 리턴
+
+        setThrottle(true); // throttle 활성화
+        setTimeout(() => setThrottle(false), 2000); // 2초 후에 throttle 해제
         try {
             const resData = await actionBabyBodyInfo(formData);
             console.log(resData);
@@ -51,6 +55,8 @@ export default function UpdateBodyInfo() {
                 alert('알 수 없는 오류가 발생했습니다.');
             }
         }
+
+        // 아이 신체 정보 저장
     }
 
     return (

@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { getUserData } from '@/data/actions/sessionAction';
 
 export default function Nav() {
-    const [userName, setUserName] = useState<string | undefined>('');
+    const [userName, setUserName] = useState<string>('');
 
     const router = useRouter();
 
@@ -21,8 +21,10 @@ export default function Nav() {
 
     useEffect(() => {
         async function fetchUserData() {
-            const res = await getUserData();
-            setUserName(res);
+            const session = await getUserData();
+            if (session) {
+                setUserName(session.user.name);
+            }
         }
         fetchUserData();
     }, []);

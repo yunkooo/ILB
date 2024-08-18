@@ -83,8 +83,8 @@ export interface UserForm {
 
 // mypage - 회원정보 수정 시 formData
 export type UserEdit = Pick<
-    UserForm,
-    'name' | 'type' | 'email' | 'phone' | 'password'
+    UserSignUpForm,
+    'name' | 'email' | 'phone' | 'password' | 'passwordCheck'
 >;
 
 export type SellerData = Pick<

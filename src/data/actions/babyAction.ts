@@ -51,12 +51,12 @@ export async function actionBabyBodyInfo(formData: BabyBody) {
                 gender: userExtra.baby.gender,
                 birth: userExtra?.baby.birth,
                 grow: [
+                    ...userExtra.baby.grow,
                     {
                         weight: formData.weight,
                         height: formData.height,
                         date: formattedDate,
                     },
-                    ...userExtra.baby.grow,
                 ],
             },
         },

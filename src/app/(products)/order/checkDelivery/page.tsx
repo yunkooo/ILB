@@ -11,7 +11,10 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Toaster } from '@/components/ui/toaster';
-import { actionAddress, actionUserData } from '@/data/actions/userAction';
+import {
+    actionUserDataModify,
+    actionUserData,
+} from '@/data/actions/userAction';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -85,7 +88,7 @@ export default function CheckDelivery() {
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         try {
-            const res = await actionAddress(data);
+            const res = await actionUserDataModify(data);
             if (res.ok) {
                 router.push('/order/payment');
             } else {
