@@ -1,19 +1,37 @@
 import { SellerData } from './user';
 
 export interface Product {
-    //! FIXME - 실제 데이터에 맞게 타입 변경 필요
-    _id: number;
-    step: number;
-    name: string;
-    image: string;
-    active: boolean;
-    show: boolean;
-    quantity: number;
-    buyQuantity: number;
-    seller: SellerData;
-    replies: number;
-    bookmarks: number;
-    options: number;
-    category: string[];
-    mainImages: any;
+    item: {
+        _id: number;
+        name: string;
+        mainImages: {
+            path: string;
+            name: string;
+            originalname: string;
+        }[];
+        category: string[];
+        content: string;
+        quantity: number;
+        seller_id: number;
+        price: number;
+        show: boolean;
+        active: boolean;
+    }[];
+
+    // 나중에는 seller_id가 아니라 seller 객체가 들어가야합니다.
+    // seller: SellerData;
+}
+
+export interface Code {
+    item: {
+        step: {
+            _id: string;
+            title: string;
+            codes: {
+                code: string;
+                value: string;
+                description: string[];
+            }[];
+        };
+    };
 }

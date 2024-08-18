@@ -3,5 +3,6 @@ type Props = {
 };
 
 export default function StepText({ text }: Props) {
-    return <p className='text-left'>{text}</p>;
+    // return <p className='text-left'>{text}</p>;
+    return <li>{text}</li>;
 }
