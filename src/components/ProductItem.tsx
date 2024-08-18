@@ -2,17 +2,32 @@ import { Product } from '@/types';
 import Image from 'next/image';
 
 type Props = {
-    item: Product;
+    item: {
+        _id: number;
+        name: string;
+        mainImages: [{ path: string }];
+        category: string[];
+        quantity: number;
+        seller_id: number;
+        price: number;
+        show: boolean;
+        active: boolean;
+        seller: {};
+        replies: number;
+        bookmarks: number;
+        options: number;
+    };
 };
 
 export default function ProductItem({ item }: Props) {
-    const image = item.mainImages[0].path;
+    // const image = item.mainImages[0].path;
+    const { name, mainImages } = item;
     return (
         <div className='flex flex-col items-center'>
             <div>
                 <div className='bg-[#D9D9D9] w-[92px] h-[92px] rounded-xl'>
                     <Image
-                        src={`https://api.fesp.shop${image}`}
+                        src={`https://api.fesp.shop${mainImages[0].path}`}
                         width={100}
                         height={100}
                         className='rounded-xl w-full h-full'
@@ -20,7 +35,7 @@ export default function ProductItem({ item }: Props) {
                     />
                 </div>
             </div>
-            <p className='text-center mt-2 break-keep'>{item.name}</p>
+            <p className='text-center mt-2 break-keep'>{name}</p>
         </div>
     );
 }
