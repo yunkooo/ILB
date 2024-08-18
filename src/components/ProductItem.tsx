@@ -20,8 +20,8 @@ type Props = {
 };
 
 export default function ProductItem({ item }: Props) {
-    // const image = item.mainImages[0].path;
     const { name, mainImages } = item;
+
     return (
         <div className='flex flex-col items-center'>
             <div className='bg-[#D9D9D9] w-[92px] h-[92px] rounded-xl border'>

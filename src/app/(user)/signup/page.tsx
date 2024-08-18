@@ -38,7 +38,7 @@ export default function Signup() {
             birth: '',
             height: '',
             weight: '',
-            gender: 'man',
+            gender: 'boy',
         },
         mode: 'onChange',
     });

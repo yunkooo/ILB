@@ -1,4 +1,5 @@
 'use client';
+
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -8,11 +9,11 @@ import Funnel from '@/lib/funnel/Funnel';
 import useFunnel from '@/lib/funnel/useFunnel';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { UserSignUpForm } from '@/types';
-import BabyName from '../signup/(baby)/BabyName';
-import BabyGender from '../signup/(baby)/BabyGender';
-import BabyBirth from '../signup/(baby)/BabyBirth';
-import BabyBody from '../signup/(baby)/BabyBody';
+import { BabyInputForm } from '@/types';
+import BabyName from '../../signup/(baby)/BabyName';
+import BabyGender from '../../signup/(baby)/BabyGender';
+import BabyBirth from '../../signup/(baby)/BabyBirth';
+import BabyBody from '../../signup/(baby)/BabyBody';
 import { actionDataFetch } from '@/data/actions/fetchAction';
 
 const steps = ['BabyName', 'BabyGender', 'BabyBirth', 'BabyBody'];
@@ -21,21 +22,19 @@ export default function BabyInfo() {
     const router = useRouter();
     const session = useSession();
     const userData = session.data;
-    const status = session.status;
     const userId = userData?.user.id;
     const accessToken = userData?.accessToken;
-    console.log(session);
-    console.log(accessToken);
+    const providerAccountId = userData?.user.extra.providerAccountId;
 
     const { step, onNextStep } = useFunnel({ steps });
 
-    const form = useForm<UserSignUpForm>({
+    const form = useForm<BabyInputForm>({
         defaultValues: {
             babyName: '',
             birth: '',
             height: '',
             weight: '',
-            gender: 'man',
+            gender: 'boy',
         },
         mode: 'onChange',
     });
@@ -44,7 +43,7 @@ export default function BabyInfo() {
     } = form;
 
     // 회원가입시 formData 전송
-    async function onSubmit(formData: UserSignUpForm) {
+    async function onSubmit(formData: BabyInputForm) {
         // 버튼이 'submit'이지만 마지막 BabyBody step에서만 전송이 가능하다.
         // 나머지는 다음 페이지로 넘어가는 버튼으로 작동
         if (step !== 'BabyBody') return;
@@ -53,19 +52,11 @@ export default function BabyInfo() {
 
         try {
             //passwordCheck 데이터를 제외를 위한 객체복사
-            const {
-                passwordCheck,
-                babyName,
-                birth,
-                height,
-                weight,
-                gender,
-                ...filteredData
-            } = formData;
+            const { babyName, birth, height, weight, gender } = formData;
 
             const remakeData = {
-                ...filteredData,
                 extra: {
+                    providerAccountId,
                     baby: {
                         name: babyName,
                         gender,
@@ -93,11 +84,7 @@ export default function BabyInfo() {
             );
 
             if (resData.ok) {
-                localStorage.setItem(
-                    'toastMessage',
-                    `회원가입 성공! 반갑습니다 ${formData.name}님`,
-                );
-                router.push('/login');
+                router.push('/');
             } else {
                 // API 서버의 에러 메시지 처리
                 if ('errors' in resData) {
