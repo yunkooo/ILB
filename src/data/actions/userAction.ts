@@ -32,8 +32,15 @@ export async function actionUserData() {
     const session = await auth();
     const userId = session?.user.id;
 
-    const resData = await actionDataFetch('GET', userId, session?.accessToken);
-    return resData;
+    if (session) {
+        const resData = await actionDataFetch(
+            'GET',
+            userId,
+            session?.accessToken,
+        );
+        return resData;
+    }
+    return undefined;
 }
 
 // 회원 정보 수정 / 주소 정보 수정 action
