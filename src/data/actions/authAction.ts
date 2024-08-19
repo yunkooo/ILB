@@ -15,8 +15,7 @@ export async function signInWithCredentials(formData: FormData) {
             password: formData.get('password') || '',
             redirect: false,
         });
-        console.log('result', result);
-        // redirect('')
+        return result;
     } catch (error) {
         console.error(error);
     }

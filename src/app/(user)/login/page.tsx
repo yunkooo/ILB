@@ -21,6 +21,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -42,6 +43,8 @@ const FormSchema = z.object({
 });
 
 export default function Login() {
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -54,20 +57,22 @@ export default function Login() {
         const formData = new FormData();
         formData.append('email', data.email);
         formData.append('password', data.password);
-        await signInWithCredentials(formData);
-
-        //@ TODO : 로그인 처리
-        toast({
-            title: `로그인 성공!`,
-            // description: (
-            //     <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-            //         <code className='text-white'>
-            //             {JSON.stringify(data, null, 2)}
-            //         </code>
-            //     </pre>
-            // ),
-            duration: 1500, // Toast의 delay를 3000ms로 설정
-        });
+        const res = await signInWithCredentials(formData);
+        if (res) {
+            router.push('/');
+        } else {
+            toast({
+                title: `로그인 실패`,
+                // description: (
+                //     <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+                //         <code className='text-white'>
+                //             {JSON.stringify(data, null, 2)}
+                //         </code>
+                //     </pre>
+                // ),
+                duration: 1500, // Toast의 delay를 3000ms로 설정
+            });
+        }
     }
 
     useEffect(() => {
