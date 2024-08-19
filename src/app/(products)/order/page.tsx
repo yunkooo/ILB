@@ -1,47 +1,37 @@
-import SubItemList from '@/app/(user)/mypage/subscribe/SubItemList';
 import { actionUserData } from '@/data/actions/userAction';
 import { getStepNumber } from '@/util/dateCalc';
 import Image from 'next/image';
 import Link from 'next/link';
-import SubDescription from './SubDescription';
-
-const getStep = async () => {
-    const res = await fetch('https://api.fesp.shop/codes/step', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'client-id': '05-ILB',
-        },
-    });
-
-    if (!res.ok) {
-        throw new Error('Failed to fetch data');
-    }
-    return res.json();
-};
+import SubDescription from '../../../components/subscribe/SubDescription';
+import { actionCodes } from '@/data/actions/productsAction';
+import SubItemList from '@/components/subscribe/SubItemList';
 
 export default async function OrderItems() {
-    // 현재 구독중인 Step을 유저 정보에서 가져와 넣어주어야한다.
-
-    const { item: userData } = await actionUserData();
+    // 유저 정보를 가져온다(아이 개월수)
     const {
-        extra: { baby: babyData },
-    } = userData;
+        item: {
+            extra: { baby: babyData },
+        },
+    } = await actionUserData();
 
+    // 전체 step을 가져온다.
     const {
         item: {
             step: { codes: stepArr },
         },
-    } = await getStep();
+    } = await actionCodes();
+
     const currentStep = getStepNumber(babyData.birth);
 
+    // 현재 태어날 날짜로 부터 일수를 계산해서 어느 step 범위에 들어가는지 계산한다.
     const checkStep = stepArr.filter((step: any) => {
         const [prev, next] = step.value
             .split('개월')[0]
             .split('~')
             .map((val: string) => parseInt(val));
-
-        if (currentStep >= prev && currentStep <= next) return true;
+        if (currentStep !== undefined) {
+            if (currentStep >= prev && currentStep <= next) return true;
+        }
 
         return false;
     })[0];

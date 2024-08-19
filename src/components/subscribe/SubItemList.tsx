@@ -1,27 +1,14 @@
 import ProductItem from '@/components/ProductItem';
+import { actionProducts } from '@/data/actions/productsAction';
 import { Product } from '@/types';
 
 type Props = {
     currentStep: string;
 };
 
-const getData = async () => {
-    const res = await fetch('https://api.fesp.shop/products', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'client-id': '05-ILB',
-        },
-    });
-
-    if (!res.ok) {
-        throw new Error('Failed to fetch data');
-    }
-    return res.json();
-};
-
 export default async function SubItemList({ currentStep }: Props) {
-    const { item: products }: { item: Product[] } = await getData();
+    const { item: products }: { item: Product[] } = await actionProducts();
+
     const dataFilter: Product[] = products.filter(
         product => product.category[0] === currentStep,
     );

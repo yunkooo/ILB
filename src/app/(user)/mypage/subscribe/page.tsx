@@ -1,9 +1,40 @@
 import Image from 'next/image';
-import SubItemList from './SubItemList';
+import { actionUserData } from '@/data/actions/userAction';
+import { actionCodes } from '@/data/actions/productsAction';
+import { getStepNumber } from '@/util/dateCalc';
+import SubDescription from '@/components/subscribe/SubDescription';
+import SubItemList from '@/components/subscribe/SubItemList';
 
-export default function Subscribe() {
-    // 현재 구독중인 Step을 유저 정보에서 가져와 넣어주어야한다.
-    const currentStep = 2;
+export default async function Subscribe() {
+    // 유저 정보를 가져온다(아이 개월수)
+    const { item: userData } = await actionUserData();
+
+    const {
+        extra: { baby: babyData },
+    } = userData;
+
+    // 전체 step을 가져온다.
+    const {
+        item: {
+            step: { codes: stepArr },
+        },
+    } = await actionCodes();
+
+    const currentStep = getStepNumber(babyData.birth);
+
+    // 현재 태어날 날짜로 부터 일수를 계산해서 어느 step 범위에 들어가는지 계산한다.
+    const checkStep = stepArr.filter((step: any) => {
+        const [prev, next] = step.value
+            .split('개월')[0]
+            .split('~')
+            .map((val: string) => parseInt(val));
+        if (currentStep !== undefined) {
+            if (currentStep >= prev && currentStep <= next) return true;
+        }
+
+        return false;
+    })[0];
+
     return (
         <section>
             <Image
@@ -14,55 +45,12 @@ export default function Subscribe() {
                 className='mx-auto mb-2'
             />
             <h1 className='mb-7 font-bold text-center'>구독 상품 조회</h1>
-            <div className='pl-3 py-4 mb-7 bg-[#FFEBEC] rounded-3xl'>
-                <div className='mb-2'>
-                    <Image
-                        src={'/icon/icon_baby_feet.svg'}
-                        width={16}
-                        height={16}
-                        alt='feetIcon'
-                        className='inline mr-2'
-                    />
-                    <span className='text-sm'>
-                        머리를 가누고, 반사 행동이 나타나는 시기에요.
-                    </span>
-                </div>
-                <div className='mb-2'>
-                    <Image
-                        src={'/icon/icon_baby_feet.svg'}
-                        width={16}
-                        height={16}
-                        alt='feetIcon'
-                        className='inline mr-2'
-                    />
-                    <span className='text-sm'>시각과 청각이 발달해요.</span>
-                </div>
-                <div className='mb-2'>
-                    <Image
-                        src={'/icon/icon_baby_feet.svg'}
-                        width={16}
-                        height={16}
-                        alt='feetIcon'
-                        className='inline mr-2'
-                    />
-                    <span className='text-sm'>
-                        물체에 손을 뻗고 입으로 가져가요.
-                    </span>
-                </div>
-                <div className='mb-2'>
-                    <Image
-                        src={'/icon/icon_baby_feet.svg'}
-                        width={16}
-                        height={16}
-                        alt='feetIcon'
-                        className='inline mr-2'
-                    />
-                    <span className='text-sm'>
-                        엄마, 아빠의 목소리를 인식해요.
-                    </span>
-                </div>
+            <div className='px-3 py-4 mb-7 bg-[#FFEBEC] rounded-3xl'>
+                {checkStep.description.map((desc: string, i: number) => (
+                    <SubDescription key={i} text={desc} />
+                ))}
             </div>
-            <SubItemList currentStep={currentStep} />
+            <SubItemList currentStep={checkStep.code} />
         </section>
     );
 }

@@ -6,8 +6,6 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from '@/components/ui/Accordion';
-import { actionProducts } from '@/data/actions/productsAction';
-import { useQuery } from '@tanstack/react-query';
 import { ChevronDown } from 'lucide-react';
 import MonthAvatar from './StepAvatar';
 import ProductCardText from './StepText';
