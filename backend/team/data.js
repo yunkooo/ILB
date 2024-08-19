@@ -650,112 +650,12 @@ export const initData = async (clientId, nextSeq) => {
                 name: '아기용 식판',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
+                        path: `/files/${clientId}/tableware.webp`,
                         name: 'sample-bugatti.png',
                         originalname: '부가티.png',
                     },
                 ],
                 category: ['ST03'],
-                content: '<div><p>예시 - 설명랑</p></div>',
-                quantity: 1,
-                seller_id: 1,
-                price: 0,
-                quantity: 100,
-                show: true,
-                active: true,
-                seller_id: 2,
-            },
-            {
-                _id: await nextSeq('product'),
-                name: '아기용 손수건',
-                mainImages: [
-                    {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
-                    },
-                ],
-                category: ['ST03'],
-                content: '<div><p>예시 - 설명랑</p></div>',
-                quantity: 1,
-                seller_id: 1,
-                price: 0,
-                quantity: 100,
-                show: true,
-                active: true,
-                seller_id: 2,
-            },
-            {
-                _id: await nextSeq('product'),
-                name: '보행기',
-                mainImages: [
-                    {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
-                    },
-                ],
-                category: ['ST04'],
-                content: '<div><p>예시 - 설명랑</p></div>',
-                quantity: 1,
-                seller_id: 1,
-                price: 0,
-                quantity: 100,
-                show: true,
-                active: true,
-                seller_id: 2,
-            },
-            {
-                _id: await nextSeq('product'),
-                name: '모서리 보호대',
-                mainImages: [
-                    {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
-                    },
-                ],
-                category: ['ST04'],
-                content: '<div><p>예시 - 설명랑</p></div>',
-                quantity: 1,
-                seller_id: 1,
-                price: 0,
-                quantity: 100,
-                show: true,
-                active: true,
-                seller_id: 2,
-            },
-            {
-                _id: await nextSeq('product'),
-                name: '서랍장 잠금장치',
-                mainImages: [
-                    {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
-                    },
-                ],
-                category: ['ST04'],
-                content: '<div><p>예시 - 설명랑</p></div>',
-                quantity: 1,
-                seller_id: 1,
-                price: 0,
-                quantity: 100,
-                show: true,
-                active: true,
-                seller_id: 2,
-            },
-            {
-                _id: await nextSeq('product'),
-                name: '단계별 장난감',
-                mainImages: [
-                    {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
-                    },
-                ],
-                category: ['ST04'],
                 content: '<div><p>예시 - 설명랑</p></div>',
                 quantity: 1,
                 seller_id: 1,
@@ -770,9 +670,29 @@ export const initData = async (clientId, nextSeq) => {
                 name: '보드북',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
+                        path: `/files/${clientId}/tableware.webp`,
                         name: 'sample-bugatti.png',
                         originalname: '부가티.png',
+                    },
+                ],
+                category: ['ST03'],
+                content: '<div><p>예시 - 설명랑</p></div>',
+                quantity: 1,
+                seller_id: 1,
+                price: 0,
+                quantity: 100,
+                show: true,
+                active: true,
+                seller_id: 2,
+            },
+            {
+                _id: await nextSeq('product'),
+                name: '보드북',
+                mainImages: [
+                    {
+                        path: `/files/${clientId}/boardbook.webp`,
+                        name: 'boardbook.webp',
+                        originalname: 'boardbook.webp',
                     },
                 ],
                 category: ['ST04'],
@@ -790,9 +710,29 @@ export const initData = async (clientId, nextSeq) => {
                 name: '책',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/book.webp`,
+                        name: 'book.webp',
+                        originalname: 'book.webp',
+                    },
+                ],
+                category: ['ST04'],
+                content: '<div><p>예시 - 설명랑</p></div>',
+                quantity: 1,
+                seller_id: 1,
+                price: 0,
+                quantity: 100,
+                show: true,
+                active: true,
+                seller_id: 2,
+            },
+            {
+                _id: await nextSeq('product'),
+                name: '모서리 보호대',
+                mainImages: [
+                    {
+                        path: `/files/${clientId}/cornerprotector.webp`,
+                        name: 'cornerprotector.webp',
+                        originalname: 'cornerprotector.webp',
                     },
                 ],
                 category: ['ST04'],
@@ -810,29 +750,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '문 안전장치',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
-                    },
-                ],
-                category: ['ST04'],
-                content: '<div><p>예시 - 설명랑</p></div>',
-                quantity: 1,
-                seller_id: 1,
-                price: 0,
-                quantity: 100,
-                show: true,
-                active: true,
-                seller_id: 2,
-            },
-            {
-                _id: await nextSeq('product'),
-                name: '식기 세트',
-                mainImages: [
-                    {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/doorlocker.webp`,
+                        name: 'doorlocker.webp',
+                        originalname: 'doorlocker.webp',
                     },
                 ],
                 category: ['ST04'],
@@ -850,9 +770,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '구급상자',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/firstaidkit.webp`,
+                        name: 'firstaidkit.webp',
+                        originalname: 'firstaidkit.webp',
                     },
                 ],
                 category: ['ST04'],
@@ -870,9 +790,89 @@ export const initData = async (clientId, nextSeq) => {
                 name: '모자',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/hat.webp`,
+                        name: 'hat.webp',
+                        originalname: 'hat.webp',
+                    },
+                ],
+                category: ['ST04'],
+                content: '<div><p>예시 - 설명랑</p></div>',
+                quantity: 1,
+                seller_id: 1,
+                price: 0,
+                quantity: 100,
+                show: true,
+                active: true,
+                seller_id: 2,
+            },
+            {
+                _id: await nextSeq('product'),
+                name: '서랍장 잠금장치',
+                mainImages: [
+                    {
+                        path: `/files/${clientId}/locker.webp`,
+                        name: 'locker.webp',
+                        originalname: 'locker.webp',
+                    },
+                ],
+                category: ['ST04'],
+                content: '<div><p>예시 - 설명랑</p></div>',
+                quantity: 1,
+                seller_id: 1,
+                price: 0,
+                quantity: 100,
+                show: true,
+                active: true,
+                seller_id: 2,
+            },
+            {
+                _id: await nextSeq('product'),
+                name: '단계별 장난감',
+                mainImages: [
+                    {
+                        path: `/files/${clientId}/steptoys.webp`,
+                        name: 'steptoys.webp',
+                        originalname: 'steptoys.webp',
+                    },
+                ],
+                category: ['ST04'],
+                content: '<div><p>예시 - 설명랑</p></div>',
+                quantity: 1,
+                seller_id: 1,
+                price: 0,
+                quantity: 100,
+                show: true,
+                active: true,
+                seller_id: 2,
+            },
+            {
+                _id: await nextSeq('product'),
+                name: '식기 세트',
+                mainImages: [
+                    {
+                        path: `/files/${clientId}/tableware.webp`,
+                        name: 'tableware.webp',
+                        originalname: 'tableware.webp',
+                    },
+                ],
+                category: ['ST04'],
+                content: '<div><p>예시 - 설명랑</p></div>',
+                quantity: 1,
+                seller_id: 1,
+                price: 0,
+                quantity: 100,
+                show: true,
+                active: true,
+                seller_id: 2,
+            },
+            {
+                _id: await nextSeq('product'),
+                name: '보행기',
+                mainImages: [
+                    {
+                        path: `/files/${clientId}/walker.webp`,
+                        name: 'walker.webp',
+                        originalname: 'walker.webp',
                     },
                 ],
                 category: ['ST04'],
@@ -890,9 +890,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '뽁뽁이 신발',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/soundshoes.webp`,
+                        name: 'soundshoes.webp',
+                        originalname: 'soundshoes.webp',
                     },
                 ],
                 category: ['ST05'],
@@ -910,9 +910,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '블럭',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/block.webp`,
+                        name: 'block.webp',
+                        originalname: 'block.webp',
                     },
                 ],
                 category: ['ST05'],
@@ -930,9 +930,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '퍼즐',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/puzzle.webp`,
+                        name: 'puzzle.webp',
+                        originalname: 'puzzle.webp',
                     },
                 ],
                 category: ['ST05'],
@@ -950,9 +950,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '미술용품',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/artsupplies.webp`,
+                        name: 'artsupplies.webp',
+                        originalname: 'artsupplies.webp',
                     },
                 ],
                 category: ['ST05'],
@@ -970,9 +970,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '아기 욕조',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/babybath.webp`,
+                        name: 'babybath.webp',
+                        originalname: 'babybath.webp',
                     },
                 ],
                 category: ['ST05'],
@@ -990,9 +990,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '아기 세면대',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/babysink.webp`,
+                        name: 'babysink.webp',
+                        originalname: 'babysink.webp',
                     },
                 ],
                 category: ['ST05'],
@@ -1010,9 +1010,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '스케치북',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/sketchbook.webp`,
+                        name: 'sketchbook.webp',
+                        originalname: 'sketchbook.webp',
                     },
                 ],
                 category: ['ST05'],
@@ -1030,9 +1030,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '소리나는 장난감',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/soundtoys.webp`,
+                        name: 'soundtoys.webp',
+                        originalname: 'soundtoys.webp',
                     },
                 ],
                 category: ['ST05'],
@@ -1050,9 +1050,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '그림책',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/picturebook.webp`,
+                        name: 'picturebook.webp',
+                        originalname: 'picturebook.webp',
                     },
                 ],
                 category: ['ST05'],
@@ -1070,9 +1070,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '대근육 발달 놀이기구',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/muscletoys.webp`,
+                        name: 'muscletoys.webp',
+                        originalname: 'muscletoys.webp',
                     },
                 ],
                 category: ['ST05'],
@@ -1090,29 +1090,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '자동차 장난감',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
-                    },
-                ],
-                category: ['ST06'],
-                content: '<div><p>예시 - 설명랑</p></div>',
-                quantity: 1,
-                seller_id: 1,
-                price: 0,
-                quantity: 100,
-                show: true,
-                active: true,
-                seller_id: 2,
-            },
-            {
-                _id: await nextSeq('product'),
-                name: '소리책',
-                mainImages: [
-                    {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/cartoys.webp`,
+                        name: 'cartoys.webp',
+                        originalname: 'cartoys.webp',
                     },
                 ],
                 category: ['ST06'],
@@ -1130,9 +1110,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '미끄럼틀',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/slide.webp`,
+                        name: 'slide.webp',
+                        originalname: 'slide.webp',
                     },
                 ],
                 category: ['ST06'],
@@ -1150,9 +1130,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '모래놀이 세트',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/sandplay.webp`,
+                        name: 'sandplay.webp',
+                        originalname: 'sandplay.webp',
                     },
                 ],
                 category: ['ST06'],
@@ -1170,9 +1150,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '아기 배낭',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/babybag.webp`,
+                        name: 'babybag.webp',
+                        originalname: 'babybag.webp',
                     },
                 ],
                 category: ['ST06'],
@@ -1190,9 +1170,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '아기 비누',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/babysoap.webp`,
+                        name: 'babysoap.webp',
+                        originalname: 'babysoap.webp',
                     },
                 ],
                 category: ['ST06'],
@@ -1210,9 +1190,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '아기 샴푸',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/shampoo.webp`,
+                        name: 'shampoo.webp',
+                        originalname: 'shampoo.webp',
                     },
                 ],
                 category: ['ST06'],
@@ -1230,9 +1210,29 @@ export const initData = async (clientId, nextSeq) => {
                 name: '미끄럼 방지 식탁 매트',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/tablewmat.webp`,
+                        name: 'tablewmat.webp',
+                        originalname: 'tablewmat.webp',
+                    },
+                ],
+                category: ['ST06'],
+                content: '<div><p>예시 - 설명랑</p></div>',
+                quantity: 1,
+                seller_id: 1,
+                price: 0,
+                quantity: 100,
+                show: true,
+                active: true,
+                seller_id: 2,
+            },
+            {
+                _id: await nextSeq('product'),
+                name: '자석 장난감',
+                mainImages: [
+                    {
+                        path: `/files/${clientId}/magnetictoys.webp`,
+                        name: 'magnetictoys.webp',
+                        originalname: 'magnetictoys.webp',
                     },
                 ],
                 category: ['ST06'],
@@ -1250,9 +1250,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '자전거',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/bike.webp`,
+                        name: 'bike.webp',
+                        originalname: 'bike.webp',
                     },
                 ],
                 category: ['ST07'],
@@ -1270,9 +1270,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '아기 악기',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/instrument.webp`,
+                        name: 'instrument.webp',
+                        originalname: 'instrument.webp',
                     },
                 ],
                 category: ['ST07'],
@@ -1290,9 +1290,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '크레파스',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/crayon.webp`,
+                        name: 'crayon.webp',
+                        originalname: 'crayon.webp',
                     },
                 ],
                 category: ['ST07'],
@@ -1310,9 +1310,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '색연필',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/coloredpencil.webp`,
+                        name: 'coloredpencil.webp',
+                        originalname: 'coloredpencil.webp',
                     },
                 ],
                 category: ['ST07'],
@@ -1327,12 +1327,12 @@ export const initData = async (clientId, nextSeq) => {
             },
             {
                 _id: await nextSeq('product'),
-                name: '아기 식판',
+                name: '아기 돗자기',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/mat.webp`,
+                        name: 'mat.webp',
+                        originalname: 'mat.webp',
                     },
                 ],
                 category: ['ST07'],
@@ -1350,9 +1350,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '자전거 헬멧',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/helmet.webp`,
+                        name: 'helmet.webp',
+                        originalname: 'helmet.webp',
                     },
                 ],
                 category: ['ST07'],
@@ -1370,9 +1370,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '훈련용 팬티',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/underwear.webp`,
+                        name: 'underwear.webp',
+                        originalname: 'underwear.webp',
                     },
                 ],
                 category: ['ST07'],
@@ -1387,12 +1387,12 @@ export const initData = async (clientId, nextSeq) => {
             },
             {
                 _id: await nextSeq('product'),
-                name: '퍼즐',
+                name: '시계 장난감',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/clock.webp`,
+                        name: 'clock.webp',
+                        originalname: 'clock.webp',
                     },
                 ],
                 category: ['ST07'],
@@ -1410,9 +1410,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '침대 가드레일',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/guardrail.webp`,
+                        name: 'guardrail.webp',
+                        originalname: 'guardrail.webp',
                     },
                 ],
                 category: ['ST07'],
@@ -1430,9 +1430,9 @@ export const initData = async (clientId, nextSeq) => {
                 name: '알파벳 장난감',
                 mainImages: [
                     {
-                        path: '/files/00-sample/sample-bugatti.png',
-                        name: 'sample-bugatti.png',
-                        originalname: '부가티.png',
+                        path: `/files/${clientId}/alphabet.webp`,
+                        name: 'alphabet.webp',
+                        originalname: 'alphabet.webp',
                     },
                 ],
                 category: ['ST07'],
