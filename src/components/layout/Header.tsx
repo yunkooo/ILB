@@ -40,7 +40,7 @@ export default function Header() {
 
     return (
         <header
-            className={`${scrollPosition ? (isMatchMain ? 'bg-gradient-to-t from-transparent to-white' : 'bg-white') : 'bg-transparent'} fixed py-2.5 px-5 w-[375px] top-0  z-10`}>
+            className={`${scrollPosition ? (isMatchMain ? 'bg-gradient-to-t from-opacity via-gradient to-white to-90%' : 'bg-white') : 'bg-transparent'} fixed py-2.5 px-5 w-[375px] top-0  z-10`}>
             <nav className='flex justify-between items-center'>
                 <Link href={'/'}>
                     <Image
