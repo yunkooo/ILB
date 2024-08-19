@@ -24,6 +24,8 @@ const config = {
                 background: 'var(--background)',
                 foreground: 'var(--foreground)',
                 destructive: 'var(--destructive)',
+                gradient: 'var(--gradient-white)',
+                opacity: 'var(--gradient-transparent)',
                 primary: {
                     DEFAULT: 'var(--primary)',
                     foreground: 'var(--primary-foreground)',
