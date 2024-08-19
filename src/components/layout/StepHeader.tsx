@@ -1,49 +1,52 @@
 'use client';
 
-import Link from 'next/link';
-import { GoChevronRight, GoArrowLeft } from 'react-icons/go';
+import { GoChevronRight } from 'react-icons/go';
+import { FaArrowLeft } from 'react-icons/fa6';
 import useScrollPosition from '@/hooks/useScroll';
+import { usePathname } from 'next/navigation';
 
 interface PaymentStatus {
-    label: string;
-    isActive: boolean;
+    pathname: string;
     component: React.ReactNode;
 }
 
 const PaymentStatuses: PaymentStatus[] = [
     {
-        label: '입금/결제',
-        isActive: false,
+        pathname: '/order',
         component: <p>아이정보</p>,
     },
     {
-        label: '배송준비중',
-        isActive: true,
+        pathname: '/order/checkdelivery',
         component: <p>배송정보</p>,
     },
     {
-        label: '배송중',
-        isActive: false,
+        pathname: '/order/payment',
         component: <p>결제수단</p>,
     },
 ];
 
 export default function StepHeader() {
+    const pathname = usePathname();
+
     const { scrollPosition } = useScrollPosition();
+
+    const handleBack = () => {
+        window.history.back();
+    };
 
     return (
         <header
             className={`${scrollPosition ? 'bg-white' : 'bg-transparent'} fixed py-2.5 px-5 w-[375px] top-0  z-10`}>
             <nav className='flex items-center'>
-                <Link href={'/'}>
-                    <GoArrowLeft className='w-6 h-6 ' />
-                </Link>
-                <div className='ml-2 flex items-center gap-2.5'>
+                <button className='w-6 h-6' onClick={handleBack}>
+                    <FaArrowLeft className='mx-auto my-1 w-4 h-4' />
+                </button>
+                <div className='ml-[23px] flex items-center gap-2.5'>
                     {PaymentStatuses.map((status, i) => (
                         <>
                             <div
                                 key={i}
-                                className={`${status.isActive ? '' : 'text-txt-foreground'}`}>
+                                className={`${status.pathname === pathname ? 'font-bold' : 'text-txt-foreground'}`}>
                                 {status.component}
                             </div>
                             {i < PaymentStatuses.length - 1 && (
