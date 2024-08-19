@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { CiCreditCard1 } from 'react-icons/ci';
 import { CiBank } from 'react-icons/ci';
+import PaymentButton from './PaymentButton';
 
 type ItemSelect = 'card' | 'account';
 
@@ -15,7 +16,7 @@ export default function PaymentInfo() {
         setSelectChecked(target.id as ItemSelect);
     };
     return (
-        <>
+        <section>
             <h1 className='mt-7 font-bold text-[28px]'>결제정보</h1>
             <div className='flex flex-col gap-3.5 mt-10'>
                 <div className='flex justify-between'>
@@ -63,6 +64,7 @@ export default function PaymentInfo() {
                     계좌
                 </Button>
             </div>
-        </>
+            <PaymentButton />
+        </section>
     );
 }

@@ -27,6 +27,7 @@ export async function signup(formData: UserForm) {
     return resData;
 }
 
+// user 정보 가져오는 action
 export async function actionUserData() {
     const session = await auth();
     const userId = session?.user.id;
@@ -35,8 +36,8 @@ export async function actionUserData() {
     return resData;
 }
 
-// 주소 정보 입력
-export async function actionAddress(formData: any) {
+// 회원 정보 수정 / 주소 정보 수정 action
+export async function actionUserDataModify(formData: any) {
     const session = await auth();
     const userId = session?.user.id;
 

@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import StepList from './(stepList)/StepList';
 
-export default function ListPage() {
+export default async function ListPage() {
     return (
         <section>
             <h1 className='text-lg font-medium py-7 px-1'>

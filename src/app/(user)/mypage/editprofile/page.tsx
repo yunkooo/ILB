@@ -1,6 +1,5 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
@@ -8,20 +7,17 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/components/ui/use-toast';
-import { actionDataFetch } from '@/data/actions/fetchAction';
-import { UserSignUpForm } from '@/types';
+import { UserEdit } from '@/types';
 import EditForm from './EditForm';
+import {
+    actionUserData,
+    actionUserDataModify,
+} from '@/data/actions/userAction';
 
 export default function EditProfile() {
     const router = useRouter();
 
-    const session = useSession();
-    const userData = session.data;
-    const status = session.status;
-    const userId = userData?.user.id;
-    const accessToken = userData?.accessToken;
-
-    const form = useForm<UserSignUpForm>({
+    const form = useForm<UserEdit>({
         defaultValues: {
             name: '',
             email: '',
@@ -29,47 +25,36 @@ export default function EditProfile() {
             passwordCheck: '',
             phone: '',
         },
+        mode: 'onChange',
     });
 
     const {
+        setValue,
         formState: { isValid },
     } = form;
 
     useEffect(() => {
-        if (userData) {
-            actionDataFetch('GET', userId, accessToken)
-                .then(resData => {
-                    form.setValue('name', resData.item.name);
-                    form.setValue('email', resData.item.email);
-                    form.setValue('phone', resData.item.phone);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+        async function fetchUserData() {
+            try {
+                const { item: userData } = await actionUserData();
+                setValue('name', userData.name);
+                setValue('phone', userData.phone);
+                setValue('email', userData.email);
+            } catch (error) {
+                console.log(error);
+            }
         }
-    }, [session, status]);
+        fetchUserData();
+    }, []);
 
     //& 수정하기 버튼 클릭 이벤트
-    async function onSubmit(formData: UserSignUpForm) {
+    async function onSubmit(formData: UserEdit) {
         //passwordCheck 데이터 제외를 위한 객체복사
-        const {
-            passwordCheck,
-            babyName,
-            birth,
-            height,
-            weight,
-            gender,
-            ...filteredData
-        } = formData;
+        const { passwordCheck, ...filteredData } = formData;
 
         try {
             // API 통신
-            const resData = await actionDataFetch(
-                'PATCH',
-                userId,
-                accessToken,
-                filteredData,
-            );
+            const resData = await actionUserDataModify(filteredData);
 
             if (resData.ok) {
                 localStorage.setItem(
@@ -99,19 +84,25 @@ export default function EditProfile() {
                 height={60}
                 className='mb-2 mx-auto'
             />
-            <h1 className='text-center mb-[34px] font-bold'>내 정보 수정</h1>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
-                    <EditForm />
-                    <Button
-                        type='submit'
-                        className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid ? 'bg-gray-400' : ''}`}
-                        variant={'default'}
-                        disabled={!isValid}>
-                        수정하기
-                    </Button>
-                </form>
-            </Form>
+            <h1 className='text-center mb-[2vh] font-bold'>내 정보 수정</h1>
+            <div className='overflow-auto h-[60vh]'>
+                <Form {...form}>
+                    <form
+                        id='userDataEdit-form'
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className='w-full'>
+                        <EditForm />
+                    </form>
+                </Form>
+            </div>
+            <Button
+                form='userDataEdit-form'
+                type='submit'
+                className={`font-notoSansKr fixed bottom-[2.5vh] mt-5 box-border ${!isValid ? 'bg-gray-400' : ''}`}
+                variant={'default'}
+                disabled={!isValid}>
+                수정하기
+            </Button>
         </section>
     );
 }
