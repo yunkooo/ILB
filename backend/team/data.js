@@ -95,7 +95,7 @@ export const initData = async (clientId, nextSeq) => {
                         originalname: 'diaper.webp',
                     },
                 ],
-                category: 'ST01',
+                category: ['ST01'],
                 content: '<div><p>예시 - 설명랑</p></div>',
                 quantity: 1,
                 seller_id: 1,
