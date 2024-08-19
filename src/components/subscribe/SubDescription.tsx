@@ -4,7 +4,7 @@ type Props = {
     text: string;
 };
 
-export default function SubDescription({ text }: Props) {
+export default async function SubDescription({ text }: Props) {
     return (
         <div className='mb-2 flex'>
             <Image

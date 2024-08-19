@@ -4,7 +4,7 @@ import { Code, Product } from '@/types';
 import StepCard from './(stepCard)/StepCard';
 
 export default async function StepList() {
-    const { item: products }: Product = await actionProducts();
+    const { item: products }: { item: Product[] } = await actionProducts();
     const { item: codes }: Code = await actionCodes(); // step 코드 전체조회
 
     const codesArray = codes.step.codes;

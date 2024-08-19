@@ -5,10 +5,10 @@ import useMenuStore from '@/zustand/menuStore';
 import { PiXBold } from 'react-icons/pi';
 import LogoutButton from '../LogoutButton';
 import { useEffect, useState } from 'react';
-import { getUserData } from '@/data/actions/sessionAction';
+import { actionUserData } from '@/data/actions/userAction';
 
 export default function Nav() {
-    const [userName, setUserName] = useState<string>('');
+    const [userName, setUserName] = useState<string | undefined>();
 
     const router = useRouter();
 
@@ -20,11 +20,14 @@ export default function Nav() {
     };
 
     useEffect(() => {
-        async function fetchUserData() {
-            const session = await getUserData();
-            if (session) {
-                setUserName(session.user.name);
-            }
+        function fetchUserData() {
+            actionUserData()
+                .then(res => {
+                    setUserName(res?.item.name);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
         fetchUserData();
     }, []);
@@ -50,14 +53,11 @@ export default function Nav() {
                     </p>
                 </div>
             ) : (
-                <div className='pt-[56px] px-[18px] mb-8'>
-                    <button
-                        className='font-bold'
-                        onClick={() => handleLinkClick('/login')}>
-                        로그인
-                    </button>
-                    이 필요합니다.
-                </div>
+                <button
+                    className='text-left mt-[40px] pt-[16px] px-[18px] mb-8'
+                    onClick={() => handleLinkClick('/login')}>
+                    <span className='font-bold'>로그인</span>이 필요합니다.
+                </button>
             )}
 
             <button
