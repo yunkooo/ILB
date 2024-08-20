@@ -85,7 +85,7 @@ export default function EditProfile() {
                 className='mb-2 mx-auto'
             />
             <h1 className='text-center mb-[2vh] font-bold'>내 정보 수정</h1>
-            <div className='overflow-auto h-[60vh]'>
+            <div className='overflow-auto h-[50vh]'>
                 <Form {...form}>
                     <form
                         id='userDataEdit-form'
@@ -98,7 +98,7 @@ export default function EditProfile() {
             <Button
                 form='userDataEdit-form'
                 type='submit'
-                className={`font-notoSansKr fixed bottom-[2.5vh] mt-5 box-border ${!isValid ? 'bg-gray-400' : ''}`}
+                className={`font-notoSansKr fixed mt-5 w-default bottom-[60px] box-border ${!isValid ? 'bg-gray-400' : ''}`}
                 variant={'default'}
                 disabled={!isValid}>
                 수정하기
