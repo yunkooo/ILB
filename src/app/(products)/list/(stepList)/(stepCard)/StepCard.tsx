@@ -1,5 +1,3 @@
-'use client';
-
 import ProductItem from '@/components/ProductItem';
 import {
     AccordionContent,
@@ -8,7 +6,7 @@ import {
 } from '@/components/ui/Accordion';
 import { ChevronDown } from 'lucide-react';
 import MonthAvatar from './StepAvatar';
-import ProductCardText from './StepText';
+import StepText from './StepText';
 
 type Props = {
     stepInfo: {
@@ -50,10 +48,7 @@ export default function StepCard({ data, codeData }: any) {
                             .reverse()
                             .slice(0, 2)
                             .map((text: any, idx: any) => (
-                                <ProductCardText
-                                    text={text.slice(0, 31)}
-                                    key={idx}
-                                />
+                                <StepText text={text.slice(0, 31)} key={idx} />
                             ))}
                     </ul>
                 </div>
