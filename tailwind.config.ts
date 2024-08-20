@@ -45,14 +45,18 @@ const config = {
                 '10': '10px',
             },
             width: {
-                default: '335px',
+                default: 'calc(100% - 40px)',
                 lg: '293px',
                 sm: '101px',
                 select: '95px',
-                screen: '375px',
+                screen: '430px',
             },
             height: {
                 default: '60px',
+            },
+            maxWidth: {
+                default: '390px',
+                screen: '430px',
             },
             borderRadius: {
                 default: '44px',

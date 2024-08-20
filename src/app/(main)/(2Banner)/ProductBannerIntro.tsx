@@ -10,7 +10,7 @@ export default function ProductBannerIntro() {
             </h2>
             <Image
                 src={'/banner_2.jpg'}
-                width={375}
+                width={430}
                 height={753}
                 alt='intro image'
             />
