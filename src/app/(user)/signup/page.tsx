@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { Form } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
@@ -132,7 +132,8 @@ export default function Signup() {
                     'toastMessage',
                     `회원가입 성공! 반갑습니다 ${formData.name}님`,
                 );
-                router.push('/login');
+
+                router.replace('/login');
             } else {
                 // API 서버의 에러 메시지 처리
                 if ('errors' in resData) {
