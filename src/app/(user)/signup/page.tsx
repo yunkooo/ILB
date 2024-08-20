@@ -8,19 +8,21 @@ import { format } from 'date-fns';
 import Funnel from '@/lib/funnel/Funnel';
 import useFunnel from '@/lib/funnel/useFunnel';
 import SignupForm from './(user)/SignupForm';
-import { signup } from '@/data/actions/userAction';
+import { emailCheck, signup } from '@/data/actions/userAction';
 import { Button } from '@/components/ui/button';
 import { UserSignUpForm } from '@/types';
 import BabyName from './(baby)/BabyName';
 import BabyGender from './(baby)/BabyGender';
 import BabyBirth from './(baby)/BabyBirth';
 import BabyBody from './(baby)/BabyBody';
+import { useEffect, useState } from 'react';
+import _ from 'lodash';
 
 const steps = ['userSignup', 'BabyName', 'BabyGender', 'BabyBirth', 'BabyBody'];
 
 export default function Signup() {
     const router = useRouter();
-
+    const [isEmailDuplicate, setIsEmailDuplicate] = useState(false); // 중복 검사 상태
     const { step, onNextStep } = useFunnel({ steps });
 
     const form = useForm<UserSignUpForm>({
@@ -42,9 +44,44 @@ export default function Signup() {
         },
         mode: 'onChange',
     });
+
     const {
         formState: { isValid },
+        setError,
+        clearErrors,
     } = form;
+
+    const email = form.watch('email');
+
+    useEffect(() => {
+        const emailPattern =
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,4}$/;
+
+        const checkEmail = _.debounce(async () => {
+            if (emailPattern.test(email)) {
+                console.log('이메일 감지하여 이메일 Checking~');
+
+                const res = await emailCheck(email);
+
+                if (!res.ok) {
+                    setError('email', {
+                        type: 'manual',
+                        message: '중복된 이메일입니다.',
+                    });
+                    setIsEmailDuplicate(true); // 중복 상태 업데이트
+                } else {
+                    clearErrors('email');
+                    setIsEmailDuplicate(false); // 중복 상태 업데이트
+                }
+            }
+        }, 300);
+
+        checkEmail();
+
+        return () => {
+            checkEmail.cancel(); // 이전 호출을 취소
+        };
+    }, [email, setError, clearErrors]);
 
     // 회원가입시 formData 전송
     async function onSubmit(formData: UserSignUpForm) {
@@ -150,9 +187,9 @@ export default function Signup() {
             <Button
                 form='signup-form'
                 type='submit'
-                className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid ? 'bg-gray-400' : ''}`}
+                className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid || isEmailDuplicate ? 'bg-gray-400' : ''}`}
                 variant={'default'}
-                disabled={!isValid}
+                disabled={!isValid || isEmailDuplicate}
                 onClick={onNextStep}>
                 다음
             </Button>

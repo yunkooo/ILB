@@ -8,18 +8,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { useFormContext } from 'react-hook-form';
+import { MultipleFieldErrors, useFormContext } from 'react-hook-form';
 
 type Address = {
     zonecode: string;
     address: string;
     roadAddress: string;
-    // addressEnglish: string;
-    // addressType: 'R' | 'J';
-    // userSelectedType: 'R' | 'J';
-    // noSelected: 'Y' | 'N';
-    // userLanguageType: 'K' | 'E';
-    // bname: string;
 };
 
 export default function SignupForm() {
@@ -94,7 +88,7 @@ export default function SignupForm() {
                                 {...field}
                             />
                         </FormControl>
-                        <FormMessage />
+												<FormMessage />
                     </FormItem>
                 )}
             />
