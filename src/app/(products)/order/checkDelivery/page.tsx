@@ -129,7 +129,7 @@ export default function CheckDelivery() {
             <h1 className='pt-7 mb-10 font-bold text-[28px]'>
                 배송정보를 확인해주세요
             </h1>
-            <div className='overflow-auto h-[50vh]'>
+            <div className='h-[50vh] custom-scrollbar'>
                 <Form {...form}>
                     <form
                         id='checkDelivery'

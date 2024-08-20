@@ -121,7 +121,7 @@ export default function Signup() {
                 className='mb-2 mx-auto'
             />
             <h1 className='text-center mb-[2vh] font-bold'>회원가입</h1>
-            <div className='overflow-auto h-[50vh]'>
+            <div className='h-[50vh] custom-scrollbar'>
                 <Form {...form}>
                     <form
                         id='signup-form'

@@ -85,7 +85,7 @@ export default function EditProfile() {
                 className='mb-2 mx-auto'
             />
             <h1 className='text-center mb-[2vh] font-bold'>내 정보 수정</h1>
-            <div className='overflow-auto h-[50vh]'>
+            <div className='h-[50vh] custom-scrollbar'>
                 <Form {...form}>
                     <form
                         id='userDataEdit-form'
