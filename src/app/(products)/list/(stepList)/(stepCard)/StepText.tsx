@@ -3,6 +3,9 @@ type Props = {
 };
 
 export default function StepText({ text }: Props) {
-    // return <p className='text-left'>{text}</p>;
-    return <li>{text}</li>;
+    return (
+        <li className='list-none font-normal text-left text-base text-txt'>
+            {text}
+        </li>
+    );
 }
