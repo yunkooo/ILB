@@ -28,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 });
 
                 const resJson = await res.json();
-                console.log('resJson', resJson);
+
                 if (resJson.ok) {
                     const user = resJson.item;
                     console.log(user);
@@ -50,6 +50,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     throw new CredentialsSignin(resJson.message, {
                         cause: resJson,
                     });
+
+                    return null;
                 }
             },
         }),
@@ -85,22 +87,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async signIn({ user, account, profile, credentials }) {
             // user에 들어 있는 사용자 정보를 이용해서 최초에 한번은 회원 DB에 저장(회원가입)
             // 가입된 회원일 경우 자동으로 로그인 처리
-            console.log(
-                'callbacks.signIn',
-                user,
-                account,
-                profile,
-                credentials,
-            );
             switch (account?.provider) {
                 case 'credentials':
-                    console.log('id/pwd 로그인', user);
                     break;
                 case 'google':
                 case 'naver':
                 case 'kakao':
-                    console.log('OAuth 로그인', user);
-
                     // DB에서 id를 조회해서 있으면 로그인 처리를 없으면 자동 회원 가입 후 로그인 처리
                     let userInfo: UserData | null = null;
 
@@ -150,7 +142,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // 로그인 성공한 회원 정보로 token 객체 설정
         // 최초 로그인시 user 객체 전달,
         async jwt({ token, user }) {
-            console.log('jwt.user', user);
             // 토큰 만료 체크, refreshToken으로 accessToken 갱신
             // refreshToken도 만료되었을 경우 로그아웃 처리
             if (user) {
@@ -172,7 +163,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // token 객체 정보로 session 객체 설정
         async session({ session, token }) {
             if (session && token) {
-                console.log('session.user', session.user);
                 session.user.id = token.id as string;
                 session.user.type = token.type as string;
                 session.user.email = token.email as string;

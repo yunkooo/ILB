@@ -72,7 +72,9 @@ export default function Login() {
         formData.append('password', data.password);
         const res = await signInWithCredentials(formData);
 
-        if (res.ok) {
+        console.log('안녕하세요', res);
+
+        if (res) {
             router.push('/');
         } else {
             toast({
