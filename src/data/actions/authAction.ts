@@ -19,7 +19,7 @@ export async function signInWithCredentials(formData: FormData) {
     } catch (error) {
         console.error(error);
     }
-    redirect('/');
+    // redirect('/');
 }
 
 export async function signInWithGithub(formData: FormData) {
