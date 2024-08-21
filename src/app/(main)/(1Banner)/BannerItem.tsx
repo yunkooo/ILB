@@ -10,7 +10,7 @@ export default function BannerItem() {
             </h2>
             <Image
                 src={'/banner_1.jpg'}
-                width={375}
+                width={430}
                 height={753}
                 alt='banner image'
             />

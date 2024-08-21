@@ -18,7 +18,7 @@ import BabyBody from './(baby)/BabyBody';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 
-const steps = ['userSignup', 'BabyName', 'BabyGender', 'BabyBirth', 'BabyBody'];
+const steps = ['usersignup', 'babyname', 'babygender', 'babybirth', 'babybody'];
 
 export default function Signup() {
     const router = useRouter();
@@ -159,26 +159,26 @@ export default function Signup() {
                 className='mb-2 mx-auto'
             />
             <h1 className='text-center mb-[2vh] font-bold'>회원가입</h1>
-            <div className='overflow-auto h-[60vh]'>
+            <div className='h-[50vh] custom-scrollbar'>
                 <Form {...form}>
                     <form
                         id='signup-form'
                         onSubmit={form.handleSubmit(onSubmit)}
                         className='w-full'>
                         <Funnel step={step}>
-                            <Funnel.Step name='userSignup'>
+                            <Funnel.Step name='usersignup'>
                                 <SignupForm />
                             </Funnel.Step>
-                            <Funnel.Step name='BabyName'>
+                            <Funnel.Step name='babyname'>
                                 <BabyName />
                             </Funnel.Step>
-                            <Funnel.Step name='BabyGender'>
+                            <Funnel.Step name='babygender'>
                                 <BabyGender />
                             </Funnel.Step>
-                            <Funnel.Step name='BabyBirth'>
+                            <Funnel.Step name='babybirth'>
                                 <BabyBirth />
                             </Funnel.Step>
-                            <Funnel.Step name='BabyBody'>
+                            <Funnel.Step name='babybody'>
                                 <BabyBody />
                             </Funnel.Step>
                         </Funnel>
