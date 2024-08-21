@@ -137,6 +137,7 @@ export default function BabyInfo() {
                 type='submit'
                 className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid ? 'bg-gray-400' : ''}`}
                 variant={'default'}
+                size={'fixed'}
                 disabled={!isValid}
                 onClick={onNextStep}>
                 다음

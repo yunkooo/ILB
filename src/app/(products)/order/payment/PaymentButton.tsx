@@ -47,6 +47,7 @@ export default function PaymentButton() {
             <Button
                 className='fixed bottom-[60px] w-default font-notoSansKr'
                 variant={'default'}
+                size={'fixed'}
                 onClick={requestPay}>
                 결제하기
             </Button>

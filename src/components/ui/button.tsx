@@ -16,6 +16,7 @@ const buttonVariants = cva(
             },
             size: {
                 default: 'max-w-default w-full h-default',
+                fixed: 'max-w-default w-default h-default',
                 lg: 'w-lg h-24',
                 md: 'w-40 h-default',
                 sm: 'w-sm h-12',

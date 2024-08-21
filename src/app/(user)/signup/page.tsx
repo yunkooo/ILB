@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Form } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
@@ -190,6 +190,7 @@ export default function Signup() {
                 type='submit'
                 className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid || isEmailDuplicate ? 'bg-gray-400' : ''}`}
                 variant={'default'}
+                size={'fixed'}
                 disabled={!isValid || isEmailDuplicate}
                 onClick={onNextStep}>
                 다음
