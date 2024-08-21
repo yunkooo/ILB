@@ -58,19 +58,18 @@ export default function Login() {
         formData.append('email', data.email);
         formData.append('password', data.password);
         const res = await signInWithCredentials(formData);
-        if (res) {
+
+        if (res.ok) {
             router.push('/');
         } else {
             toast({
                 title: `로그인 실패`,
-                // description: (
-                //     <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-                //         <code className='text-white'>
-                //             {JSON.stringify(data, null, 2)}
-                //         </code>
-                //     </pre>
-                // ),
-                duration: 1500, // Toast의 delay를 3000ms로 설정
+                description: (
+                    <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4 text-white'>
+                        {res.message}
+                    </pre>
+                ),
+                duration: 1500,
             });
         }
     }

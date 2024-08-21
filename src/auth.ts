@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth';
+import NextAuth, { CredentialsSignin } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import github from 'next-auth/providers/github';
 import google from 'next-auth/providers/google';
@@ -47,7 +47,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         refreshToken: user.token.refreshToken,
                     };
                 } else {
-                    return null;
+                    throw new CredentialsSignin(resJson.message, {
+                        cause: resJson,
+                    });
                 }
             },
         }),
@@ -124,7 +126,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         if (resData.ok) {
                             userInfo = resData.item;
                         } else {
-                            throw new Error(resData.message);
+                            // throw new Error(resData.message);
+                            return resData.message;
                         }
                     } catch (err) {
                         console.log(err);
