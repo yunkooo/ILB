@@ -7,10 +7,10 @@ import { actionDataFetch } from './fetchAction';
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 const CLIENT_ID = process.env.DB_NAME;
 
-type LoginForm = {
+interface LoginForm {
     email: string;
     password: string;
-};
+}
 
 export async function signup(formData: UserForm) {
     // 회원 가입
@@ -25,6 +25,21 @@ export async function signup(formData: UserForm) {
 
     const resData = await res.json();
     return resData;
+}
+
+export async function emailCheck(email: any) {
+    // 이메일 검사
+    try {
+        const res = await fetch(`${SERVER}/users/email?email=${email}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'client-id': CLIENT_ID,
+            },
+        });
+        const resData = await res.json();
+        return resData;
+    } catch (error) {}
 }
 
 // user 정보 가져오는 action

@@ -8,18 +8,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { useFormContext } from 'react-hook-form';
+import { MultipleFieldErrors, useFormContext } from 'react-hook-form';
 
 type Address = {
     zonecode: string;
     address: string;
     roadAddress: string;
-    // addressEnglish: string;
-    // addressType: 'R' | 'J';
-    // userSelectedType: 'R' | 'J';
-    // noSelected: 'Y' | 'N';
-    // userLanguageType: 'K' | 'E';
-    // bname: string;
 };
 
 export default function SignupForm() {
@@ -94,7 +88,7 @@ export default function SignupForm() {
                                 {...field}
                             />
                         </FormControl>
-                        <FormMessage />
+												<FormMessage />
                     </FormItem>
                 )}
             />
@@ -200,12 +194,13 @@ export default function SignupForm() {
                     <FormItem className='mb-6'>
                         <FormLabel htmlFor='zoneCode'>우편 번호</FormLabel>
                         <FormControl className='flex'>
-                            <div className='flex items-end'>
+                            <div className='flex items-end justify-between'>
                                 <Input
                                     id='zoneCode'
-                                    className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
+                                    className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[70%] mx-1 mt-2 bg-gray-100'
                                     type='text'
                                     placeholder='우편번호를 검색하세요'
+																		disabled={true}
                                     {...field}
                                 />
                                 <Button

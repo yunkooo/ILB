@@ -36,12 +36,12 @@ export default function StepHeader() {
 
     return (
         <header
-            className={`${scrollPosition ? 'bg-white' : 'bg-transparent'} fixed py-2.5 px-5 w-[375px] top-0  z-10`}>
+            className={`${scrollPosition ? 'bg-white' : 'bg-transparent'} fixed py-2.5 px-5 max-w-screen w-full top-0  z-10`}>
             <nav className='flex items-center'>
                 <button className='w-6 h-6' onClick={handleBack}>
                     <FaArrowLeft className='mx-auto my-1 w-4 h-4' />
                 </button>
-                <div className='ml-[23px] flex items-center gap-2.5'>
+                <div className='ml-[23px] flex justify-center items-center gap-2.5 w-full'>
                     {PaymentStatuses.map((status, i) => (
                         <>
                             <div

@@ -17,8 +17,8 @@ export default function PaymentInfo() {
     };
     return (
         <section>
-            <h1 className='mt-7 font-bold text-[28px]'>결제정보</h1>
-            <div className='flex flex-col gap-3.5 mt-10'>
+            <h1 className='pt-7 mb-10 font-bold text-[28px]'>결제정보</h1>
+            <div className='flex flex-col gap-3.5'>
                 <div className='flex justify-between'>
                     <p className='text-txt-foreground'>상품 총 금액</p>
                     <p className='font-bold'>62,000원</p>
@@ -37,9 +37,9 @@ export default function PaymentInfo() {
                     <p className='text-lg font-bold'>50,0000원</p>
                 </div>
             </div>
-            <div className='mt-10 -left-5 relative w-[375px] bg-[#F7EFEF] h-[16px]'></div>
+            {/* <div className='mt-10 -left-5 relative w-[375px] bg-[#F7EFEF] h-[16px]'></div> */}
 
-            <h2 className='mt-[28px] font-bold text-[28px]'>결제수단 선택</h2>
+            {/* <h2 className='mt-[28px] font-bold text-[28px]'>결제수단 선택</h2>
             <div className='flex justify-between mt-10'>
                 <Button
                     id='card'
@@ -63,7 +63,7 @@ export default function PaymentInfo() {
                     <CiBank className='w-[52px] h-[52px]' />
                     계좌
                 </Button>
-            </div>
+            </div> */}
             <PaymentButton />
         </section>
     );

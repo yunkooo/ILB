@@ -7,9 +7,27 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useEffect, useState } from 'react';
+import { actionUserData } from '@/data/actions/userAction';
 
 export default function EditForm() {
     const form = useFormContext();
+
+    const [providerId, setProviderId] = useState('');
+
+    useEffect(() => {
+        function fetchUserData() {
+            actionUserData()
+                .then(res => {
+                    console.log(res);
+                    setProviderId(res?.item.extra.providerAccountId);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+        fetchUserData();
+    }, []);
 
     return (
         <>
@@ -67,64 +85,68 @@ export default function EditForm() {
                     </FormItem>
                 )}
             />
-            <FormField
-                control={form.control}
-                name='password'
-                rules={{
-                    required: '비밀번호를 입력해 주세요.',
-                    minLength: {
-                        value: 8,
-                        message: '8자리 이상 입력해 주세요.',
-                    },
-                    maxLength: {
-                        value: 15,
-                        message: '15자리 이하 입력해 주세요.',
-                    },
-                    pattern: {
-                        value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$#&*?!%])[A-Za-z\d!@$#%&*?]{8,15}$/,
-                        message:
-                            '비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다.',
-                    },
-                }}
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>비밀번호</FormLabel>
-                        <FormControl>
-                            <Input
-                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
-                                type='password'
-                                placeholder='8~15글자이고, 영문,숫자,특수문자를 포함하여야합니다.'
-                                {...field}
-                            />
-                        </FormControl>
-                        <FormMessage className='whitespace-pre-line' />
-                    </FormItem>
-                )}
-            />
-            <FormField
-                control={form.control}
-                name='passwordCheck'
-                rules={{
-                    required: '비밀번호 확인을 입력해 주세요.',
-                    validate: value =>
-                        value === form.watch('password') ||
-                        '비밀번호가 일치하지 않습니다.',
-                }}
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>비밀번호 확인</FormLabel>
-                        <FormControl>
-                            <Input
-                                className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
-                                type='password'
-                                placeholder='비밀번호를 한번 더 입력해주세요'
-                                {...field}
-                            />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )}
-            />
+            {providerId && (
+                <>
+                    <FormField
+                        control={form.control}
+                        name='password'
+                        rules={{
+                            required: '비밀번호를 입력해 주세요.',
+                            minLength: {
+                                value: 8,
+                                message: '8자리 이상 입력해 주세요.',
+                            },
+                            maxLength: {
+                                value: 15,
+                                message: '15자리 이하 입력해 주세요.',
+                            },
+                            pattern: {
+                                value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$#&*?!%])[A-Za-z\d!@$#%&*?]{8,15}$/,
+                                message:
+                                    '비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다.',
+                            },
+                        }}
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>비밀번호</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
+                                        type='password'
+                                        placeholder='8~15글자이고, 영문,숫자,특수문자를 포함하여야합니다.'
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage className='whitespace-pre-line' />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='passwordCheck'
+                        rules={{
+                            required: '비밀번호 확인을 입력해 주세요.',
+                            validate: value =>
+                                value === form.watch('password') ||
+                                '비밀번호가 일치하지 않습니다.',
+                        }}
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>비밀번호 확인</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[97%] mx-1 mt-2'
+                                        type='password'
+                                        placeholder='비밀번호를 한번 더 입력해주세요'
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </>
+            )}
             <FormField
                 control={form.control}
                 name='phone'

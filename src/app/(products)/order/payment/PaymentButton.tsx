@@ -45,7 +45,7 @@ export default function PaymentButton() {
     return (
         <div>
             <Button
-                className='mt-60 font-notoSansKr'
+                className='fixed bottom-[60px] w-default font-notoSansKr'
                 variant={'default'}
                 onClick={requestPay}>
                 결제하기
