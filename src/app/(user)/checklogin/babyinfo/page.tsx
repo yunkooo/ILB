@@ -109,7 +109,7 @@ export default function BabyInfo() {
                 height={60}
                 className='mb-2 mx-auto'
             />
-            <div className='overflow-auto h-[60vh]'>
+            <div className='h-[60vh] custom-scrollbar'>
                 <Form {...form}>
                     <form
                         id='signup-form'

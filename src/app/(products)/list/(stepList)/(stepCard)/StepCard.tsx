@@ -1,5 +1,3 @@
-'use client';
-
 import ProductItem from '@/components/ProductItem';
 import {
     AccordionContent,
@@ -8,7 +6,7 @@ import {
 } from '@/components/ui/Accordion';
 import { ChevronDown } from 'lucide-react';
 import MonthAvatar from './StepAvatar';
-import ProductCardText from './StepText';
+import StepText from './StepText';
 
 type Props = {
     stepInfo: {
@@ -45,19 +43,16 @@ export default function StepCard({ data, codeData }: any) {
             <AccordionTrigger className='py-5 px-4 hover:no-underline flex-col items-start justify-center'>
                 <div className='flex gap-6'>
                     <MonthAvatar month={`${codeData.value}`} />
-                    <ul className='list-disc py-2.5'>
+                    <ul className='flex flex-col gap-2.5 list-disc py-2.5'>
                         {codeData.description
                             .reverse()
                             .slice(0, 2)
                             .map((text: any, idx: any) => (
-                                <ProductCardText
-                                    text={text.slice(0, 31)}
-                                    key={idx}
-                                />
+                                <StepText text={text.slice(0, 31)} key={idx} />
                             ))}
                     </ul>
                 </div>
-                <ChevronDown className='self-center h-4 w-4 transition-transform duration-200' />
+                <ChevronDown className='self-center h-6 w-6 text-txt-foreground transition-transform duration-200' />
             </AccordionTrigger>
             <AccordionContent className='px-2.5 py-2.5'>
                 <div className='bg-white py-4 px-2.5 rounded-xl grid grid-cols-3 gap-2.5'>
