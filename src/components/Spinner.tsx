@@ -1,7 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { HashLoader, PuffLoader } from 'react-spinners';
+import { CSSProperties } from 'react';
+import { BarLoader, PuffLoader } from 'react-spinners';
+
+const override: CSSProperties = {
+    borderRadius: '15px',
+};
 
 // 전체 화면 로딩표시
 export function FullScreen() {
@@ -10,9 +15,9 @@ export function FullScreen() {
             <div className='flex flex-col items-center'>
                 <h3 className='mb-4 text-lg font-medium text-txt'>로딩중...</h3>
                 <div className='relative flex justify-center items-center h-[200px]'>
-                    <PuffLoader color='#F6BC4C' size={200} />
+                    <PuffLoader color='#FFC2C5' size={200} />
                     <Image
-                        src={'/baby_sleep.svg'}
+                        src={'/baby/baby_2.svg'}
                         alt='ILB'
                         width={110}
                         height={110}
@@ -27,8 +32,15 @@ export function FullScreen() {
 // 일부분(Component) 로딩표시
 export function TargetArea() {
     return (
-        <div className='flex justify-center'>
-            <HashLoader color='#ff8087' />
+        <div className='flex flex-col items-center justify-center gap-7 h-[80vh]'>
+            <Image
+                src={'/baby/baby_2.svg'}
+                alt='ILB'
+                width={110}
+                height={110}
+                className='mx-auto'
+            />
+            <BarLoader color='#ff8087' cssOverride={override} />
         </div>
     );
 }

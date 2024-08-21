@@ -7,7 +7,7 @@ export default function StepChecker() {
                 꼬꼬미(9개월)
             </p>
             <Image
-                src={'/monthCheckCharacter.svg'}
+                src={'/baby/baby_monthCheck.svg'}
                 width={60}
                 height={51}
                 alt=''

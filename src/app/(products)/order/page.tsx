@@ -39,7 +39,7 @@ export default async function OrderItems() {
     return (
         <section>
             <Image
-                src={'/baby_profile_img.svg'}
+                src={'/baby/baby_avatar.svg'}
                 alt='baby_img'
                 width={60}
                 height={60}

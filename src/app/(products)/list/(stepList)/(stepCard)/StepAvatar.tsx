@@ -12,7 +12,7 @@ export default function StepAvatar({ month }: Props) {
                     className='absolute top-[5px] left-2.5'
                     width={50}
                     height={50}
-                    src={'/sample_avatar.svg'}
+                    src={'/baby/baby_avatar.svg'}
                     alt=''
                 />
             </div>
