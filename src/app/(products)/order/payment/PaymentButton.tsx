@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { actionSubscribeModify } from '@/data/actions/payAction';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 
@@ -10,23 +11,22 @@ export default function PaymentButton() {
     const requestPay = () => {
         if (window.IMP) {
             const { IMP } = window;
+
             IMP.init('imp14397622');
             IMP.request_pay(
                 {
-                    pg: 'nice.nictest00m',
+                    pg: 'tosspayments.iamporttest_3',
                     pay_method: 'card',
-                    merchant_uid: 'test_lzw229ek',
+                    merchant_uid: `payment-${crypto.randomUUID()}`,
                     name: '테스트 결제',
                     amount: 100,
-                    buyer_name: '포트원',
+                    buyer_name: 'ILB',
                     buyer_tel: '010-0000-0000',
                 },
                 function (rsp: any) {
-                    console.log(rsp);
-                    // 콜백 함수
-                    if (rsp.success) {
-                        // 결제 성공 시 로직
-                        console.log('결제 성공', rsp);
+                    // 결제 성공 시 로직
+                    if (!rsp.error_code) {
+                        actionSubscribeModify();
                         // 결제 완료 페이지로 이동
                         router.push('/order/complete');
                     } else {
