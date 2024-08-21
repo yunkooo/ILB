@@ -53,6 +53,19 @@ export default function Login() {
         },
     });
 
+    useEffect(() => {
+        const handlePopState = () => {
+            router.replace('/');
+        };
+
+        window.history.pushState(null, '', window.location.href);
+        window.addEventListener('popstate', handlePopState);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, [router]);
+
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         const formData = new FormData();
         formData.append('email', data.email);
