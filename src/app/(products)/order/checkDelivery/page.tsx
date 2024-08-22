@@ -254,8 +254,9 @@ export default function CheckDelivery() {
             <Button
                 form='checkDelivery'
                 type='submit'
-                className={`font-notoSansKr fixed w-default bottom-[60px] box-border ${!isFormValid ? 'bg-gray-400' : ''}`}
+                className={`font-notoSansKr fixed w-default bottom-1/4 box-border ${!isFormValid ? 'bg-gray-400' : ''}`}
                 variant={'default'}
+                size={'fixed'}
                 disabled={!isFormValid}>
                 다음
             </Button>

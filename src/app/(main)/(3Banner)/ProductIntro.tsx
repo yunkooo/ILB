@@ -17,7 +17,7 @@ export default function ProductIntro() {
                 height={384}
                 alt='moble sample image'
             />
-            <Link href={'/list'}>
+            <Link href={'/list'} className='w-full text-center'>
                 <Button
                     variant={'default'}
                     size={'lg'}

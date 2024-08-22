@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -13,9 +13,12 @@ import {
     actionUserData,
     actionUserDataModify,
 } from '@/data/actions/userAction';
+import { TargetArea } from '@/components/Spinner';
 
 export default function EditProfile() {
     const router = useRouter();
+
+    const [loading, setLoading] = useState(false);
 
     const form = useForm<UserEdit>({
         defaultValues: {
@@ -40,12 +43,13 @@ export default function EditProfile() {
                 setValue('name', userData.name);
                 setValue('phone', userData.phone);
                 setValue('email', userData.email);
+                setLoading(true);
             } catch (error) {
                 console.log(error);
             }
         }
         fetchUserData();
-    }, []);
+    }, [setValue]);
 
     //& 수정하기 버튼 클릭 이벤트
     async function onSubmit(formData: UserEdit) {
@@ -77,32 +81,41 @@ export default function EditProfile() {
 
     return (
         <section>
-            <Image
-                src={'/logo_M.svg'}
-                alt='ILB'
-                width={60}
-                height={60}
-                className='mb-2 mx-auto'
-            />
-            <h1 className='text-center mb-[2vh] font-bold'>내 정보 수정</h1>
-            <div className='h-[50vh] custom-scrollbar'>
-                <Form {...form}>
-                    <form
-                        id='userDataEdit-form'
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className='w-full'>
-                        <EditForm />
-                    </form>
-                </Form>
-            </div>
-            <Button
-                form='userDataEdit-form'
-                type='submit'
-                className={`font-notoSansKr fixed mt-5 w-default bottom-[60px] box-border ${!isValid ? 'bg-gray-400' : ''}`}
-                variant={'default'}
-                disabled={!isValid}>
-                수정하기
-            </Button>
+            {loading ? (
+                <>
+                    <Image
+                        src={'/logo_M.svg'}
+                        alt='ILB'
+                        width={60}
+                        height={60}
+                        className='mb-2 mx-auto'
+                    />
+                    <h1 className='text-center mb-[2vh] font-bold'>
+                        내 정보 수정
+                    </h1>
+                    <div className='h-[50vh] custom-scrollbar'>
+                        <Form {...form}>
+                            <form
+                                id='userDataEdit-form'
+                                onSubmit={form.handleSubmit(onSubmit)}
+                                className='w-full'>
+                                <EditForm />
+                            </form>
+                        </Form>
+                    </div>
+                    <Button
+                        form='userDataEdit-form'
+                        type='submit'
+                        className={`font-notoSansKr fixed mt-5 bottom-[60px] box-border ${!isValid ? 'bg-gray-400' : ''}`}
+                        variant={'default'}
+                        size={'fixed'}
+                        disabled={!isValid}>
+                        수정하기
+                    </Button>
+                </>
+            ) : (
+                <TargetArea />
+            )}
         </section>
     );
 }

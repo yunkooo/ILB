@@ -1,17 +1,12 @@
 import Image from 'next/image';
 
-export default function BannerItem() {
+export default function BannerItem({ img }: { img: string }) {
     return (
-        <div className='relative w-[375px] h-[753px]'>
-            <h2 className='absolute px-5 top-[100px] text-2xl'>
-                <span className='text-3xl font-bold'>첫 구독 할인</span>
-                <br />
-                오픈기념 특별할인
-            </h2>
+        <div className='relative w-screen h-screen'>
             <Image
-                src={'/banner_1.jpg'}
+                src={`/${img}.webp`}
                 width={430}
-                height={753}
+                height={932}
                 alt='banner image'
             />
         </div>

@@ -46,7 +46,7 @@ const config = {
             },
             width: {
                 default: 'calc(100% - 40px)',
-                lg: '293px',
+                lg: 'calc(100% - 80px)',
                 sm: '101px',
                 select: '95px',
                 screen: '430px',
@@ -57,6 +57,7 @@ const config = {
             maxWidth: {
                 default: '390px',
                 screen: '430px',
+                lg: '350px',
             },
             borderRadius: {
                 default: '44px',

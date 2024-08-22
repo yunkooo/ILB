@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { emailCheck, signup } from '@/data/actions/userAction';
@@ -8,8 +10,6 @@ import useFunnel from '@/lib/funnel/useFunnel';
 import { UserSignUpForm } from '@/types';
 import { format } from 'date-fns';
 import _ from 'lodash';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import BabyBirth from './(baby)/BabyBirth';
@@ -192,6 +192,7 @@ export default function Signup() {
                 type='submit'
                 className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid || isEmailDuplicate ? 'bg-gray-400' : ''}`}
                 variant={'default'}
+                size={'fixed'}
                 disabled={!isValid || isEmailDuplicate}
                 onClick={onNextStep}>
                 다음

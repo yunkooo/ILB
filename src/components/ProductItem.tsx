@@ -28,7 +28,7 @@ export default function ProductItem({ item }: Props) {
 
     return (
         <div className='flex flex-col items-center'>
-            <div className='bg-[#D9D9D9] w-[92px] h-[92px] rounded-xl border'>
+            <div className='w-[92px] h-[92px] rounded-xl border border-[#ffd9db]'>
                 <Image
                     src={`https://api.fesp.shop${mainImages[0].path}`}
                     width={100}

@@ -7,6 +7,7 @@ import LinkCard from './LinkCard';
 import { GrowType, UserData } from '@/types';
 import { actionUserData } from '@/data/actions/userAction';
 import { getDayNumbers, getStepNumber } from '@/util/dateCalc';
+import Image from 'next/image';
 
 export default function MyPage() {
     const [user, setUser] = useState<UserData>();
@@ -23,7 +24,14 @@ export default function MyPage() {
         <section className='py-7'>
             <div className='flex gap-5 items-center mb-14'>
                 <div className='w-[90px]'>
-                    <div className='w-[90px] h-[90px] bg-pink-100 border-solid rounded-full'></div>
+                    <div className='flex justify-center items-center w-[90px] h-[90px] rounded-full'>
+                        <Image
+                            src={'/baby/baby_avatar.svg'}
+                            width={60}
+                            height={60}
+                            alt='baby_profile_img'
+                        />
+                    </div>
                 </div>
                 <div>
                     <h3 className='text-lg font-bold'>
@@ -34,14 +42,14 @@ export default function MyPage() {
                     </h3>
 
                     <p className='py-3.5 text-sm font-normal'>
-                        <span className='font-medium'>
+                        <span className='font-bold text-base'>
                             {getStepNumber(user?.extra.baby.birth)}
                         </span>
                         개월
                     </p>
                     <p className='text-sm font-normal'>
                         세상에 온 지{' '}
-                        <span className='font-medium'>
+                        <span className='font-bold text-base'>
                             {getDayNumbers(user?.extra.baby.birth)}일
                         </span>
                         째 되는 날이에요!
