@@ -35,14 +35,21 @@ type Props = {
     };
 };
 
-export default function StepCard({ data, codeData, idx, currentStep }: any) {
+export default function StepCard({
+    data,
+    codeData,
+    idx,
+    currentStep,
+    currentMonth,
+    babyName,
+}: any) {
     return (
         <AccordionItem
             className={`relative  rounded-xl border-0 ${codeData.code === currentStep ? 'mt-9 bg-[#FFB1B1]' : 'bg-[#FFEBEE]'}`}
             // value값 card 마다 다르게 주어야한다.
             value={`item-${codeData.code}`}>
             {codeData.code === currentStep ? (
-                <StepChecker currentMonth={5} />
+                <StepChecker babyName={babyName} currentMonth={currentMonth} />
             ) : (
                 ''
             )}
