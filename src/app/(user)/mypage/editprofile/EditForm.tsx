@@ -85,7 +85,7 @@ export default function EditForm() {
                     </FormItem>
                 )}
             />
-            {providerId && (
+            {!providerId && (
                 <>
                     <FormField
                         control={form.control}
