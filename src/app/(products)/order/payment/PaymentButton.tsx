@@ -5,6 +5,20 @@ import { actionSubscribeModify } from '@/data/actions/payAction';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 
+function generateRandomString() {
+    const characters =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const length = 8;
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters[randomIndex];
+    }
+
+    return result;
+}
+
 export default function PaymentButton() {
     const router = useRouter();
 
@@ -17,11 +31,12 @@ export default function PaymentButton() {
                 {
                     pg: 'tosspayments.iamporttest_3',
                     pay_method: 'card',
-                    merchant_uid: `payment-${crypto.randomUUID()}`,
+                    merchant_uid: `payment-${generateRandomString()}`,
                     name: '테스트 결제',
                     amount: 100,
                     buyer_name: 'ILB',
                     buyer_tel: '010-0000-0000',
+                    m_redirect_url: 'http://localhost:3000/order/payment/check',
                 },
                 function (rsp: any) {
                     // 결제 성공 시 로직
@@ -36,6 +51,7 @@ export default function PaymentButton() {
                             '결제에 실패하였습니다. 에러 내용: ' +
                                 rsp.error_msg,
                         );
+                        router.push('/order/fail');
                     }
                 },
             );

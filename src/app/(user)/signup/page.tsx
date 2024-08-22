@@ -2,21 +2,21 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { useForm } from 'react-hook-form';
-import { format } from 'date-fns';
+import { emailCheck, signup } from '@/data/actions/userAction';
 import Funnel from '@/lib/funnel/Funnel';
 import useFunnel from '@/lib/funnel/useFunnel';
-import SignupForm from './(user)/SignupForm';
-import { emailCheck, signup } from '@/data/actions/userAction';
-import { Button } from '@/components/ui/button';
 import { UserSignUpForm } from '@/types';
-import BabyName from './(baby)/BabyName';
-import BabyGender from './(baby)/BabyGender';
+import { format } from 'date-fns';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import BabyBirth from './(baby)/BabyBirth';
 import BabyBody from './(baby)/BabyBody';
-import { useEffect, useState } from 'react';
-import _ from 'lodash';
+import BabyGender from './(baby)/BabyGender';
+import BabyName from './(baby)/BabyName';
+import SignupForm from './(user)/SignupForm';
 
 const steps = ['usersignup', 'babyname', 'babygender', 'babybirth', 'babybody'];
 
@@ -57,21 +57,23 @@ export default function Signup() {
         const emailPattern =
             /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,4}$/;
 
+        clearErrors('email');
+
         const checkEmail = _.debounce(async () => {
             if (emailPattern.test(email)) {
-                console.log('이메일 감지하여 이메일 Checking~');
-
                 const res = await emailCheck(email);
 
-                if (!res.ok) {
-                    setError('email', {
-                        type: 'manual',
-                        message: '중복된 이메일입니다.',
-                    });
-                    setIsEmailDuplicate(true); // 중복 상태 업데이트
-                } else {
+                // res.ok 가 1이면 중복되지 않음
+                // res.ok 가 0이면 중복됨
+                if (res.ok || res.errors) {
                     clearErrors('email');
                     setIsEmailDuplicate(false); // 중복 상태 업데이트
+                } else {
+                    setError('email', {
+                        type: 'manual',
+                        message: '이미 등록된 이메일입니다.',
+                    });
+                    setIsEmailDuplicate(true); // 중복 상태 업데이트
                 }
             }
         }, 300);
@@ -87,7 +89,7 @@ export default function Signup() {
     async function onSubmit(formData: UserSignUpForm) {
         // 버튼이 'submit'이지만 마지막 BabyBody step에서만 전송이 가능하다.
         // 나머지는 다음 페이지로 넘어가는 버튼으로 작동
-        if (step !== 'BabyBody') return;
+        if (step !== 'babybody') return;
 
         const formattedDate = format(new Date(), 'yyyyMMdd');
 

@@ -23,17 +23,12 @@ export default async function Subscribe() {
     const currentStep = getStepNumber(babyData.birth);
 
     // 현재 태어날 날짜로 부터 일수를 계산해서 어느 step 범위에 들어가는지 계산한다.
-    const checkStep = stepArr.filter((step: any) => {
-        const [prev, next] = step.value
-            .split('개월')[0]
-            .split('~')
-            .map((val: string) => parseInt(val));
+    const checkStep = stepArr.find((step: any) => {
+        const [prev, next] = step.value.match(/\d+/g).map(Number);
         if (currentStep !== undefined) {
-            if (currentStep >= prev && currentStep <= next) return true;
+            return currentStep >= prev && currentStep <= next;
         }
-
-        return false;
-    })[0];
+    });
 
     return (
         <section>
@@ -46,11 +41,15 @@ export default async function Subscribe() {
             />
             <h1 className='mb-7 font-bold text-center'>구독 상품 조회</h1>
             <div className='px-3 py-4 mb-7 bg-[#FFEBEC] rounded-3xl'>
-                {checkStep.description.map((desc: string, i: number) => (
-                    <SubDescription key={i} text={desc} />
-                ))}
+                {checkStep ? (
+                    checkStep.description.map((desc: string, i: number) => (
+                        <SubDescription key={i} text={desc} />
+                    ))
+                ) : (
+                    <p>현재 단계에 해당하는 구독 정보를 찾을 수 없습니다.</p>
+                )}
             </div>
-            <SubItemList currentStep={checkStep.code} />
+            {checkStep && <SubItemList currentStep={checkStep.code} />}
         </section>
     );
 }

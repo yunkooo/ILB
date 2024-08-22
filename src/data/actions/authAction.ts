@@ -16,10 +16,12 @@ export async function signInWithCredentials(formData: FormData) {
             redirect: false,
         });
         return result;
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.log(err);
+        if (err instanceof Error) {
+            return err.cause;
+        }
     }
-    // redirect('/');
 }
 
 export async function signInWithGithub(formData: FormData) {

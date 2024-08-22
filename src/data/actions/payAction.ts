@@ -22,7 +22,7 @@ export async function actionSubscribeModify() {
         extra: {
             ...userExtra,
             subscribe: {
-                statue: 'true',
+                status: 'true',
                 date: formattedDate,
             },
         },
