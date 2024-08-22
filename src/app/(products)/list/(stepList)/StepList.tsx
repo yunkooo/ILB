@@ -11,11 +11,11 @@ export default async function StepList() {
 
     return (
         <Accordion className='flex flex-col gap-5' type='multiple'>
-            {codesArray.map(step => {
+            {codesArray.map((step, i) => {
                 const filterData = products.filter(
                     product => product.category[0] === step.code,
                 );
-                return <StepCard codeData={step} data={filterData} />;
+                return <StepCard codeData={step} data={filterData} idx={i} />;
             })}
         </Accordion>
     );
