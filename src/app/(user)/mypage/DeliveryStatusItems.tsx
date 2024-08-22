@@ -1,7 +1,9 @@
-import { CiCreditCard1 } from 'react-icons/ci';
-import { CiShoppingCart } from 'react-icons/ci';
-import { CiDeliveryTruck } from 'react-icons/ci';
-import { CiGift } from 'react-icons/ci';
+import {
+    CiCreditCard1,
+    CiShoppingCart,
+    CiDeliveryTruck,
+    CiGift,
+} from 'react-icons/ci';
 import { GoChevronRight } from 'react-icons/go';
 
 interface DeliveryStatus {
@@ -10,7 +12,7 @@ interface DeliveryStatus {
     icon: React.ReactNode;
 }
 
-//@ 배송 상태 더미 데이터
+// @ 배송 상태 더미 데이터
 const deliveryStatuses: DeliveryStatus[] = [
     {
         label: '입금/결제',

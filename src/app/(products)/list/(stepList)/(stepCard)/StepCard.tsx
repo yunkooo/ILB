@@ -66,9 +66,9 @@ export default function StepCard({ data, codeData, idx, currentStep }: any) {
                     맞춰 선별하여 보내드려요.
                 </span>
                 <div className='bg-white py-4 px-2.5 mt-4 rounded-xl grid grid-cols-3 gap-2.5'>
-                    {data.map((product: any) => {
-                        return <ProductItem item={product} />;
-                    })}
+                    {data.map((product: any) => (
+                        <ProductItem item={product} />
+                    ))}
                 </div>
             </AccordionContent>
         </AccordionItem>

@@ -8,12 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/components/ui/use-toast';
 import { UserEdit } from '@/types';
-import EditForm from './EditForm';
 import {
     actionUserData,
     actionUserDataModify,
 } from '@/data/actions/userAction';
 import { TargetArea } from '@/components/Spinner';
+import EditForm from './EditForm';
 
 export default function EditProfile() {
     const router = useRouter();
@@ -51,9 +51,9 @@ export default function EditProfile() {
         fetchUserData();
     }, [setValue]);
 
-    //& 수정하기 버튼 클릭 이벤트
+    // & 수정하기 버튼 클릭 이벤트
     async function onSubmit(formData: UserEdit) {
-        //passwordCheck 데이터 제외를 위한 객체복사
+        // passwordCheck 데이터 제외를 위한 객체복사
         const { passwordCheck, ...filteredData } = formData;
 
         try {
@@ -84,7 +84,7 @@ export default function EditProfile() {
             {loading ? (
                 <>
                     <Image
-                        src={'/logo_M.svg'}
+                        src='/logo_M.svg'
                         alt='ILB'
                         width={60}
                         height={60}
@@ -107,8 +107,8 @@ export default function EditProfile() {
                         form='userDataEdit-form'
                         type='submit'
                         className={`font-notoSansKr fixed mt-5 bottom-[60px] box-border ${!isValid ? 'bg-gray-400' : ''}`}
-                        variant={'default'}
-                        size={'fixed'}
+                        variant='default'
+                        size='fixed'
                         disabled={!isValid}>
                         수정하기
                     </Button>

@@ -100,7 +100,7 @@ export default function Login() {
     return (
         <section>
             <Image
-                src={'/logo_M.svg'}
+                src='/logo_M.svg'
                 alt='ILB'
                 width={60}
                 height={60}
@@ -154,7 +154,7 @@ export default function Login() {
             </Form>
             <p className='text-txt-foreground text-center mt-[18px] text-xs'>
                 아직 회원이 아니신가요?{' '}
-                <Link href={'/signup'} className='text-txt font-normal'>
+                <Link href='/signup' className='text-txt font-normal'>
                     회원가입
                 </Link>
             </p>
@@ -171,7 +171,7 @@ export default function Login() {
                 <Button
                     type='submit'
                     className='bg-white'
-                    size={'xs'}
+                    size='xs'
                     formAction={signInWithKakao}>
                     <Image
                         src='/icon/icon_kakao.svg'
@@ -183,7 +183,7 @@ export default function Login() {
                 <Button
                     type='submit'
                     className='bg-white'
-                    size={'xs'}
+                    size='xs'
                     formAction={signInWithGoogle}>
                     <Image
                         src='/icon/icon_google.svg'
@@ -195,7 +195,7 @@ export default function Login() {
                 <Button
                     type='submit'
                     className='bg-white'
-                    size={'xs'}
+                    size='xs'
                     formAction={signInWithNaver}>
                     <Image
                         src='/icon/icon_naver.svg'

@@ -9,7 +9,7 @@ import { loginOAuth, signupWithOAuth } from './data/actions/authAction';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 const CLIENT_ID = process.env.DB_NAME;
-const AUTH_SECRET = process.env.AUTH_SECRET;
+const { AUTH_SECRET } = process.env;
 
 // OAuth2.0
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -46,13 +46,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         accessToken: user.token.accessToken,
                         refreshToken: user.token.refreshToken,
                     };
-                } else {
-                    throw new CredentialsSignin(resJson.message, {
-                        cause: resJson,
-                    });
-
-                    return null;
                 }
+                throw new CredentialsSignin(resJson.message, {
+                    cause: resJson,
+                });
+
+                return null;
             },
         }),
         github({

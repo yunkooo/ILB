@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
-import AuthSession from './AuthSession';
 import HeaderSelector from '@/components/layout/HeaderSelector';
+import AuthSession from './AuthSession';
 
 const notoSansKr = Noto_Sans_KR({
     preload: false,

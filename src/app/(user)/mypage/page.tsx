@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import ChartCard from './ChartCard';
-import DeliveryCard from './DeliveryCard';
-import LinkCard from './LinkCard';
 import { GrowType, UserData } from '@/types';
 import { actionUserData } from '@/data/actions/userAction';
 import { getDayNumbers, getStepNumber } from '@/util/dateCalc';
 import Image from 'next/image';
+import LinkCard from './LinkCard';
+import DeliveryCard from './DeliveryCard';
+import ChartCard from './ChartCard';
 
 export default function MyPage() {
     const [user, setUser] = useState<UserData>();
@@ -26,7 +26,7 @@ export default function MyPage() {
                 <div className='w-[90px]'>
                     <div className='flex justify-center items-center w-[90px] h-[90px] rounded-full'>
                         <Image
-                            src={'/baby/baby_avatar.svg'}
+                            src='/baby/baby_avatar.svg'
                             width={60}
                             height={60}
                             alt='baby_profile_img'
@@ -58,11 +58,11 @@ export default function MyPage() {
             </div>
             <ChartCard growData={user?.extra.baby.grow} />
             <DeliveryCard />
-            <LinkCard title={'내정보 수정'} link={'/mypage/editprofile'} />
+            <LinkCard title='내정보 수정' link='/mypage/editprofile' />
             {user?.extra.subscribe.status === 'true' ? (
-                <LinkCard title={'구독 상품 조회'} link={'/mypage/subscribe'} />
+                <LinkCard title='구독 상품 조회' link='/mypage/subscribe' />
             ) : (
-                <LinkCard title={'구독 상품 조회'} link={'/order'} />
+                <LinkCard title='구독 상품 조회' link='/order' />
             )}
         </section>
     );

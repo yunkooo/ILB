@@ -10,7 +10,7 @@ export default function ProductTutorial() {
                 구독 서비스 시작하기
             </h2>
             <div className='relative self-start flex flex-col gap-[61px]'>
-                <div className='z-[-1] absolute top-5 left-3.5 h-[230px] w-[1px] border-l-2 border-dashed	 border-[#7DC8AA]'></div>
+                <div className='z-[-1] absolute top-5 left-3.5 h-[230px] w-[1px] border-l-2 border-dashed	 border-[#7DC8AA]' />
                 <div className='flex gap-2.5 items-center'>
                     <div className='w-[30px] h-[30px] rounded-full bg-[#7DC8AA] flex justify-center items-center text-white text-sm'>
                         1
@@ -47,12 +47,8 @@ export default function ProductTutorial() {
                     </div>
                 </div>
             </div>
-            <Link href={'/order'} className='w-full text-center'>
-                <Button
-                    variant={'default'}
-                    size={'lg'}
-                    radius={'lg'}
-                    fontSize={'lg'}>
+            <Link href='/order' className='w-full text-center'>
+                <Button variant='default' size='lg' radius='lg' fontSize='lg'>
                     구독하러가기
                 </Button>
             </Link>

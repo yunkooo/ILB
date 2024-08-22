@@ -94,7 +94,7 @@ export default function Signup() {
         const formattedDate = format(new Date(), 'yyyyMMdd');
 
         try {
-            //passwordCheck 데이터를 제외를 위한 객체복사
+            // passwordCheck 데이터를 제외를 위한 객체복사
             const {
                 passwordCheck,
                 babyName,
@@ -154,7 +154,7 @@ export default function Signup() {
     return (
         <section>
             <Image
-                src={'/logo_M.svg'}
+                src='/logo_M.svg'
                 alt='ILB'
                 width={60}
                 height={60}
@@ -191,8 +191,8 @@ export default function Signup() {
                 form='signup-form'
                 type='submit'
                 className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid || isEmailDuplicate ? 'bg-gray-400' : ''}`}
-                variant={'default'}
-                size={'fixed'}
+                variant='default'
+                size='fixed'
                 disabled={!isValid || isEmailDuplicate}
                 onClick={onNextStep}>
                 다음

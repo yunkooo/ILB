@@ -38,7 +38,7 @@ export default function PaymentButton() {
                     buyer_tel: '010-0000-0000',
                     m_redirect_url: 'http://localhost:3000/order/payment/check',
                 },
-                function (rsp: any) {
+                (rsp: any) => {
                     // 결제 성공 시 로직
                     if (!rsp.error_code) {
                         actionSubscribeModify();
@@ -48,8 +48,9 @@ export default function PaymentButton() {
                         // 결제 실패 시 로직
                         console.log('결제 실패', rsp);
                         alert(
-                            '결제에 실패하였습니다. 에러 내용: ' +
-                                rsp.error_msg,
+                            `결제에 실패하였습니다. 에러 내용: ${
+                                rsp.error_msg
+                            }`,
                         );
                         router.push('/order/fail');
                     }
@@ -62,8 +63,8 @@ export default function PaymentButton() {
         <div>
             <Button
                 className='fixed bottom-[60px] w-default font-notoSansKr'
-                variant={'default'}
-                size={'fixed'}
+                variant='default'
+                size='fixed'
                 onClick={requestPay}>
                 결제하기
             </Button>

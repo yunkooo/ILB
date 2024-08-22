@@ -9,11 +9,11 @@ export default async function ListPage() {
                 우리 아이를 위해 준비했어요
             </h1>
             <StepList />
-            <Link href={'/order'}>
+            <Link href='/order'>
                 <Button
                     type='button'
                     className='font-notoSansKr my-[60px] box-border'
-                    variant={'default'}>
+                    variant='default'>
                     구독하러가기
                 </Button>
             </Link>
