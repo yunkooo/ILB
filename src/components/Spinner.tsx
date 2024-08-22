@@ -17,7 +17,7 @@ export function FullScreen() {
                 <div className='relative flex justify-center items-center h-[200px]'>
                     <PuffLoader color='#FFC2C5' size={200} />
                     <Image
-                        src={'/baby/baby_2.svg'}
+                        src='/baby/baby_2.svg'
                         alt='ILB'
                         width={110}
                         height={110}
@@ -34,7 +34,7 @@ export function TargetArea() {
     return (
         <div className='flex flex-col items-center justify-center gap-7 h-[80vh]'>
             <Image
-                src={'/baby/baby_2.svg'}
+                src='/baby/baby_2.svg'
                 alt='ILB'
                 width={110}
                 height={110}

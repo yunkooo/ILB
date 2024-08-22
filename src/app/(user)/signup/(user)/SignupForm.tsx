@@ -88,7 +88,7 @@ export default function SignupForm() {
                                 {...field}
                             />
                         </FormControl>
-												<FormMessage />
+                        <FormMessage />
                     </FormItem>
                 )}
             />
@@ -200,15 +200,15 @@ export default function SignupForm() {
                                     className='border-0 border-b-[1px] rounded-none p-[5px] border-txt-foreground w-[70%] mx-1 mt-2 bg-gray-100'
                                     type='text'
                                     placeholder='우편번호를 검색하세요'
-																		disabled={true}
+                                    disabled
                                     {...field}
                                 />
                                 <Button
                                     type='button'
                                     className='font-notoSansKr right-0 bottom-[0.0625rem]'
-                                    size={'sm'}
-                                    fontSize={'sm'}
-                                    fontWeight={'sm'}
+                                    size='sm'
+                                    fontSize='sm'
+                                    fontWeight='sm'
                                     onClick={openAddressPopup}>
                                     검색
                                 </Button>

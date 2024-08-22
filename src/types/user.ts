@@ -1,4 +1,4 @@
-import { BabyInfoData, GrowType } from './baby';
+import { GrowType } from './baby';
 
 export interface UserData {
     _id: number;

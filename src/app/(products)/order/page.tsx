@@ -2,9 +2,9 @@ import { actionUserData } from '@/data/actions/userAction';
 import { getStepNumber } from '@/util/dateCalc';
 import Image from 'next/image';
 import Link from 'next/link';
-import SubDescription from '../../../components/subscribe/SubDescription';
 import { actionCodes } from '@/data/actions/productsAction';
 import SubItemList from '@/components/subscribe/SubItemList';
+import SubDescription from '../../../components/subscribe/SubDescription';
 
 export default async function OrderItems() {
     // 유저 정보를 가져온다(아이 개월수)
@@ -33,7 +33,7 @@ export default async function OrderItems() {
     return (
         <section>
             <Image
-                src={'/baby/baby_avatar.svg'}
+                src='/baby/baby_avatar.svg'
                 alt='baby_img'
                 width={60}
                 height={60}
@@ -55,7 +55,7 @@ export default async function OrderItems() {
             {checkStep && <SubItemList currentStep={checkStep.code} />}
             <Link
                 className='inline-flex items-center justify-center my-[60px] max-w-screen w-full h-default rounded-default box-border font-notoSansKr text-white text-base font-bold bg-primary -hover:bg-primary/50 '
-                href={'/order/checkdelivery'}>
+                href='/order/checkdelivery'>
                 다음
             </Link>
         </section>

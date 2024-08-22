@@ -11,7 +11,7 @@ export default function StepChecker({ currentMonth }: Props) {
                 꼬꼬미({currentMonth}개월)
             </p>
             <Image
-                src={'/baby/baby_monthCheck.svg'}
+                src='/baby/baby_monthCheck.svg'
                 width={60}
                 height={51}
                 alt=''

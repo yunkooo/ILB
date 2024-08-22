@@ -3,10 +3,10 @@
 import { useRouter } from 'next/navigation';
 import useMenuStore from '@/zustand/menuStore';
 import { PiXBold } from 'react-icons/pi';
-import LogoutButton from '../LogoutButton';
 import { useEffect, useState } from 'react';
 import { actionUserData } from '@/data/actions/userAction';
 import { Skeleton } from '@/components/ui/skeleton';
+import LogoutButton from '../LogoutButton';
 
 export default function Nav() {
     const [userName, setUserName] = useState<string | undefined>(undefined);
@@ -14,7 +14,7 @@ export default function Nav() {
     console.log(loading);
     const router = useRouter();
 
-    //# 메뉴 상태 전역 관리
+    // # 메뉴 상태 전역 관리
     const { setIsOpen } = useMenuStore();
 
     const handleOnClick = () => {
@@ -36,7 +36,7 @@ export default function Nav() {
         fetchUserData();
     }, []);
 
-    //# 메뉴 버튼 클릭 이벤트
+    // # 메뉴 버튼 클릭 이벤트
     const handleLinkClick = (path: string) => {
         setIsOpen();
         router.push(path);

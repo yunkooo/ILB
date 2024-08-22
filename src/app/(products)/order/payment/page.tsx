@@ -2,8 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { CiCreditCard1 } from 'react-icons/ci';
-import { CiBank } from 'react-icons/ci';
+import { CiCreditCard1, CiBank } from 'react-icons/ci';
 import PaymentButton from './PaymentButton';
 
 type ItemSelect = 'card' | 'account';

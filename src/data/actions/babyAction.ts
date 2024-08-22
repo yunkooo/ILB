@@ -1,4 +1,5 @@
 'use server';
+
 import { format } from 'date-fns';
 
 import { auth } from '@/auth';

@@ -8,9 +8,7 @@ export default function Banner() {
         <article>
             <MultiCarousel>
                 {banner.map((item, i) => (
-                    <>
-                        <BannerItem img={item} key={i} />
-                    </>
+                    <BannerItem img={item} key={i} />
                 ))}
             </MultiCarousel>
         </article>

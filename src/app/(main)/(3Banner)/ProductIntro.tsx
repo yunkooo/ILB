@@ -12,17 +12,13 @@ export default function ProductIntro() {
             </h2>
             <Image
                 className='mx-auto'
-                src={'/mobileMockup.svg'}
+                src='/mobileMockup.svg'
                 width={190}
                 height={384}
                 alt='moble sample image'
             />
-            <Link href={'/list'} className='w-full text-center'>
-                <Button
-                    variant={'default'}
-                    size={'lg'}
-                    radius={'lg'}
-                    fontSize={'lg'}>
+            <Link href='/list' className='w-full text-center'>
+                <Button variant='default' size='lg' radius='lg' fontSize='lg'>
                     상품 보러가기
                 </Button>
             </Link>

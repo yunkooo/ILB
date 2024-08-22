@@ -1,10 +1,10 @@
 import { Accordion } from '@/components/ui/Accordion';
 import { actionCodes, actionProducts } from '@/data/actions/productsAction';
 import { Code, Product } from '@/types';
-import StepCard from './(stepCard)/StepCard';
 import { actionUserData } from '@/data/actions/userAction';
 import { getStepNumber } from '@/util/dateCalc';
 import { auth } from '@/auth';
+import StepCard from './(stepCard)/StepCard';
 
 export default async function StepList() {
     const { item: products }: { item: Product[] } = await actionProducts();

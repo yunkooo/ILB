@@ -33,7 +33,7 @@ export default async function Subscribe() {
     return (
         <section>
             <Image
-                src={'/baby/baby_avatar.svg'}
+                src='/baby/baby_avatar.svg'
                 alt='baby_img'
                 width={60}
                 height={60}

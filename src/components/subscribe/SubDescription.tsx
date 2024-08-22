@@ -8,7 +8,7 @@ export default async function SubDescription({ text }: Props) {
     return (
         <div className='mb-2 flex'>
             <Image
-                src={'/icon/icon_baby_feet.svg'}
+                src='/icon/icon_baby_feet.svg'
                 width={16}
                 height={16}
                 alt='feetIcon'

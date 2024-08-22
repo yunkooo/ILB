@@ -194,9 +194,9 @@ export default function CheckDelivery() {
                                             <Button
                                                 type='button'
                                                 className='font-notoSansKr right-0 bottom-[0.0625rem]'
-                                                size={'sm'}
-                                                fontSize={'sm'}
-                                                fontWeight={'sm'}
+                                                size='sm'
+                                                fontSize='sm'
+                                                fontWeight='sm'
                                                 onClick={openAddressPopup}>
                                                 검색
                                             </Button>
@@ -255,8 +255,8 @@ export default function CheckDelivery() {
                 form='checkDelivery'
                 type='submit'
                 className={`font-notoSansKr fixed w-default bottom-1/4 box-border ${!isFormValid ? 'bg-gray-400' : ''}`}
-                variant={'default'}
-                size={'fixed'}
+                variant='default'
+                size='fixed'
                 disabled={!isFormValid}>
                 다음
             </Button>

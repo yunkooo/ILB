@@ -10,11 +10,11 @@ import useFunnel from '@/lib/funnel/useFunnel';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { BabyInputForm } from '@/types';
+import { actionDataFetch } from '@/data/actions/fetchAction';
 import BabyName from '../../signup/(baby)/BabyName';
 import BabyGender from '../../signup/(baby)/BabyGender';
 import BabyBirth from '../../signup/(baby)/BabyBirth';
 import BabyBody from '../../signup/(baby)/BabyBody';
-import { actionDataFetch } from '@/data/actions/fetchAction';
 
 const steps = ['BabyName', 'BabyGender', 'BabyBirth', 'BabyBody'];
 
@@ -51,7 +51,7 @@ export default function BabyInfo() {
         const formattedDate = format(new Date(), 'yyyyMMdd');
 
         try {
-            //passwordCheck 데이터를 제외를 위한 객체복사
+            // passwordCheck 데이터를 제외를 위한 객체복사
             const { babyName, birth, height, weight, gender } = formData;
 
             const remakeData = {
@@ -103,7 +103,7 @@ export default function BabyInfo() {
     return (
         <section>
             <Image
-                src={'/logo_M.svg'}
+                src='/logo_M.svg'
                 alt='ILB'
                 width={60}
                 height={60}
@@ -136,8 +136,8 @@ export default function BabyInfo() {
                 form='signup-form'
                 type='submit'
                 className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid ? 'bg-gray-400' : ''}`}
-                variant={'default'}
-                size={'fixed'}
+                variant='default'
+                size='fixed'
                 disabled={!isValid}
                 onClick={onNextStep}>
                 다음

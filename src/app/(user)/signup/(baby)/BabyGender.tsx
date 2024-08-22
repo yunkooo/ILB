@@ -27,18 +27,18 @@ export default function BabyGender() {
                     <Button
                         className={`text-txt mx-auto hover:bg-primary-foreground ${selectedGender === 'boy' ? 'bg-primary-foreground font-bold' : ''}`}
                         type='button'
-                        variant={'outline'}
-                        size={'md'}
-                        fontWeight={'sm'}
+                        variant='outline'
+                        size='md'
+                        fontWeight='sm'
                         onClick={() => handleButtonClick('boy')}>
                         남자
                     </Button>
                     <Button
                         className={`text-txt mx-auto hover:bg-primary-foreground ${selectedGender === 'girl' ? 'bg-primary-foreground font-bold' : ''}`}
                         type='button'
-                        variant={'outline'}
-                        size={'md'}
-                        fontWeight={'sm'}
+                        variant='outline'
+                        size='md'
+                        fontWeight='sm'
                         onClick={() => handleButtonClick('girl')}>
                         여자
                     </Button>
