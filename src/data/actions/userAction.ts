@@ -39,7 +39,9 @@ export async function emailCheck(email: any) {
         });
         const resData = await res.json();
         return resData;
-    } catch (error) {}
+    } catch (error) {
+        console.log('error', error);
+    }
 }
 
 // user 정보 가져오는 action

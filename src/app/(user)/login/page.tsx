@@ -53,24 +53,38 @@ export default function Login() {
         },
     });
 
+    useEffect(() => {
+        const handlePopState = () => {
+            router.replace('/');
+        };
+
+        window.history.pushState(null, '', window.location.href);
+        window.addEventListener('popstate', handlePopState);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, [router]);
+
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         const formData = new FormData();
         formData.append('email', data.email);
         formData.append('password', data.password);
         const res = await signInWithCredentials(formData);
+
+        console.log('안녕하세요', res);
+
         if (res) {
             router.push('/');
         } else {
             toast({
                 title: `로그인 실패`,
-                // description: (
-                //     <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-                //         <code className='text-white'>
-                //             {JSON.stringify(data, null, 2)}
-                //         </code>
-                //     </pre>
-                // ),
-                duration: 1500, // Toast의 delay를 3000ms로 설정
+                description: (
+                    <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4 text-white'>
+                        {res.message}
+                    </pre>
+                ),
+                duration: 1500,
             });
         }
     }
