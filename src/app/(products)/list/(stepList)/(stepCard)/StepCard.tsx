@@ -7,6 +7,7 @@ import {
 import { ChevronDown } from 'lucide-react';
 import MonthAvatar from './StepAvatar';
 import StepText from './StepText';
+import StepChecker from './StepChecker';
 
 type Props = {
     stepInfo: {
@@ -33,13 +34,17 @@ type Props = {
     };
 };
 
-export default function StepCard({ data, codeData }: any) {
+export default async function StepCard({ data, codeData, currentStep }: any) {
     return (
         <AccordionItem
-            className='relative bg-[#FFEBEE] rounded-xl border-0'
+            className={`relative  rounded-xl border-0 ${codeData.code === currentStep ? 'mt-9 bg-[#FFB1B1]' : 'bg-[#FFEBEE]'}`}
             // value값 card 마다 다르게 주어야한다.
             value={`item-${codeData.code}`}>
-            {/* <MonthCheck /> */}
+            {codeData.code === currentStep ? (
+                <StepChecker currentMonth={5} />
+            ) : (
+                ''
+            )}
             <AccordionTrigger className='py-5 px-4 hover:no-underline flex-col items-start justify-center'>
                 <div className='flex gap-6'>
                     <MonthAvatar month={`${codeData.value}`} />

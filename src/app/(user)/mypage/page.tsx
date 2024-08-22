@@ -51,7 +51,11 @@ export default function MyPage() {
             <ChartCard growData={user?.extra.baby.grow} />
             <DeliveryCard />
             <LinkCard title={'내정보 수정'} link={'/mypage/editprofile'} />
-            <LinkCard title={'구독 상품 조회'} link={'/mypage/subscribe'} />
+            {user?.extra.subscribe.status === 'true' ? (
+                <LinkCard title={'구독 상품 조회'} link={'/mypage/subscribe'} />
+            ) : (
+                <LinkCard title={'구독 상품 조회'} link={'/order'} />
+            )}
         </section>
     );
 }

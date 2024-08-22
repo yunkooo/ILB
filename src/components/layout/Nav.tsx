@@ -6,10 +6,12 @@ import { PiXBold } from 'react-icons/pi';
 import LogoutButton from '../LogoutButton';
 import { useEffect, useState } from 'react';
 import { actionUserData } from '@/data/actions/userAction';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Nav() {
-    const [userName, setUserName] = useState<string | undefined>();
-
+    const [userName, setUserName] = useState<string | undefined>(undefined);
+    const [loading, setLoading] = useState(true);
+    console.log(loading);
     const router = useRouter();
 
     //# 메뉴 상태 전역 관리
@@ -20,15 +22,17 @@ export default function Nav() {
     };
 
     useEffect(() => {
-        function fetchUserData() {
-            actionUserData()
-                .then(res => {
-                    setUserName(res?.item.name);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+        async function fetchUserData() {
+            try {
+                const res = await actionUserData();
+                setUserName(res?.item.name);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false); // 데이터 로드가 완료되면 로딩 상태를 false로 변경
+            }
         }
+
         fetchUserData();
     }, []);
 
@@ -44,7 +48,12 @@ export default function Nav() {
                 className='absolute top-[18px] right-5 w-6 h-6 text-[#4C4646]'
                 onClick={handleOnClick}
             />
-            {userName ? (
+            {loading ? (
+                <div className='pt-[56px] px-[18px] mb-8 flex flex-col space-y-3'>
+                    <Skeleton className='h-[20px] w-[70px] bg-gray-200' />
+                    <Skeleton className=' h-[20px] w-[300px] bg-gray-200' />
+                </div>
+            ) : userName ? (
                 <div className='pt-[56px] px-[18px] mb-8'>
                     <span className='font-bold'>{userName}</span>
                     님,
