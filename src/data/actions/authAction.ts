@@ -4,7 +4,6 @@
 
 import { signIn } from '@/auth';
 import { OAuthUser } from '@/types';
-import { redirect } from 'next/navigation';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 
@@ -25,19 +24,15 @@ export async function signInWithCredentials(formData: FormData) {
     }
 }
 
-export async function signInWithGithub(formData: FormData) {
-    await signIn('github', { redirectTo: '/' });
-}
-
 export async function signInWithGoogle() {
     await signIn('google', { redirectTo: '/checklogin' });
 }
 
-export async function signInWithNaver(formData: FormData) {
+export async function signInWithNaver() {
     await signIn('naver', { redirectTo: '/' });
 }
 
-export async function signInWithKakao(formData: FormData) {
+export async function signInWithKakao() {
     await signIn('kakao', { redirectTo: '/' });
 }
 

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { getBabyData } from '@/data/actions/babyAction';
 import { FullScreen } from '@/components/Spinner';
 
-export default function loading() {
+export default function Loading() {
     const router = useRouter();
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export default function loading() {
             }
         }
         fetchUserData();
-    }, []);
+    }, [router]);
 
     return <FullScreen />;
 }

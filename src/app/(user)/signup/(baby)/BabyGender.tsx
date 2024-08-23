@@ -15,7 +15,7 @@ export default function BabyGender() {
 
     useEffect(() => {
         setValue('gender', selectedGender);
-    }, [selectedGender]);
+    }, [selectedGender, setValue]);
 
     return (
         <>

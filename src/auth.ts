@@ -1,10 +1,9 @@
 import NextAuth, { CredentialsSignin } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import github from 'next-auth/providers/github';
 import google from 'next-auth/providers/google';
 import NaverProvider from 'next-auth/providers/naver';
 import KakaoProvider from 'next-auth/providers/kakao';
-import { OAuthUser, UserData } from './types';
+import { BabyInfoData, OAuthUser, UserData } from './types';
 import { loginOAuth, signupWithOAuth } from './data/actions/authAction';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
@@ -54,10 +53,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 return null;
             },
         }),
-        github({
-            clientId: process.env.GITHUB_CLIENT_ID,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        }),
         google({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -83,7 +78,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // 로그인 처리를 계속 할지 여부 결정
         // true를 리턴하면 로그인 처리를 계속하고 false를 리턴하거나 Error를 throw하면 로그인 흐름을 중단
         // user: authorize()가 리턴한 값
-        async signIn({ user, account, profile, credentials }) {
+        async signIn({ user, account }) {
             // user에 들어 있는 사용자 정보를 이용해서 최초에 한번은 회원 DB에 저장(회원가입)
             // 가입된 회원일 경우 자동으로 로그인 처리
             switch (account?.provider) {
@@ -103,12 +98,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                             email: user.email || '',
                             profileImage: user.image || '',
                             extra: {
-                                // ...profile,
                                 providerAccountId: account.providerAccountId,
                             },
                         };
 
-                        const result = await signupWithOAuth(newUser);
+                        await signupWithOAuth(newUser);
 
                         // 자동 로그인
                         const resData = await loginOAuth(
@@ -117,7 +111,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         if (resData.ok) {
                             userInfo = resData.item;
                         } else {
-                            // throw new Error(resData.message);
                             return resData.message;
                         }
                     } catch (err) {
@@ -168,9 +161,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.phone = token.phone as string;
                 session.user.address = token.address as string;
                 const extra = token.extra as {
-                    [key: string]: any;
-                    // baby: BabyInfoData;
-                    // subscribe: boolean;
+                    baby: BabyInfoData;
+                    subscribe: boolean;
+                    providerAccountId: string;
                 };
 
                 session.user.extra = {

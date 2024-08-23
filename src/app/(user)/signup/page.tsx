@@ -7,7 +7,7 @@ import { Form } from '@/components/ui/form';
 import { emailCheck, signup } from '@/data/actions/userAction';
 import Funnel from '@/lib/funnel/Funnel';
 import useFunnel from '@/lib/funnel/useFunnel';
-import { UserSignUpForm } from '@/types';
+import { ResError, UserSignUpForm } from '@/types';
 import { format } from 'date-fns';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
@@ -96,6 +96,7 @@ export default function Signup() {
         try {
             // passwordCheck 데이터를 제외를 위한 객체복사
             const {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 passwordCheck,
                 babyName,
                 birth,
@@ -139,8 +140,10 @@ export default function Signup() {
             } else {
                 // API 서버의 에러 메시지 처리
                 if ('errors' in resData) {
-                    resData.errors.forEach((error: any) =>
-                        form.setError(error.path, { message: error.msg }),
+                    resData.errors.forEach((error: ResError<UserSignUpForm>) =>
+                        form.setError(error.path, {
+                            message: error.msg,
+                        }),
                     );
                 } else if (resData.message) {
                     alert(resData.message);

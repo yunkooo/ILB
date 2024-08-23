@@ -1,19 +1,6 @@
-'use client';
-
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { CiCreditCard1, CiBank } from 'react-icons/ci';
 import PaymentButton from './PaymentButton';
 
-type ItemSelect = 'card' | 'account';
-
 export default function PaymentInfo() {
-    const [selectChecked, setSelectChecked] = useState<ItemSelect>('card');
-
-    const handleButtonCheck = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const target = event.currentTarget as HTMLButtonElement;
-        setSelectChecked(target.id as ItemSelect);
-    };
     return (
         <section>
             <h1 className='pt-7 mb-10 font-bold text-[28px]'>결제정보</h1>
@@ -36,33 +23,6 @@ export default function PaymentInfo() {
                     <p className='text-lg font-bold'>50,0000원</p>
                 </div>
             </div>
-            {/* <div className='mt-10 -left-5 relative w-[375px] bg-[#F7EFEF] h-[16px]'></div> */}
-
-            {/* <h2 className='mt-[28px] font-bold text-[28px]'>결제수단 선택</h2>
-            <div className='flex justify-between mt-10'>
-                <Button
-                    id='card'
-                    onClick={handleButtonCheck}
-                    variant={`${selectChecked === 'card' ? 'checked' : 'outline'}`}
-                    size={'md'}
-                    fontSize={'sm'}
-                    fontWeight={'sm'}
-                    radius={'md'}>
-                    <CiCreditCard1 className='w-[52px] h-[52px]' />
-                    카드
-                </Button>
-                <Button
-                    id='account'
-                    onClick={handleButtonCheck}
-                    variant={`${selectChecked === 'account' ? 'checked' : 'outline'}`}
-                    size={'md'}
-                    fontSize={'sm'}
-                    fontWeight={'sm'}
-                    radius={'md'}>
-                    <CiBank className='w-[52px] h-[52px]' />
-                    계좌
-                </Button>
-            </div> */}
             <PaymentButton />
         </section>
     );

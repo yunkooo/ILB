@@ -1,16 +1,11 @@
 'use server';
 
-import { UserForm } from '@/types';
+import { DeliveryForm, FilteredForm, UserForm } from '@/types';
 import { auth } from '@/auth';
 import { actionDataFetch } from './fetchAction';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 const CLIENT_ID = process.env.DB_NAME;
-
-interface LoginForm {
-    email: string;
-    password: string;
-}
 
 export async function signup(formData: UserForm) {
     // 회원 가입
@@ -27,7 +22,7 @@ export async function signup(formData: UserForm) {
     return resData;
 }
 
-export async function emailCheck(email: any) {
+export async function emailCheck(email: string) {
     // 이메일 검사
     try {
         const res = await fetch(`${SERVER}/users/email?email=${email}`, {
@@ -61,7 +56,9 @@ export async function actionUserData() {
 }
 
 // 회원 정보 수정 / 주소 정보 수정 action
-export async function actionUserDataModify(formData: any) {
+export async function actionUserDataModify(
+    formData: FilteredForm | DeliveryForm,
+) {
     const session = await auth();
     const userId = session?.user.id;
 

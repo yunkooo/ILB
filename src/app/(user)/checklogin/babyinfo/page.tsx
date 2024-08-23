@@ -9,7 +9,7 @@ import Funnel from '@/lib/funnel/Funnel';
 import useFunnel from '@/lib/funnel/useFunnel';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { BabyInputForm } from '@/types';
+import { BabyInputForm, ResError } from '@/types';
 import { actionDataFetch } from '@/data/actions/fetchAction';
 import BabyName from '../../signup/(baby)/BabyName';
 import BabyGender from '../../signup/(baby)/BabyGender';
@@ -88,7 +88,7 @@ export default function BabyInfo() {
             } else {
                 // API 서버의 에러 메시지 처리
                 if ('errors' in resData) {
-                    resData.errors.forEach((error: any) =>
+                    resData.errors.forEach((error: ResError<BabyInputForm>) =>
                         form.setError(error.path, { message: error.msg }),
                     );
                 } else if (resData.message) {

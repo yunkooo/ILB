@@ -8,7 +8,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { MultipleFieldErrors, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 type Address = {
     zonecode: string;

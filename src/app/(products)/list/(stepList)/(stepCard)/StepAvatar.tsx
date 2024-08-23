@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 type Props = {
     month: string;
-    step: string;
+    step: number;
 };
 
 export default function StepAvatar({ month, step }: Props) {

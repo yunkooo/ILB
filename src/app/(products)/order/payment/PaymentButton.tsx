@@ -38,7 +38,7 @@ export default function PaymentButton() {
                     buyer_tel: '010-0000-0000',
                     m_redirect_url: 'http://localhost:3000/order/payment/check',
                 },
-                (rsp: any) => {
+                rsp => {
                     // 결제 성공 시 로직
                     if (!rsp.error_code) {
                         actionSubscribeModify();
