@@ -13,7 +13,8 @@ export default function LogoutButton({
         <motion.button
             key={8}
             onClick={() => {
-                signOut({ callbackUrl: '/' });
+                localStorage.setItem('toastMessage', `로그아웃 되었습니다.`);
+                signOut({ callbackUrl: '/login' });
             }}
             whileHover={{ scale: 1.1 }}
             variants={itemVariants}>
