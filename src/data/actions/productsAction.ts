@@ -32,7 +32,7 @@ export async function actionCodes() {
 
         const resData = await res.json();
         return resData;
-    } catch (error: any) {
+    } catch (error) {
         console.error('에러 발생~~~');
     }
 }

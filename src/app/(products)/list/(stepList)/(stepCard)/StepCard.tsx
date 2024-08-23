@@ -9,33 +9,16 @@ import {
 import MonthAvatar from './StepAvatar';
 import StepText from './StepText';
 import StepChecker from './StepChecker';
+import { Codes, Product } from '@/types';
 
 type Props = {
-    stepInfo: {
-        code: string;
-        value: string;
-        description: string[];
-    };
-    products: {
-        item: {
-            _id: number;
-            name: string;
-            mainImages: [{ path: string }];
-            category: string[];
-            quantity: number;
-            seller_id: number;
-            price: number;
-            show: boolean;
-            active: boolean;
-            seller: {};
-            replies: number;
-            bookmarks: number;
-            options: number;
-        }[];
-    };
+    data: Product[];
+    codeData: Codes;
+    idx: number;
+    currentStep?: string;
 };
 
-export default function StepCard({ data, codeData, idx, currentStep }: any) {
+export default function StepCard({ data, codeData, idx, currentStep }: Props) {
     return (
         <AccordionItem
             className={`relative  rounded-xl border-0 ${codeData.code === currentStep ? 'mt-9 bg-[#FFB1B1]' : 'bg-[#FFEBEE]'}`}
@@ -53,7 +36,7 @@ export default function StepCard({ data, codeData, idx, currentStep }: any) {
                         {codeData.description
                             .reverse()
                             .slice(0, 2)
-                            .map((text: any, idx: any) => (
+                            .map((text: string, idx: number) => (
                                 <StepText text={text.slice(0, 33)} key={idx} />
                             ))}
                     </ul>
@@ -66,8 +49,8 @@ export default function StepCard({ data, codeData, idx, currentStep }: any) {
                     맞춰 선별하여 보내드려요.
                 </span>
                 <div className='bg-white py-4 px-2.5 mt-4 rounded-xl grid grid-cols-3 gap-2.5'>
-                    {data.map((product: any) => (
-                        <ProductItem item={product} />
+                    {data.map((product: Product, i: number) => (
+                        <ProductItem item={product} key={i} />
                     ))}
                 </div>
             </AccordionContent>

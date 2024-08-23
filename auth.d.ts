@@ -1,4 +1,4 @@
-import { BabyForm, BabyInfoData } from '@/types';
+import { BabyInfoData } from '@/types';
 
 export declare module '@auth/core/types' {
     /*

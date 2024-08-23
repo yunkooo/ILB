@@ -1,5 +1,3 @@
-import { SellerData } from './user';
-
 // export interface Product {
 //     item: {
 //         _id: number;
@@ -43,15 +41,18 @@ export interface Product {
 }
 
 export interface Code {
-    item: {
-        step: {
-            _id: string;
-            title: string;
-            codes: {
-                code: string;
-                value: string;
-                description: string[];
-            }[];
-        };
-    };
+    step: Step;
+}
+
+export interface Step {
+    code: string;
+    _id: string;
+    title: string;
+    codes: Codes[];
+}
+
+export interface Codes {
+    code: string;
+    value: string;
+    description: string[];
 }

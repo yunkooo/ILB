@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/components/ui/use-toast';
-import { UserEdit } from '@/types';
+import { FilteredForm, UserEdit } from '@/types';
 import {
     actionUserData,
     actionUserDataModify,
@@ -52,8 +52,10 @@ export default function EditProfile() {
     }, [setValue]);
 
     // & 수정하기 버튼 클릭 이벤트
-    async function onSubmit(formData: UserEdit) {
+    async function onSubmit(formData: FilteredForm) {
         // passwordCheck 데이터 제외를 위한 객체복사
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { passwordCheck, ...filteredData } = formData;
 
         try {
@@ -71,7 +73,7 @@ export default function EditProfile() {
                     duration: 3000,
                 });
             }
-        } catch (error: any) {
+        } catch (error) {
             // API 서버의 에러 메시지 처리
             if (error instanceof Error) {
                 alert(error.message);

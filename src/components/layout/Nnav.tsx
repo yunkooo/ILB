@@ -1,47 +1,45 @@
-// @ts-nocheck
-
-import { AnimatePresence, useCycle, motion } from 'framer-motion';
+// import { AnimatePresence, useCycle, motion } from 'framer-motion';
 import React from 'react';
 
-const links = [
-    { name: 'Home', to: '#', id: 1 },
-    { name: 'About', to: '#', id: 2 },
-    { name: 'Blog', to: '#', id: 3 },
-    { name: 'Contact', to: '#', id: 4 },
-];
+// const links = [
+//     { name: 'Home', to: '#', id: 1 },
+//     { name: 'About', to: '#', id: 2 },
+//     { name: 'Blog', to: '#', id: 3 },
+//     { name: 'Contact', to: '#', id: 4 },
+// ];
 
-const itemVariants = {
-    closed: {
-        opacity: 0,
-    },
-    open: { opacity: 1 },
-};
+// const itemVariants = {
+//     closed: {
+//         opacity: 0,
+//     },
+//     open: { opacity: 1 },
+// };
 
-const sideVariants = {
-    closed: {
-        transition: {
-            staggerChildren: 0.2,
-            staggerDirection: -1,
-        },
-    },
-    open: {
-        transition: {
-            staggerChildren: 0.2,
-            staggerDirection: 1,
-        },
-    },
-};
+// const sideVariants = {
+//     closed: {
+//         transition: {
+//             staggerChildren: 0.2,
+//             staggerDirection: -1,
+//         },
+//     },
+//     open: {
+//         transition: {
+//             staggerChildren: 0.2,
+//             staggerDirection: 1,
+//         },
+//     },
+// };
 
 export default function Nnav() {
-    const [open, cycleOpen] = useCycle(false, true);
+    // const [open, cycleOpen] = useCycle(false, true);
 
     return (
         <>
             <div className='btn-container fixed'>
-                <button onClick={cycleOpen}>{open ? 'Close' : 'Open'}</button>
+                {/* <button onClick={cycleOpen}>{open ? 'Close' : 'Open'}</button> */}
             </div>
-            <AnimatePresence>
-                {open && (
+            {/* <AnimatePresence> */}
+            {/* {open && (
                     <motion.aside
                         initial={{ width: 0 }}
                         animate={{
@@ -69,8 +67,8 @@ export default function Nnav() {
                             ))}
                         </motion.div>
                     </motion.aside>
-                )}
-            </AnimatePresence>
+                )} */}
+            {/* </AnimatePresence> */}
         </>
     );
 }

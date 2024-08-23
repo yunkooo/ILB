@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import DeliveryStatusItems from './DeliveryStatusItems';
 
 export default function DeliveryCard() {

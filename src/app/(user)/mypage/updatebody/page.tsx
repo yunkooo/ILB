@@ -40,14 +40,14 @@ export default function UpdateBodyInfo() {
             } else {
                 // API 서버의 에러 메시지 처리
                 if ('errors' in resData) {
-                    resData.errors.forEach((error: any) =>
+                    resData.errors.forEach(error =>
                         setError(error.path, { message: error.msg }),
                     );
                 } else if (resData.message) {
                     alert(resData.message);
                 }
             }
-        } catch (error: any) {
+        } catch (error) {
             // 네트워크 오류 또는 기타 예외 처리
             if (error instanceof Error) {
                 alert(`API 호출 중 오류가 발생했습니다: ${error.message}`);

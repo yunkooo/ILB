@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { FullScreen } from '@/components/Spinner';
 import { actionSubscribeModify } from '@/data/actions/payAction';
 
-export default function loading() {
+export default function Loading() {
     const router = useRouter();
 
     useEffect(() => {
@@ -20,10 +20,10 @@ export default function loading() {
         } else {
             // 결제 실패 처리
             const error_msg = query.get('error_msg');
-            // alert('결제에 실패하였습니다. 에러 내용: ' + error_msg);
+            alert('결제에 실패하였습니다. 에러 내용: ' + error_msg);
             router.push('/order/fail');
         }
-    }, []);
+    }, [router]);
 
     return <FullScreen />;
 }

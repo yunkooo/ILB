@@ -4,6 +4,7 @@ import { actionCodes } from '@/data/actions/productsAction';
 import { getStepNumber } from '@/util/dateCalc';
 import SubDescription from '@/components/subscribe/SubDescription';
 import SubItemList from '@/components/subscribe/SubItemList';
+import { Codes } from '@/types';
 
 export default async function Subscribe() {
     // 유저 정보를 가져온다(아이 개월수)
@@ -23,10 +24,13 @@ export default async function Subscribe() {
     const currentStep = getStepNumber(babyData.birth);
 
     // 현재 태어날 날짜로 부터 일수를 계산해서 어느 step 범위에 들어가는지 계산한다.
-    const checkStep = stepArr.find((step: any) => {
-        const [prev, next] = step.value.match(/\d+/g).map(Number);
-        if (currentStep !== undefined) {
-            return currentStep >= prev && currentStep <= next;
+    const checkStep = stepArr.find((step: Codes) => {
+        const matchedNumbers = step.value.match(/\d+/g);
+        if (matchedNumbers) {
+            const [prev, next] = matchedNumbers.map(Number);
+            if (currentStep !== undefined) {
+                return currentStep >= prev && currentStep <= next;
+            }
         }
     });
 

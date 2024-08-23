@@ -10,7 +10,6 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Toaster } from '@/components/ui/toaster';
 import {
     actionUserDataModify,
     actionUserData,
@@ -115,7 +114,7 @@ export default function CheckDelivery() {
         }
 
         checkDelivery();
-    }, []);
+    }, [form]);
 
     const isFormValid =
         form.watch().name &&

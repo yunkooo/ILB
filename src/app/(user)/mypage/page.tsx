@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { GrowType, UserData } from '@/types';
+import { UserData } from '@/types';
 import { actionUserData } from '@/data/actions/userAction';
 import { getDayNumbers, getStepNumber } from '@/util/dateCalc';
 import Image from 'next/image';

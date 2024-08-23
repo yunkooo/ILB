@@ -1,4 +1,4 @@
-import { GrowType } from './baby';
+import { BabyInfoData } from './baby';
 
 export interface UserData {
     _id: number;
@@ -11,8 +11,13 @@ export interface UserData {
     profileImage?: string;
     profile?: string;
     extra: {
-        [key: string]: any;
-        // baby: BabyInfoData;
+        // [key: string]: any;
+        baby?: BabyInfoData;
+        subscribe?: {
+            status: string;
+            date: string;
+        };
+        providerAccountId?: string;
     };
     token?: {
         accessToken: string;
@@ -44,7 +49,7 @@ export interface UserSignUpForm {
     name: string;
     email: string;
     password: string;
-    passwordCheck: string;
+    passwordCheck?: string;
     phone: string;
     zoneCode: string;
     roadAddress: string;
@@ -67,17 +72,12 @@ export interface UserForm {
     roadAddress: string;
     detailAddress: string;
     extra: {
-        [key: string]: any;
-        baby: {
-            name: string;
-            gender: string;
-            birth: string;
-            grow: GrowType[];
-        };
+        baby: BabyInfoData;
         subscribe: {
             status: string;
             date: string;
         };
+        providerAccountId?: string;
     };
 }
 
@@ -94,3 +94,13 @@ export type SellerData = Pick<
 
 export type OAuthUser = Required<Pick<UserData, 'type' | 'loginType'>> &
     Partial<Pick<UserData, 'name' | 'email' | 'profileImage' | 'extra'>>;
+
+export type FilteredForm = Pick<
+    UserSignUpForm,
+    'name' | 'email' | 'phone' | 'password' | 'passwordCheck'
+>;
+
+export type DeliveryForm = Pick<
+    UserSignUpForm,
+    'name' | 'phone' | 'zoneCode' | 'roadAddress' | 'detailAddress'
+>;
