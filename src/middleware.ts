@@ -9,8 +9,11 @@ export default async function middleware(req: NextRequest) {
         salt: process.env.NEXTAUTH_SALT!,
     });
 
+    console.log('token', token);
+    console.log('process.env.AUTH_SECRET', process.env.AUTH_SECRET);
+    console.log('process.env.NEXTAUTH_SALT', process.env.NEXTAUTH_SALT);
     const { pathname } = req.nextUrl;
-
+    console.log('pathname', pathname);
     if (pathname.startsWith('/login') || pathname.startsWith('/signup')) {
         if (token) {
             // 로그인 된 상태에서 login 페이지나 signup 페이지에 접근했을 경우
