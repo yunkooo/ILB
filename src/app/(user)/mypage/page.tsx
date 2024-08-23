@@ -57,7 +57,7 @@ export default function MyPage() {
                 </div>
             </div>
             <ChartCard growData={user?.extra.baby.grow} />
-            <DeliveryCard />
+            <DeliveryCard subscribeDate={user?.extra.subscribe.date} />
             <LinkCard title='내정보 수정' link='/mypage/editprofile' />
             {user?.extra.subscribe.status === 'true' ? (
                 <LinkCard title='구독 상품 조회' link='/mypage/subscribe' />

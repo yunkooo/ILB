@@ -1,6 +1,6 @@
 import { Accordion } from '@/components/ui/Accordion';
 import { actionCodes, actionProducts } from '@/data/actions/productsAction';
-import { Product, Code, Codes } from '@/types';
+import { Code, Product, UserData, Codes } from '@/types';
 import { actionUserData } from '@/data/actions/userAction';
 import { getStepNumber } from '@/util/dateCalc';
 import { auth } from '@/auth';
@@ -12,7 +12,7 @@ export default async function StepList() {
 
     const session = await auth();
 
-    let userData;
+    let userData: UserData | null = null;
     const codesArray = codeData.step.codes;
 
     if (session) {
@@ -20,14 +20,16 @@ export default async function StepList() {
         userData = item;
     }
 
-    const currentStep = getStepNumber(userData?.extra.baby.birth);
+    const currentMonth = userData?.extra.baby?.birth
+        ? getStepNumber(userData.extra.baby.birth)
+        : undefined;
     // 현재 태어날 날짜로 부터 일수를 계산해서 어느 step 범위에 들어가는지 계산한다.
     const checkStep = codesArray.find((codes: Codes) => {
         const matchedNumbers = codes.value.match(/\d+/g);
         if (matchedNumbers) {
             const [prev, next] = matchedNumbers.map(Number);
-            if (currentStep !== undefined) {
-                return currentStep >= prev && currentStep <= next;
+            if (currentMonth !== undefined) {
+                return currentMonth >= prev && currentMonth <= next;
             }
         }
     });
@@ -45,6 +47,8 @@ export default async function StepList() {
                         data={filterData}
                         idx={i}
                         key={i}
+                        currentMonth={currentMonth}
+                        babyName={userData?.extra.baby?.name}
                     />
                 );
             })}
