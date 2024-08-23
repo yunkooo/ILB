@@ -40,21 +40,6 @@ const sideVariants = {
     },
 };
 
-const variants = {
-    closed: {
-        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-        transition: {
-            duration: 0.5,
-        },
-    },
-    open: {
-        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 50%)',
-        transition: {
-            duration: 0.5,
-        },
-    },
-};
-
 export default function SideBar() {
     const router = useRouter();
     const [open, cycleOpen] = useCycle(false, true);

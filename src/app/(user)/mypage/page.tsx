@@ -33,33 +33,39 @@ export default function MyPage() {
                         />
                     </div>
                 </div>
-                <div>
-                    <h3 className='text-lg font-bold'>
-                        {user?.name}
-                        <span className='text-sm font-normal'>
-                            님의 아이는 지금
-                        </span>
-                    </h3>
+                {user?.extra?.baby && (
+                    <div>
+                        <h3 className='text-lg font-bold'>
+                            {user?.name}
+                            <span className='text-sm font-normal'>
+                                님의 아이는 지금
+                            </span>
+                        </h3>
 
-                    <p className='py-3.5 text-sm font-normal'>
-                        <span className='font-bold text-base'>
-                            {getStepNumber(user?.extra.baby.birth)}
-                        </span>
-                        개월
-                    </p>
-                    <p className='text-sm font-normal'>
-                        세상에 온 지{' '}
-                        <span className='font-bold text-base'>
-                            {getDayNumbers(user?.extra.baby.birth)}일
-                        </span>
-                        째 되는 날이에요!
-                    </p>
-                </div>
+                        <p className='py-3.5 text-sm font-normal'>
+                            <span className='font-bold text-base'>
+                                {getStepNumber(user?.extra.baby.birth)}
+                            </span>
+                            개월
+                        </p>
+                        <p className='text-sm font-normal'>
+                            세상에 온 지{' '}
+                            <span className='font-bold text-base'>
+                                {getDayNumbers(user?.extra.baby.birth)}일
+                            </span>
+                            째 되는 날이에요!
+                        </p>
+                    </div>
+                )}
             </div>
-            <ChartCard growData={user?.extra.baby.grow} />
-            <DeliveryCard subscribeDate={user?.extra.subscribe.date} />
+            {user?.extra?.baby && (
+                <ChartCard growData={user?.extra.baby.grow} />
+            )}
+            {user?.extra?.subscribe && (
+                <DeliveryCard subscribeDate={user?.extra.subscribe.date} />
+            )}
             <LinkCard title='내정보 수정' link='/mypage/editprofile' />
-            {user?.extra.subscribe.status === 'true' ? (
+            {user?.extra?.subscribe?.status === 'true' ? (
                 <LinkCard title='구독 상품 조회' link='/mypage/subscribe' />
             ) : (
                 <LinkCard title='구독 상품 조회' link='/order' />
