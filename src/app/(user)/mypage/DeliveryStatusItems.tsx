@@ -1,3 +1,4 @@
+import { differenceInDays, format, parse } from 'date-fns';
 import {
     CiCreditCard1,
     CiShoppingCart,
@@ -16,7 +17,7 @@ interface DeliveryStatus {
 const deliveryStatuses: DeliveryStatus[] = [
     {
         label: '입금/결제',
-        isActive: true,
+        isActive: false,
         icon: <CiCreditCard1 className='w-8 h-9' />,
     },
     {
@@ -35,11 +36,30 @@ const deliveryStatuses: DeliveryStatus[] = [
         icon: <CiGift className='w-9 h-8' />,
     },
 ];
+type Props = {
+    subscribeDate: string;
+};
 
-export default function DeliveryStatusItems({ bgColor }: { bgColor: string }) {
+export default function DeliveryStatusItems({ subscribeDate }: Props) {
+    if (subscribeDate) {
+        const subDate = parse(subscribeDate, 'yyyyMMdd', new Date());
+        const currentDate = new Date();
+
+        const diffDays = differenceInDays(currentDate, subDate) % 30;
+
+        if (diffDays >= 0 && diffDays <= 3) {
+            deliveryStatuses[0].isActive = true;
+        } else if (diffDays >= 4 && diffDays <= 6) {
+            deliveryStatuses[1].isActive = true;
+        } else if (diffDays >= 7 && diffDays <= 10) {
+            deliveryStatuses[2].isActive = true;
+        } else if (diffDays >= 11 && diffDays <= 13) {
+            deliveryStatuses[3].isActive = true;
+        }
+    }
     return (
         <div
-            className={`flex justify-between py-3 px-[29px] mb-8 w-full ${bgColor} rounded-2xl`}>
+            className={`flex justify-between py-3 px-[29px] mb-8 w-full bg-card rounded-2xl`}>
             {deliveryStatuses.map((status, i) => (
                 <>
                     <div
