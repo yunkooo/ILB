@@ -7,20 +7,45 @@ import { auth } from '@/auth';
 import StepCard from './(stepCard)/StepCard';
 
 export default async function StepList() {
-    const { item: products }: { item: Product[] } = await actionProducts();
-    const { item: codeData }: { item: Code } = await actionCodes(); // step 코드 전체조회
-
-    const session = await auth();
-
+    let products: Product[] = [];
+    let codesArray: Codes[] = [];
     let userData: UserData | null = null;
 
-    const codesArray = codeData.step.codes;
+    try {
+        // Fetch products data
+        const productsResponse = await actionProducts();
+        if (productsResponse?.item) {
+            products = productsResponse.item;
+        } else {
+            console.error('Failed to fetch products data.');
+        }
 
-    if (session) {
-        const { item } = await actionUserData();
-        userData = item;
+        // Fetch code data
+        const codeDataResponse = await actionCodes();
+        if (codeDataResponse?.item) {
+            const codeData: Code = codeDataResponse.item;
+            codesArray = codeData.step.codes;
+        } else {
+            console.error('Failed to fetch code data.');
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
     }
 
+    // Fetch user session and user data
+    const session = await auth();
+    if (session) {
+        try {
+            const userDataResponse = await actionUserData();
+            if (userDataResponse?.item) {
+                userData = userDataResponse.item;
+            } else {
+                console.error('Failed to fetch user data.');
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    }
     const currentMonth = userData?.extra.baby?.birth
         ? getStepNumber(userData.extra.baby.birth)
         : undefined;
