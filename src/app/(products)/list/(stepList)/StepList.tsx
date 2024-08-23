@@ -13,6 +13,7 @@ export default async function StepList() {
     const session = await auth();
 
     let userData: UserData | null = null;
+
     const codesArray = codeData.step.codes;
 
     if (session) {
