@@ -7,11 +7,11 @@ import { Form } from '@/components/ui/form';
 import { emailCheck, signup } from '@/data/actions/userAction';
 import Funnel from '@/lib/funnel/Funnel';
 import useFunnel from '@/lib/funnel/useFunnel';
-import { UserSignUpForm } from '@/types';
+import { ResError, UserSignUpForm } from '@/types';
 import { format } from 'date-fns';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { ErrorOption, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import BabyBirth from './(baby)/BabyBirth';
 import BabyBody from './(baby)/BabyBody';
 import BabyGender from './(baby)/BabyGender';
@@ -140,9 +140,9 @@ export default function Signup() {
             } else {
                 // API 서버의 에러 메시지 처리
                 if ('errors' in resData) {
-                    resData.errors.forEach((error: ErrorOption) =>
+                    resData.errors.forEach((error: ResError<UserSignUpForm>) =>
                         form.setError(error.path, {
-                            message: error.message,
+                            message: error.msg,
                         }),
                     );
                 } else if (resData.message) {

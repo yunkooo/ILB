@@ -111,7 +111,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         if (resData.ok) {
                             userInfo = resData.item;
                         } else {
-                            // throw new Error(resData.message);
                             return resData.message;
                         }
                     } catch (err) {
