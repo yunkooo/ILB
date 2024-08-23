@@ -68,7 +68,13 @@ export default function ChartCard({ growData }: Props) {
             <ChartContainer
                 config={chartConfig}
                 className='mb-5 p-4 h-[250px] w-full bg-card rounded-2xl'>
-                <BarChart accessibilityLayer data={convertedChartData}>
+                <BarChart
+                    accessibilityLayer
+                    data={convertedChartData}
+                    margin={{
+                        top: 20,
+                        bottom: 5,
+                    }}>
                     <XAxis
                         className='text-xs'
                         dataKey='date'
@@ -78,14 +84,22 @@ export default function ChartCard({ growData }: Props) {
                     />
                     <ChartTooltip content={<ChartTooltipContent />} />
                     <ChartLegend content={<ChartLegendContent />} />
-                    <Bar dataKey='height' fill='var(--color-height)' radius={4}>
+                    <Bar
+                        dataKey='height'
+                        fill='var(--color-height)'
+                        radius={4}
+                        barSize={25}>
                         <LabelList
                             dataKey='heightValue'
                             position='top'
                             className='text-[10px]'
                         />
                     </Bar>
-                    <Bar dataKey='weight' fill='var(--color-weight)' radius={4}>
+                    <Bar
+                        dataKey='weight'
+                        fill='var(--color-weight)'
+                        radius={4}
+                        barSize={25}>
                         <LabelList
                             dataKey='weightValue'
                             position='top'
