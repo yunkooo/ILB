@@ -105,6 +105,7 @@ export default function SideBar() {
                             width: halfWidth,
                             opacity: 1,
                         }}
+                        transition={{ type: 'spring' }}
                         exit={{
                             width: 0,
                             opacity: 0,
