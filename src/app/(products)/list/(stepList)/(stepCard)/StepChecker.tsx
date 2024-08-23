@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
 type Props = {
-    currentMonth: number;
-    babyName: string;
+    currentMonth?: number;
+    babyName?: string;
 };
 
 export default function StepChecker({ currentMonth, babyName }: Props) {
