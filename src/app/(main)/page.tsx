@@ -4,6 +4,7 @@ import ProductTutorial from './(4Banner)/ProductTutorial';
 import Banner from './(1Banner)/Banner';
 import ProductBannerIntro from './(2Banner)/ProductBannerIntro';
 import ProductCertification from './(5Banner)/ProductCertification';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: '로그인 - 멋사컴',
