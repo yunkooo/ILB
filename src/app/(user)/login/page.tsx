@@ -86,6 +86,8 @@ export default function Login() {
                 localStorage.setItem('toastMessage', `로그인이 되었습니다.`);
                 router.push('/');
             }
+        } else {
+            router.push('/');
         }
     }
 
