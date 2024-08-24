@@ -59,7 +59,7 @@ export default async function OrderItems() {
             {checkStep && <SubItemList currentStep={checkStep.code} />}
             <Link
                 className='inline-flex items-center justify-center my-[60px] max-w-screen w-full h-default rounded-default box-border font-notoSansKr text-white text-base font-bold bg-primary -hover:bg-primary/50 '
-                href='/order/checkdelivery'>
+                href='/order/delivery'>
                 다음
             </Link>
         </section>
