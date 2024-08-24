@@ -10,7 +10,6 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Toaster } from '@/components/ui/toaster';
 import { toast } from '@/components/ui/use-toast';
 import {
     signInWithCredentials,
@@ -72,30 +71,23 @@ export default function Login() {
         formData.append('password', data.password);
         const res = await signInWithCredentials(formData);
 
-        console.log('안녕하세요', res);
-
         if (res) {
-            router.push('/');
-        } else {
-            toast({
-                title: `로그인 실패`,
-                description: (
-                    <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4 text-white'>
-                        {res.message}
-                    </pre>
-                ),
-                duration: 1500,
-            });
+            if (res.ok === 0) {
+                toast({
+                    title: `로그인 실패`,
+                    description: (
+                        <pre className='mt-2 rounded-md p-4 bg-slate-900 text-white'>
+                            {res.message}
+                        </pre>
+                    ),
+                    duration: 1000,
+                });
+            } else {
+                localStorage.setItem('toastMessage', `로그인이 되었습니다.`);
+                router.push('/');
+            }
         }
     }
-
-    useEffect(() => {
-        const toastMessage = localStorage.getItem('toastMessage');
-        if (toastMessage) {
-            toast({ title: toastMessage });
-            localStorage.removeItem('toastMessage');
-        }
-    }, []);
 
     return (
         <section>
@@ -205,8 +197,6 @@ export default function Login() {
                     />
                 </Button>
             </form>
-
-            <Toaster />
         </section>
     );
 }
