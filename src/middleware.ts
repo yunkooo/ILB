@@ -6,12 +6,16 @@ export default async function middleware(req: NextRequest) {
     const token = await getToken({
         req,
         secret: process.env.AUTH_SECRET!,
-        salt: process.env.NEXTAUTH_SALT!,
+        secureCookie: process.env.NODE_ENV === 'production',
+        salt:
+            process.env.NODE_ENV === 'production'
+                ? '__Secure-authjs.session-token'
+                : 'authjs.session-token',
     });
 
     console.log('token', token);
     console.log('process.env.AUTH_SECRET', process.env.AUTH_SECRET);
-    console.log('process.env.NEXTAUTH_SALT', process.env.NEXTAUTH_SALT);
+    console.log('process.env.NODE_ENV', process.env.NODE_ENV);
     const { pathname } = req.nextUrl;
     console.log('pathname', pathname);
     if (pathname.startsWith('/login') || pathname.startsWith('/signup')) {
