@@ -2,12 +2,18 @@
 
 import { actionUserData } from '@/data/actions/userAction';
 import { AnimatePresence, motion, useCycle } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import { FcLike } from 'react-icons/fc';
+import { TiHomeOutline } from 'react-icons/ti';
+import { IoMdGift } from 'react-icons/io';
+import { PiLinkSimpleBold } from 'react-icons/pi';
+import { HiOutlineUser } from 'react-icons/hi';
 import LogoutButton from '../LogoutButton';
 import { Skeleton } from '../ui/skeleton';
+import useScrollPosition from '@/hooks/useScroll';
 
 const halfWidth = '70%';
 
@@ -42,9 +48,12 @@ const sideVariants = {
 
 export default function SideBar() {
     const router = useRouter();
+    const pathname = usePathname();
     const [open, cycleOpen] = useCycle(false, true);
     const [userName, setUserName] = useState<string | undefined>(undefined);
     const [loading, setLoading] = useState(true);
+    const isMatchMain = pathname === '/';
+    const { scrollPosition } = useScrollPosition();
 
     useEffect(() => {
         async function fetchUserData() {
@@ -73,7 +82,9 @@ export default function SideBar() {
         <>
             {!open ? (
                 <button className='w-9 h-9' onClick={() => cycleOpen()}>
-                    <RxHamburgerMenu className='mx-auto w-7 h-7 text-[#4C4646]' />
+                    <RxHamburgerMenu
+                        className={`${!scrollPosition && isMatchMain ? 'text-white' : 'text-[#4C4646]'} mx-auto w-7 h-7`}
+                    />
                 </button>
             ) : (
                 <div
@@ -96,96 +107,98 @@ export default function SideBar() {
                             opacity: 0,
                             transition: { delay: 1, duration: 0.3 },
                         }}
-                        className='bg-red-100 h-screen absolute top-0 right-0 rounded-lg'>
+                        className='bg-[#FFEBEC] h-screen absolute top-0 right-0 rounded-lg'>
                         <motion.div
-                            className='mt-10 mx-2 flex flex-col'
+                            className=' mt-10 flex flex-col'
                             initial='closed'
                             animate='open'
                             exit='closed'
                             variants={sideVariants}>
                             <motion.div
                                 key={1}
-                                whileHover={{ scale: 1.1 }}
-                                variants={itemVariants}>
+                                variants={itemVariants}
+                                className='rounded-lg mx-2 mt-5'>
                                 {loading ? (
-                                    <div className='pt-[56px] px-[18px] mb-8 flex flex-col space-y-3'>
+                                    <div className='pt-[56px] px-[18px] mb-5 flex flex-col space-y-3'>
                                         <Skeleton className='h-[20px] w-[70px] bg-gray-200' />
                                         <Skeleton className=' h-[20px] w-[300px] bg-gray-200' />
                                     </div>
                                 ) : userName ? (
-                                    <div className='pt-[56px] px-[18px] mb-8'>
+                                    <div className='py-10 px-5'>
                                         <span className='font-bold'>
                                             {userName}
                                         </span>
-                                        님,
-                                        <p className='mt-1'>
+                                        님{' '}
+                                        <FcLike className='inline-block align-baseline' />
+                                        <p className='mt-2 break-keep'>
                                             소중한 우리 아이와 행복한 순간을
                                             함께하세요!
                                         </p>
                                     </div>
                                 ) : (
-                                    <button
-                                        className='text-left mt-[40px] pt-[16px] px-[18px] mb-8'
+                                    <motion.button
+                                        className='text-left mt-[40px] pt-[16px] px-[18px] mb-8  w-full'
                                         onClick={() =>
                                             handleLinkClick('/login')
-                                        }>
+                                        }
+                                        whileHover={{ scale: 1.1 }}>
                                         <span className='font-bold'>
                                             로그인
                                         </span>
                                         이 필요합니다.
-                                    </button>
+                                    </motion.button>
                                 )}
                             </motion.div>
+                            <hr className='my-6 border-primary-foreground' />
                             <motion.button
                                 key={2}
                                 onClick={() => handleLinkClick('/')}
                                 whileHover={{ scale: 1.1 }}
                                 variants={itemVariants}
-                                className='hover:bg-slate-50 items-center w-full rounded-lg my-1'>
+                                className='hover:bg-[#fdf9f9] flex items-center w-[90%] mx-auto rounded-lg py-3 px-5 text-left'>
+                                <TiHomeOutline className='mr-2 text-[#C13DEE]' />
                                 홈
                             </motion.button>
                             <motion.button
                                 key={3}
                                 onClick={() => handleLinkClick('/list')}
                                 whileHover={{ scale: 1.1 }}
-                                variants={itemVariants}>
+                                variants={itemVariants}
+                                className='hover:bg-[#fdf9f9] flex items-center w-[90%] mx-auto rounded-lg py-3 px-5 text-left'>
+                                <IoMdGift className='mr-2 text-[#F945A7]' />
                                 상품 리스트
                             </motion.button>
                             <motion.button
                                 key={4}
                                 onClick={() => handleLinkClick('/')}
                                 whileHover={{ scale: 1.1 }}
-                                variants={itemVariants}>
-                                (함께 보면 좋은 사이트)
-                            </motion.button>
-                            <motion.button
-                                key={5}
-                                onClick={() => handleLinkClick('/')}
-                                whileHover={{ scale: 1.1 }}
-                                variants={itemVariants}>
-                                (파트너사)
-                            </motion.button>
-                            <hr className='my-6 border-[#CDC5C5]' />
-                            <motion.button
-                                key={6}
-                                whileHover={{ scale: 1.1 }}
                                 variants={itemVariants}
-                                onClick={() => {
-                                    if (userName) {
-                                        handleLinkClick('/mypage');
-                                    } else {
-                                        handleLinkClick('/login');
-                                    }
-                                }}>
-                                마이 페이지
+                                className='hover:bg-[#fdf9f9] flex items-center w-[90%] mx-auto rounded-lg py-3 px-5 text-left'>
+                                <PiLinkSimpleBold className='mr-2 text-[#42D674]' />
+                                함께 보면 좋은 사이트
                             </motion.button>
-                            <motion.button
-                                key={7}
-                                onClick={() => handleLinkClick('/')}
-                                whileHover={{ scale: 1.1 }}
-                                variants={itemVariants}>
-                                설정
-                            </motion.button>
+
+                            {userName && (
+                                <>
+                                    <hr className='my-6 border-primary-foreground' />
+                                    <motion.button
+                                        key={5}
+                                        whileHover={{ scale: 1.1 }}
+                                        variants={itemVariants}
+                                        onClick={() => {
+                                            if (userName) {
+                                                handleLinkClick('/mypage');
+                                            } else {
+                                                handleLinkClick('/login');
+                                            }
+                                        }}
+                                        className='hover:bg-[#fdf9f9] flex items-center w-[90%] mx-auto rounded-lg py-3 px-5 text-left'>
+                                        <HiOutlineUser className='mr-2 text-[#3D99EE]' />
+                                        마이 페이지
+                                    </motion.button>
+                                </>
+                            )}
+
                             {userName && (
                                 <LogoutButton itemVariants={itemVariants} />
                             )}
