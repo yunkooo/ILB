@@ -51,7 +51,6 @@ export default function EditProfile() {
         fetchUserData();
     }, [setValue]);
 
-    // & 수정하기 버튼 클릭 이벤트
     async function onSubmit(formData: FilteredForm) {
         // passwordCheck 데이터 제외를 위한 객체복사
 
