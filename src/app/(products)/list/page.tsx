@@ -4,7 +4,7 @@ import StepList from './(stepList)/StepList';
 
 export default async function ListPage() {
     return (
-        <article className='bg-[#FFFBEE]'>
+        <article className='bg-[#FFF8E1]'>
             <section>
                 <h1 className='text-lg font-medium py-7 px-1'>
                     우리 아이를 위해 준비했어요
