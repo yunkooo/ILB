@@ -37,7 +37,7 @@ const deliveryStatuses: DeliveryStatus[] = [
     },
 ];
 type Props = {
-    subscribeDate: string;
+    subscribeDate?: string;
 };
 
 export default function DeliveryStatusItems({ subscribeDate }: Props) {

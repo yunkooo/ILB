@@ -8,7 +8,6 @@
     "extends": [
         "next/core-web-vitals", // Next.js의 Core Web Vitals 규칙
         "prettier", // Prettier와의 충돌 방지
-
         "plugin:@typescript-eslint/recommended"
     ],
     "plugins": ["@typescript-eslint", "prettier"], // 사용되는 플러그인
