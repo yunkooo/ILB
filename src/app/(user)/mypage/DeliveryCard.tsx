@@ -1,7 +1,7 @@
 import DeliveryStatusItems from './DeliveryStatusItems';
 
 type Props = {
-    subscribeDate: string;
+    subscribeDate?: string;
 };
 
 export default function DeliveryCard({ subscribeDate }: Props) {

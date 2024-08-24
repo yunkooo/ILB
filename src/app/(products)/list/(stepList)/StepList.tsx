@@ -7,18 +7,44 @@ import { auth } from '@/auth';
 import StepCard from './(stepCard)/StepCard';
 
 export default async function StepList() {
-    const { item: products }: { item: Product[] } = await actionProducts();
-    const { item: codeData }: { item: Code } = await actionCodes(); // step 코드 전체조회
+    let products: Product[] = [];
+    let codesArray: Codes[] = [];
+    let userData: UserData | null = null;
+
+    try {
+        // Products data 받아온다.
+        const productsResponse = await actionProducts();
+        if (productsResponse?.item) {
+            products = productsResponse.item;
+        } else {
+            console.error('products data를 받아오는데 실패했습니다.');
+        }
+
+        // code data 받아온다.
+        const codeDataResponse = await actionCodes();
+        if (codeDataResponse?.item) {
+            const codeData: Code = codeDataResponse.item;
+            codesArray = codeData.step.codes;
+        } else {
+            console.error('code data를 받아오는데 실패했습니다.');
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 
     const session = await auth();
 
-    let userData: UserData | null = null;
-
-    const codesArray = codeData.step.codes;
-
     if (session) {
-        const { item } = await actionUserData();
-        userData = item;
+        try {
+            const userDataResponse = await actionUserData();
+            if (userDataResponse?.item) {
+                userData = userDataResponse.item;
+            } else {
+                console.error('user data 를 받아오는데 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
     }
 
     const currentMonth = userData?.extra.baby?.birth

@@ -1,4 +1,5 @@
 {
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "project": "./tsconfig.json", // tsconfig.json 파일 경로
         "tsconfigRootDir": "./" // tsconfig.json의 루트 디렉토리
@@ -7,7 +8,6 @@
     "extends": [
         "next/core-web-vitals", // Next.js의 Core Web Vitals 규칙
         "prettier", // Prettier와의 충돌 방지
-        "@typescript-eslint/parser",
         "plugin:@typescript-eslint/recommended"
     ],
     "plugins": ["@typescript-eslint", "prettier"], // 사용되는 플러그인

@@ -20,6 +20,10 @@ export default function MyPage() {
 
         fetchUserData();
     }, []);
+
+    const baby = user?.extra?.baby;
+    const subscribe = user?.extra?.subscribe;
+
     return (
         <section className='py-7'>
             <div className='flex gap-5 items-center mb-14'>
@@ -41,25 +45,32 @@ export default function MyPage() {
                         </span>
                     </h3>
 
-                    <p className='py-3.5 text-sm font-normal'>
-                        <span className='font-bold text-base'>
-                            {getStepNumber(user?.extra.baby.birth)}
-                        </span>
-                        개월
-                    </p>
-                    <p className='text-sm font-normal'>
-                        세상에 온 지{' '}
-                        <span className='font-bold text-base'>
-                            {getDayNumbers(user?.extra.baby.birth)}일
-                        </span>
-                        째 되는 날이에요!
-                    </p>
+                    {baby && (
+                        <>
+                            <p className='py-3.5 text-sm font-normal'>
+                                <span className='font-bold text-base'>
+                                    {getStepNumber(baby.birth)}
+                                </span>
+                                개월
+                            </p>
+                            <p className='text-sm font-normal'>
+                                세상에 온 지{' '}
+                                <span className='font-bold text-base'>
+                                    {getDayNumbers(baby.birth)}일
+                                </span>
+                                째 되는 날이에요!
+                            </p>
+                        </>
+                    )}
                 </div>
             </div>
-            <ChartCard growData={user?.extra.baby.grow} />
-            <DeliveryCard subscribeDate={user?.extra.subscribe.date} />
+
+            {baby && <ChartCard growData={baby.grow} />}
+            {subscribe && <DeliveryCard subscribeDate={subscribe.date} />}
+
             <LinkCard title='내정보 수정' link='/mypage/editprofile' />
-            {user?.extra.subscribe.status === 'true' ? (
+
+            {subscribe?.status === 'true' ? (
                 <LinkCard title='구독 상품 조회' link='/mypage/subscribe' />
             ) : (
                 <LinkCard title='구독 상품 조회' link='/order' />

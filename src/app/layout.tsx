@@ -3,6 +3,7 @@ import { Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
 import HeaderSelector from '@/components/layout/HeaderSelector';
 import AuthSession from './AuthSession';
+import { Toaster } from '@/components/ui/toaster';
 
 const notoSansKr = Noto_Sans_KR({
     preload: false,
@@ -25,6 +26,7 @@ export default function RootLayout({
                 <AuthSession>
                     <HeaderSelector />
                     {children}
+                    <Toaster />
                 </AuthSession>
             </body>
         </html>
