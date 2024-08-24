@@ -1,26 +1,39 @@
+import Image from 'next/image';
 import PaymentButton from './PaymentButton';
-
 export default function PaymentInfo() {
     return (
         <section>
-            <h1 className='pt-7 mb-10 font-bold text-[28px]'>결제정보</h1>
-            <div className='flex flex-col gap-3.5'>
+            <h1 className='pt-7 font-bold text-[28px]'>월간 이용권</h1>
+            <h2 className='mt-[26px] font-bold text-[20px]'>
+                월 49,000원 정기결제
+            </h2>
+
+            <div className='mt-[54px] border px-5 py-[22px] flex flex-col gap-[22px] rounded-2xl'>
                 <div className='flex justify-between'>
-                    <p className='text-txt-foreground'>상품 총 금액</p>
-                    <p className='font-bold'>62,000원</p>
+                    <p className='font-bold text-[16px] text-[#968F8F]'>
+                        다음 결제 예정일
+                    </p>
+                    <p className='font-bold'>2024.09.23</p>
                 </div>
+                <hr />
                 <div className='flex justify-between'>
-                    <p className='text-txt-foreground'>정 배송 할인 금액</p>
-                    <p className='font-bold'>12,000원</p>
-                </div>
-                <div className='flex justify-between'>
-                    <p className='text-txt-foreground'>배송비</p>
-                    <p className='font-bold'>0원</p>
-                </div>
-                <hr className='border-[#CDC5C5]' />
-                <div className='flex justify-between'>
-                    <p className='text-lg font-bold'>결제 금액</p>
-                    <p className='text-lg font-bold'>50,0000원</p>
+                    <div className='flex'>
+                        <div className='flex items-center'>
+                            <Image
+                                src='/toss_logo.svg'
+                                height={24}
+                                width={24}
+                                alt='toss logo'
+                            />
+                            <p className='font-bold align-top text-base'>
+                                toss
+                            </p>
+                        </div>
+                        <p className='font-bold text-base text-[#968F8F]'>
+                            결제 수단
+                        </p>
+                    </div>
+                    <p className='font-bold text-base'>카드 간편 결제</p>
                 </div>
             </div>
             <PaymentButton />
