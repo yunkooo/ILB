@@ -13,24 +13,29 @@ const buttonVariants = cva(
                 outline:
                     'border border-primary-foreground bg-background text-black box-border hover:bg-accent hover:text-accent-foreground',
                 checked: 'bg-primary-foreground text-black',
+                linkToList:
+                    'bg-gradient-to-r from-[#FF8087] to-[#FFAD6E] text-white',
+                linkToOrder:
+                    'bg-gradient-to-r from-[#65C09B] to-[#65C9D2] text-white',
             },
             size: {
                 default: 'max-w-default w-full h-default',
                 fixed: 'max-w-default w-default h-default',
-                lg: 'max-w-lg w-lg h-24',
+                lg: 'max-w-default w-full h-[68px]',
                 md: 'w-40 h-default',
                 sm: 'w-sm h-12',
                 xs: 'w-[60px] h-[60px]',
             },
             radius: {
                 default: 'rounded-default',
-                lg: 'rounded-full',
+                lg: 'rounded-[34px]',
                 md: 'rounded-m',
                 sm: 'rounded-3xl',
             },
             fontSize: {
                 default: 'text-base',
                 lg: 'text-[32px]',
+                md: 'text-[26px]',
                 sm: 'text-sm',
             },
             fontWeight: {
