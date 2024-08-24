@@ -20,11 +20,10 @@ const steps = ['BabyName', 'BabyGender', 'BabyBirth', 'BabyBody'];
 
 export default function BabyInfo() {
     const router = useRouter();
-    const session = useSession();
-    const userData = session.data;
-    const userId = userData?.user.id;
-    const accessToken = userData?.accessToken;
-    const providerAccountId = userData?.user.extra.providerAccountId;
+    const { data: session } = useSession();
+    const userId = session?.user?.id;
+    const accessToken = session?.accessToken;
+    const providerAccountId = session?.user?.extra.providerAccountId;
 
     const { step, onNextStep } = useFunnel({ steps });
 

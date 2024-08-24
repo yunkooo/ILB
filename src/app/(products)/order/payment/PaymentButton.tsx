@@ -5,6 +5,8 @@ import { actionSubscribeModify } from '@/data/actions/payAction';
 import { useRouter } from 'next/navigation';
 import Script from 'next/script';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 function generateRandomString() {
     const characters =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,7 +21,11 @@ function generateRandomString() {
     return result;
 }
 
-export default function PaymentButton() {
+type Props = {
+    disabled: boolean;
+};
+
+export default function PaymentButton({ disabled }: Props) {
     const router = useRouter();
 
     const requestPay = () => {
@@ -33,10 +39,10 @@ export default function PaymentButton() {
                     pay_method: 'card',
                     merchant_uid: `payment-${generateRandomString()}`,
                     name: '테스트 결제',
-                    amount: 100,
+                    amount: 49000,
                     buyer_name: 'ILB',
                     buyer_tel: '010-0000-0000',
-                    m_redirect_url: 'http://localhost:3000/order/payment/check',
+                    m_redirect_url: `${BASE_URL}/order/payment/check`,
                 },
                 rsp => {
                     // 결제 성공 시 로직
@@ -65,6 +71,7 @@ export default function PaymentButton() {
                 className='fixed bottom-[60px] w-default font-notoSansKr'
                 variant='default'
                 size='fixed'
+                disabled={!disabled}
                 onClick={requestPay}>
                 결제하기
             </Button>

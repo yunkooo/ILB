@@ -12,15 +12,17 @@ export default async function StepList() {
     let userData: UserData | null = null;
 
     try {
-        // Fetch products data
+        // Products data 받아온다.
+
         const productsResponse = await actionProducts();
         if (productsResponse?.item) {
             products = productsResponse.item;
         } else {
-            console.error('Failed to fetch products data.');
+            console.error('products data를 받아오는데 실패했습니다.');
         }
 
-        // Fetch code data
+        // code data 받아온다.
+
         const codeDataResponse = await actionCodes();
         if (codeDataResponse?.item) {
             const codeData: Code = codeDataResponse.item;
@@ -30,22 +32,25 @@ export default async function StepList() {
         }
     } catch (error) {
         console.error('Error fetching data:', error);
+
+        console.error('code data를 받아오는데 실패했습니다.');
     }
 
-    // Fetch user session and user data
     const session = await auth();
+
     if (session) {
         try {
             const userDataResponse = await actionUserData();
             if (userDataResponse?.item) {
                 userData = userDataResponse.item;
             } else {
-                console.error('Failed to fetch user data.');
+                console.error('user data 를 받아오는데 실패했습니다.');
             }
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
     }
+
     const currentMonth = userData?.extra.baby?.birth
         ? getStepNumber(userData.extra.baby.birth)
         : undefined;
@@ -61,7 +66,7 @@ export default async function StepList() {
     });
 
     return (
-        <Accordion className='flex flex-col gap-5' type='multiple'>
+        <Accordion className='flex flex-col gap-7' type='multiple'>
             {codesArray.map((codes: Codes, i: number) => {
                 const filterData = products.filter(
                     product => product.category[0] === codes.code,

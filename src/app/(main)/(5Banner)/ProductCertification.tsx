@@ -2,13 +2,13 @@ import Image from 'next/image';
 
 export default function ProductCertification() {
     return (
-        <article className='bg-[#FFF9F3] flex flex-col px-5 py-[62px]'>
-            <h2 className='mb-[42px] text-3xl font-normal'>
+        <article className='bg-gradient-to-b from-[#FFF0F2] via-[#FFFFFF] via-85% to-[#EAF0EE] flex flex-col px-5 pt-[104px] pb-24'>
+            <h2 className='mb-[38px] text-3xl font-bold text-center leading-[150%]'>
                 아이들에게 이로운
                 <br />
                 제품만을 엄선합니다
             </h2>
-            <div className='grid grid-cols-2 justify-items-center gap-y-[42px]'>
+            <div className='grid grid-cols-2 justify-items-center gap-y-16'>
                 <div className='flex flex-col justify-center items-center text-center w-[156px] h-[156px]'>
                     <Image
                         className='text-center'

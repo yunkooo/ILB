@@ -8,10 +8,16 @@
     "extends": [
         "next/core-web-vitals", // Next.js의 Core Web Vitals 규칙
         "prettier", // Prettier와의 충돌 방지
-
         "plugin:@typescript-eslint/recommended"
     ],
-    "plugins": ["@typescript-eslint", "prettier"], // 사용되는 플러그인
+    "plugins": [
+        "@typescript-eslint",
+        "prettier"
+        // "@typescript-eslint/parser"
+        // "@typescript-eslint/recommended"
+    ], // 사용되는 플러그인
+    // "parser": "@typescript-eslint/parser",
+
     "rules": {
         "prettier/prettier": "error", // Prettier 규칙 위반 시 오류 발생
         "react/react-in-jsx-scope": "off", // Next.js에서는 React를 자동으로 가져옴

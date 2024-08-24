@@ -10,7 +10,7 @@ import DeliveryCard from './DeliveryCard';
 import ChartCard from './ChartCard';
 
 export default function MyPage() {
-    const [user, setUser] = useState<UserData | undefined>(undefined);
+    const [user, setUser] = useState<UserData>();
     // 회원 정보 불러오기
     useEffect(() => {
         async function fetchUserData() {
@@ -37,32 +37,34 @@ export default function MyPage() {
                         />
                     </div>
                 </div>
-                <div>
-                    <h3 className='text-lg font-bold'>
-                        {user?.name}
-                        <span className='text-sm font-normal'>
-                            님의 아이는 지금
-                        </span>
-                    </h3>
+                {user?.extra?.baby && (
+                    <div>
+                        <h3 className='text-lg font-bold'>
+                            {user?.name}
+                            <span className='text-sm font-normal'>
+                                님의 아이는 지금
+                            </span>
+                        </h3>
 
-                    {baby && (
-                        <>
-                            <p className='py-3.5 text-sm font-normal'>
-                                <span className='font-bold text-base'>
-                                    {getStepNumber(baby.birth)}
-                                </span>
-                                개월
-                            </p>
-                            <p className='text-sm font-normal'>
-                                세상에 온 지{' '}
-                                <span className='font-bold text-base'>
-                                    {getDayNumbers(baby.birth)}일
-                                </span>
-                                째 되는 날이에요!
-                            </p>
-                        </>
-                    )}
-                </div>
+                        {baby && (
+                            <>
+                                <p className='py-3.5 text-sm font-normal'>
+                                    <span className='font-bold text-base'>
+                                        {getStepNumber(baby.birth)}
+                                    </span>
+                                    개월
+                                </p>
+                                <p className='text-sm font-normal'>
+                                    세상에 온 지{' '}
+                                    <span className='font-bold text-base'>
+                                        {getDayNumbers(baby.birth)}일
+                                    </span>
+                                    째 되는 날이에요!
+                                </p>
+                            </>
+                        )}
+                    </div>
+                )}
             </div>
 
             {baby && <ChartCard growData={baby.grow} />}
