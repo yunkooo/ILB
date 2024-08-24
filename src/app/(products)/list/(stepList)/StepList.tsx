@@ -36,7 +36,7 @@ export default async function StepList() {
     });
 
     return (
-        <Accordion className='flex flex-col gap-5' type='multiple'>
+        <Accordion className='flex flex-col gap-7' type='multiple'>
             {codesArray.map((codes: Codes, i: number) => {
                 const filterData = products.filter(
                     product => product.category[0] === codes.code,

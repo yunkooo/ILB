@@ -83,7 +83,7 @@ export default function SideBar() {
             {!open ? (
                 <button className='w-9 h-9' onClick={() => cycleOpen()}>
                     <RxHamburgerMenu
-                        className={`${scrollPosition && isMatchMain ? 'text-[#4C4646]' : 'text-white'} mx-auto w-7 h-7`}
+                        className={`${!scrollPosition && isMatchMain ? 'text-white' : 'text-[#4C4646]'} mx-auto w-7 h-7`}
                     />
                 </button>
             ) : (
