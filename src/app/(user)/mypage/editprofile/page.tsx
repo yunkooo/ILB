@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -14,12 +13,21 @@ import {
 } from '@/data/actions/userAction';
 import { TargetArea } from '@/components/Spinner';
 import EditForm from './EditForm';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+
+async function fetchUserData() {
+    const { item: userData } = await actionUserData();
+    return userData;
+}
 
 export default function EditProfile() {
     const router = useRouter();
 
-    const [loading, setLoading] = useState(false);
-
+    const { isPending, data: userData } = useQuery({
+        queryKey: ['userData'],
+        queryFn: fetchUserData,
+    });
     const form = useForm<UserEdit>({
         defaultValues: {
             name: '',
@@ -37,19 +45,12 @@ export default function EditProfile() {
     } = form;
 
     useEffect(() => {
-        async function fetchUserData() {
-            try {
-                const { item: userData } = await actionUserData();
-                setValue('name', userData.name);
-                setValue('phone', userData.phone);
-                setValue('email', userData.email);
-                setLoading(true);
-            } catch (error) {
-                console.log(error);
-            }
+        if (userData) {
+            setValue('name', userData.name);
+            setValue('phone', userData.phone);
+            setValue('email', userData.email);
         }
-        fetchUserData();
-    }, [setValue]);
+    }, [userData, setValue]);
 
     async function onSubmit(formData: FilteredForm) {
         // passwordCheck 데이터 제외를 위한 객체복사
@@ -82,7 +83,9 @@ export default function EditProfile() {
 
     return (
         <section>
-            {loading ? (
+            {isPending ? (
+                <TargetArea />
+            ) : (
                 <>
                     <Image
                         src='/logo_M.svg'
@@ -100,7 +103,7 @@ export default function EditProfile() {
                                 id='userDataEdit-form'
                                 onSubmit={form.handleSubmit(onSubmit)}
                                 className='w-full'>
-                                <EditForm />
+                                <EditForm userData={userData} />
                             </form>
                         </Form>
                     </div>
@@ -114,8 +117,6 @@ export default function EditProfile() {
                         수정하기
                     </Button>
                 </>
-            ) : (
-                <TargetArea />
             )}
         </section>
     );

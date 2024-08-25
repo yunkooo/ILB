@@ -13,9 +13,9 @@ import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import {
     signInWithCredentials,
+    signInWithDiscord,
+    signInWithGithub,
     signInWithGoogle,
-    signInWithKakao,
-    signInWithNaver,
 } from '@/data/actions/authAction';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
@@ -164,10 +164,11 @@ export default function Login() {
                     type='submit'
                     className='bg-white'
                     size='xs'
-                    formAction={signInWithKakao}>
+                    variant='icon'
+                    formAction={signInWithGithub}>
                     <Image
-                        src='/icon/icon_kakao.svg'
-                        alt='카카오톡 로그인'
+                        src='/icon/icon_github.svg'
+                        alt='깃허브 로그인'
                         width={60}
                         height={60}
                     />
@@ -176,6 +177,7 @@ export default function Login() {
                     type='submit'
                     className='bg-white'
                     size='xs'
+                    variant='icon'
                     formAction={signInWithGoogle}>
                     <Image
                         src='/icon/icon_google.svg'
@@ -188,10 +190,11 @@ export default function Login() {
                     type='submit'
                     className='bg-white'
                     size='xs'
-                    formAction={signInWithNaver}>
+                    variant='icon'
+                    formAction={signInWithDiscord}>
                     <Image
-                        src='/icon/icon_naver.svg'
-                        alt='네이버 로그인'
+                        src='/icon/icon_discord.webp'
+                        alt='디스코드 로그인'
                         width={60}
                         height={60}
                     />

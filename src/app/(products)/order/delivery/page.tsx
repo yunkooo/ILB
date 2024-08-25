@@ -1,5 +1,6 @@
 'use client';
 
+import { TargetArea } from '@/components/Spinner';
 import { Button } from '@/components/ui/button';
 import {
     Form,
@@ -15,6 +16,7 @@ import {
     actionUserData,
 } from '@/data/actions/userAction';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
@@ -56,8 +58,19 @@ type Address = {
     bname: string;
 };
 
+async function fetchUserData() {
+    const { item: userData } = await actionUserData();
+    return userData;
+}
+
 export default function CheckDelivery() {
     const router = useRouter();
+
+    const { isPending, data: userData } = useQuery({
+        queryKey: ['userData'],
+        queryFn: fetchUserData,
+    });
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -70,6 +83,8 @@ export default function CheckDelivery() {
         mode: 'onChange',
     });
 
+    const { watch, setValue } = form;
+
     const open = useDaumPostcodePopup(
         'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js',
     );
@@ -81,8 +96,8 @@ export default function CheckDelivery() {
 
     // 주소 선택시 form에 값 삽입
     const handleComplete = (data: Address) => {
-        form.setValue('zoneCode', data.zonecode);
-        form.setValue('roadAddress', data.roadAddress);
+        setValue('zoneCode', data.zonecode);
+        setValue('roadAddress', data.roadAddress);
     };
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -99,29 +114,21 @@ export default function CheckDelivery() {
     }
 
     useEffect(() => {
-        async function checkDelivery() {
-            try {
-                const { item: userData } = await actionUserData();
-
-                form.setValue('name', userData.name);
-                form.setValue('phone', userData.phone);
-                form.setValue('zoneCode', userData.zoneCode);
-                form.setValue('roadAddress', userData.roadAddress);
-                form.setValue('detailAddress', userData.detailAddress);
-            } catch (error) {
-                console.error(error);
-            }
+        if (userData) {
+            setValue('name', userData.name);
+            setValue('phone', userData.phone);
+            setValue('zoneCode', userData.zoneCode);
+            setValue('roadAddress', userData.roadAddress);
+            setValue('detailAddress', userData.detailAddress);
         }
-
-        checkDelivery();
-    }, [form]);
+    }, [userData, setValue]);
 
     const isFormValid =
-        form.watch().name &&
-        form.watch().phone &&
-        form.watch().zoneCode &&
-        form.watch().roadAddress &&
-        form.watch().detailAddress;
+        watch().name &&
+        watch().phone &&
+        watch().zoneCode &&
+        watch().roadAddress &&
+        watch().detailAddress;
 
     return (
         <section>
@@ -192,7 +199,7 @@ export default function CheckDelivery() {
                                             />
                                             <Button
                                                 type='button'
-                                                className=' right-0 bottom-[0.0625rem]'
+                                                className='right-0 bottom-[0.0625rem]'
                                                 size='sm'
                                                 fontSize='sm'
                                                 fontWeight='sm'
