@@ -84,6 +84,10 @@ export default function BabyInfo() {
             );
 
             if (resData.ok) {
+                localStorage.setItem(
+                    'toastMessage',
+                    `ILB의 회원가입을 환영합니다.`,
+                );
                 router.push('/');
             } else {
                 // API 서버의 에러 메시지 처리
