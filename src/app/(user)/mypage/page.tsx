@@ -42,7 +42,7 @@ export default async function MyPage() {
                                     개월
                                 </p>
                                 <p className='text-sm font-normal'>
-                                    세상에 온 지
+                                    세상에 온 지{' '}
                                     <span className='font-bold text-base'>
                                         {getDayNumbers(baby.birth)}일
                                     </span>
@@ -54,7 +54,7 @@ export default async function MyPage() {
                 )}
             </div>
 
-            {baby && <ChartCard growData={baby.grow} />}
+            <ChartCard />
             {subscribe && <DeliveryCard subscribeDate={subscribe.date} />}
 
             <LinkCard title='내정보 수정' link='/mypage/editprofile' />
