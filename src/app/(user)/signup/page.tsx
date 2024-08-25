@@ -193,7 +193,7 @@ export default function Signup() {
             <Button
                 form='signup-form'
                 type='submit'
-                className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid || isEmailDuplicate ? 'bg-gray-400' : ''}`}
+                className={`fixed bottom-[60px] ${!isValid || isEmailDuplicate ? 'bg-gray-400' : ''}`}
                 variant='default'
                 size='fixed'
                 disabled={!isValid || isEmailDuplicate}

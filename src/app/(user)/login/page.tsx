@@ -139,16 +139,14 @@ export default function Login() {
                             </FormItem>
                         )}
                     />
-                    <Button
-                        type='submit'
-                        className='font-notoSansKr mt-[60px] box-border'>
+                    <Button type='submit' className='mt-[60px]'>
                         로그인
                     </Button>
                 </form>
             </Form>
             <p className='text-txt-foreground text-center mt-[18px] text-xs'>
                 아직 회원이 아니신가요?{' '}
-                <Link href='/signup' className='text-txt font-normal'>
+                <Link href='/signup' className='text-txt font-medium'>
                     회원가입
                 </Link>
             </p>

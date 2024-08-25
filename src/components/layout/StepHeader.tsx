@@ -16,7 +16,7 @@ const PaymentStatuses: PaymentStatus[] = [
         component: <p>아이정보</p>,
     },
     {
-        pathname: '/order/checkdelivery',
+        pathname: '/order/delivery',
         component: <p>배송정보</p>,
     },
     {

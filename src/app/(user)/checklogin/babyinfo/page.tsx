@@ -135,7 +135,7 @@ export default function BabyInfo() {
             <Button
                 form='signup-form'
                 type='submit'
-                className={`font-notoSansKr fixed bottom-[2.5vh] box-border ${!isValid ? 'bg-gray-400' : ''}`}
+                className={`fixed mb-[60px] ${!isValid ? 'bg-gray-400' : ''}`}
                 variant='default'
                 size='fixed'
                 disabled={!isValid}
