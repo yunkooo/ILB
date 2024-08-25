@@ -28,12 +28,12 @@ export async function signInWithGoogle() {
     await signIn('google', { redirectTo: '/checklogin' });
 }
 
-export async function signInWithNaver() {
-    await signIn('naver', { redirectTo: '/' });
+export async function signInWithDiscord() {
+    await signIn('discord', { redirectTo: '/checklogin' });
 }
 
-export async function signInWithKakao() {
-    await signIn('kakao', { redirectTo: '/' });
+export async function signInWithGithub() {
+    await signIn('github', { redirectTo: '/checklogin' });
 }
 
 // auth provider 인증 후 자동 회원 가입

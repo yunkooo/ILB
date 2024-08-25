@@ -18,6 +18,7 @@ const buttonVariants = cva(
                     'bg-gradient-to-r from-[#FF8087] to-[#FFAD6E] text-white',
                 linkToOrder:
                     'bg-gradient-to-r from-[#65C09B] to-[#65C9D2] text-white',
+                icon: 'bg-white',
             },
             size: {
                 default: 'max-w-default w-full h-default',
