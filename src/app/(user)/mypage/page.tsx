@@ -71,12 +71,7 @@ export default function MyPage() {
             {subscribe && <DeliveryCard subscribeDate={subscribe.date} />}
 
             <LinkCard title='내정보 수정' link='/mypage/editprofile' />
-
-            {subscribe?.status === 'true' ? (
-                <LinkCard title='구독 상품 조회' link='/mypage/subscribe' />
-            ) : (
-                <LinkCard title='구독 상품 조회' link='/order' />
-            )}
+            <LinkCard title='구독 상품 조회' link='/mypage/subscribe' />
         </section>
     );
 }
