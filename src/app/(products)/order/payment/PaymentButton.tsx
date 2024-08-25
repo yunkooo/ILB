@@ -68,7 +68,7 @@ export default function PaymentButton({ disabled }: Props) {
     return (
         <div>
             <Button
-                className='fixed bottom-[60px] w-default font-notoSansKr'
+                className='fixed bottom-[60px] w-default'
                 variant='default'
                 size='fixed'
                 disabled={!disabled}
