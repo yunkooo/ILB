@@ -28,7 +28,6 @@ export default function EditProfile() {
         queryKey: ['userData'],
         queryFn: fetchUserData,
     });
-    console.log(isPending);
     const form = useForm<UserEdit>({
         defaultValues: {
             name: '',
