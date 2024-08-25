@@ -4,16 +4,20 @@ import ProductTutorial from './(4Banner)/ProductTutorial';
 import Banner from './(1Banner)/Banner';
 import ProductBannerIntro from './(2Banner)/ProductBannerIntro';
 import ProductCertification from './(5Banner)/ProductCertification';
-// import { Metadata } from 'next';
+import { Metadata } from 'next';
 
-// export const metadata: Metadata = {
-//     title: '로그인 - 멋사컴',
-//     openGraph: {
-//         title: '로그인 - 멋사컴',
-//         description: '로그인 페이지',
-//         url: '/user/login',
-//     },
-// };
+export const metadata: Metadata = {
+    title: '🧸ILB',
+    description: '초보 육아러들을 위한 따뜻한 서비스',
+    openGraph: {
+        title: '🧸ILB',
+        description: '초보 육아러들을 위한 따뜻한 서비스',
+        url: '/',
+        images: {
+            url: '/logo_bg.svg',
+        },
+    },
+};
 
 // export function generateMetadata({ params }: { params: { type: string } }): Metadata{
 //   const boardName = params.type;

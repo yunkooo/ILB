@@ -9,7 +9,7 @@ export default async function CompletePage() {
             <Image
                 width={100}
                 height={100}
-                src='/baby/baby_4.svg'
+                src='/baby/baby_7.svg'
                 alt='웃고 있는 아이 이미지'
             />
             <h1 className='mt-5'>정기 구독이 신청되었습니다</h1>
