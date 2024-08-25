@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 export default async function CompletePage() {
     const { item: userData } = await actionUserData();
-    console.log(userData);
     return (
         <section className='flex flex-col items-center'>
             <Image

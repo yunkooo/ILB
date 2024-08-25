@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/chart';
 import { GrowType } from '@/types';
 import { chartDateCaculate } from '@/util/calculate';
+import { useQuery } from '@tanstack/react-query';
+import { actionUserData } from '@/data/actions/userAction';
 
 const chartConfig = {
     height: {
@@ -24,16 +26,23 @@ const chartConfig = {
     },
 } satisfies ChartConfig;
 
-type Props = {
-    growData?: GrowType[];
-};
+async function fetchUserData() {
+    const { item: userData } = await actionUserData();
+    return userData;
+}
 
-export default function ChartCard({ growData }: Props) {
+export default function ChartCard() {
+    const { isSuccess, data: userData } = useQuery({
+        queryKey: ['userData'],
+        queryFn: fetchUserData,
+    });
+    const growData = userData?.extra.baby.grow;
+
     // height, weight 차이값 비율 조정 스케일링
     let remakeGrowArray: GrowType[] = [];
     // grow 배열의 요소가 5개 미만이 일 경우 그래프 틀(5개)을 만들어 주기 위해
     // grow 배열을 넣고 나머지 요소들은 빈 grow를 넣어준다.
-    if (growData !== undefined) {
+    if (isSuccess) {
         const fitGrowData = growData.length > 5 ? growData.slice(-5) : growData;
         remakeGrowArray = Array.from({ length: 5 }, (_, index) =>
             index < fitGrowData.length

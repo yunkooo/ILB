@@ -1,7 +1,3 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { UserData } from '@/types';
 import { actionUserData } from '@/data/actions/userAction';
 import { getDayNumbers, getStepNumber } from '@/util/dateCalc';
 import Image from 'next/image';
@@ -9,17 +5,8 @@ import LinkCard from './LinkCard';
 import DeliveryCard from './DeliveryCard';
 import ChartCard from './ChartCard';
 
-export default function MyPage() {
-    const [user, setUser] = useState<UserData>();
-    // 회원 정보 불러오기
-    useEffect(() => {
-        async function fetchUserData() {
-            const { item: userData } = await actionUserData();
-            setUser(userData);
-        }
-
-        fetchUserData();
-    }, []);
+export default async function MyPage() {
+    const { item: user } = await actionUserData();
 
     const baby = user?.extra?.baby;
     const subscribe = user?.extra?.subscribe;
@@ -37,7 +24,7 @@ export default function MyPage() {
                         />
                     </div>
                 </div>
-                {user?.extra?.baby && (
+                {baby && (
                     <div>
                         <h3 className='text-lg font-bold'>
                             {user?.name}
@@ -67,7 +54,7 @@ export default function MyPage() {
                 )}
             </div>
 
-            {baby && <ChartCard growData={baby.grow} />}
+            <ChartCard />
             {subscribe && <DeliveryCard subscribeDate={subscribe.date} />}
 
             <LinkCard title='내정보 수정' link='/mypage/editprofile' />
