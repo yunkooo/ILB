@@ -1,6 +1,7 @@
 'use client';
 
-import Carousel from 'react-multi-carousel';
+import React from 'react';
+import Carousel, { DotProps } from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 const responsive = {
@@ -25,6 +26,17 @@ const responsive = {
 type Props = {
     children: React.ReactNode;
 };
+
+const CustomDot = ({ onClick, active }: DotProps) => {
+    return (
+        <li className='mx-2 my-6 inline-block cursor-pointer' onClick={onClick}>
+            <div
+                className={`w-[14px] h-[14px] rounded-full ${active ? 'bg-white' : 'bg-white opacity-30'}`}
+            />
+        </li>
+    );
+};
+
 export default function MultiCarousel({ children }: Props) {
     return (
         <Carousel
@@ -32,8 +44,11 @@ export default function MultiCarousel({ children }: Props) {
             infinite
             autoPlay
             showDots
+            customDot={<CustomDot />}
             ssr
-            responsive={responsive}>
+            responsive={responsive}
+            containerClass='carousel-container'
+            dotListClass='custom-dot-list'>
             {children}
         </Carousel>
     );
