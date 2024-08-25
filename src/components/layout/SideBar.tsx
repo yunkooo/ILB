@@ -1,9 +1,7 @@
 'use client';
 
-import { actionUserData } from '@/data/actions/userAction';
 import { AnimatePresence, motion, useCycle } from 'framer-motion';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { PiXBold } from 'react-icons/pi';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { FcLike } from 'react-icons/fc';
@@ -12,8 +10,8 @@ import { IoMdGift } from 'react-icons/io';
 import { PiLinkSimpleBold } from 'react-icons/pi';
 import { HiOutlineUser } from 'react-icons/hi';
 import LogoutButton from '../LogoutButton';
-import { Skeleton } from '../ui/skeleton';
 import useScrollPosition from '@/hooks/useScroll';
+import { useUserStore } from '@/zustand/userStore';
 
 const halfWidth = '70%';
 
@@ -50,31 +48,16 @@ export default function SideBar() {
     const router = useRouter();
     const pathname = usePathname();
     const [open, cycleOpen] = useCycle(false, true);
-    const [userName, setUserName] = useState<string | undefined>(undefined);
-    const [loading, setLoading] = useState(true);
     const isMatchMain = pathname === '/';
     const { scrollPosition } = useScrollPosition();
 
-    useEffect(() => {
-        async function fetchUserData() {
-            try {
-                const res = await actionUserData();
-                setUserName(res?.item.name);
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false); // 데이터 로드가 완료되면 로딩 상태를 false로 변경
-            }
-        }
-
-        fetchUserData();
-    }, [open]);
+    const { user } = useUserStore();
 
     const handleLinkClick = (to: string) => {
         cycleOpen();
 
         setTimeout(() => {
-            router.push(to);
+            router.push(to, { scroll: false });
         }, 500);
     };
 
@@ -118,15 +101,10 @@ export default function SideBar() {
                                 key={1}
                                 variants={itemVariants}
                                 className='rounded-lg mx-2 mt-5'>
-                                {loading ? (
-                                    <div className='pt-[56px] px-[18px] mb-5 flex flex-col space-y-3'>
-                                        <Skeleton className='h-[20px] w-[70px] bg-gray-200' />
-                                        <Skeleton className=' h-[20px] w-[300px] bg-gray-200' />
-                                    </div>
-                                ) : userName ? (
+                                {user ? (
                                     <div className='py-10 px-5'>
                                         <span className='font-bold'>
-                                            {userName}
+                                            {user.name}
                                         </span>
                                         님{' '}
                                         <FcLike className='inline-block align-baseline' />
@@ -178,7 +156,7 @@ export default function SideBar() {
                                 함께 보면 좋은 사이트
                             </motion.button>
 
-                            {userName && (
+                            {user && (
                                 <>
                                     <hr className='my-6 border-primary-foreground' />
                                     <motion.button
@@ -186,7 +164,7 @@ export default function SideBar() {
                                         whileHover={{ scale: 1.1 }}
                                         variants={itemVariants}
                                         onClick={() => {
-                                            if (userName) {
+                                            if (user.name) {
                                                 handleLinkClick('/mypage');
                                             } else {
                                                 handleLinkClick('/login');
@@ -199,7 +177,7 @@ export default function SideBar() {
                                 </>
                             )}
 
-                            {userName && (
+                            {user && (
                                 <LogoutButton itemVariants={itemVariants} />
                             )}
                         </motion.div>
