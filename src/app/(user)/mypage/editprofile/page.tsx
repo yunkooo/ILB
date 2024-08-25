@@ -107,7 +107,7 @@ export default function EditProfile() {
                     <Button
                         form='userDataEdit-form'
                         type='submit'
-                        className={`font-notoSansKr fixed mt-5 bottom-[60px] box-border ${!isValid ? 'bg-gray-400' : ''}`}
+                        className={`fixed mt-5 bottom-[60px] ${!isValid ? 'bg-gray-400' : ''}`}
                         variant='default'
                         size='fixed'
                         disabled={!isValid}>

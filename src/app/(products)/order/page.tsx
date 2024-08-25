@@ -1,12 +1,12 @@
 import { actionUserData } from '@/data/actions/userAction';
 import { getStepNumber } from '@/util/dateCalc';
 import Image from 'next/image';
-import Link from 'next/link';
 import { actionCodes } from '@/data/actions/productsAction';
 import SubItemList from '@/components/subscribe/SubItemList';
 import SubDescription from '../../../components/subscribe/SubDescription';
 import { Codes } from '@/types';
 import { PiClover } from 'react-icons/pi';
+import SubButton from '@/components/subscribe/SubButton';
 
 export default async function OrderItems() {
     // 유저 정보를 가져온다(아이 개월수)
@@ -62,11 +62,7 @@ export default async function OrderItems() {
                 선별하여 보내드려요.
             </p>
             {checkStep && <SubItemList currentStep={checkStep.code} />}
-            <Link
-                className='inline-flex items-center justify-center my-[60px] max-w-screen w-full h-default rounded-default box-border font-notoSansKr text-white text-base font-bold bg-primary -hover:bg-primary/50 '
-                href='/order/delivery'>
-                다음
-            </Link>
+            <SubButton link={'/order/delivery'} />
         </section>
     );
 }

@@ -13,7 +13,7 @@ export default async function ListPage() {
                 <Link href='/order'>
                     <Button
                         type='button'
-                        className='font-notoSansKr my-[60px] box-border'
+                        className='my-[60px] box-border'
                         variant='default'>
                         구독하러가기
                     </Button>

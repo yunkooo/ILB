@@ -122,7 +122,7 @@ export default function UpdateBodyInfo() {
                 )}
                 <Button
                     type='submit'
-                    className='font-notoSansKr my-[60px] box-border bottom-0'
+                    className='my-[60px] bottom-0'
                     variant='default'
                     disabled={!isValid}>
                     저장하기

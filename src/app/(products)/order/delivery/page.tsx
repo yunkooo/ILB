@@ -192,7 +192,7 @@ export default function CheckDelivery() {
                                             />
                                             <Button
                                                 type='button'
-                                                className='font-notoSansKr right-0 bottom-[0.0625rem]'
+                                                className=' right-0 bottom-[0.0625rem]'
                                                 size='sm'
                                                 fontSize='sm'
                                                 fontWeight='sm'
@@ -253,7 +253,7 @@ export default function CheckDelivery() {
             <Button
                 form='checkDelivery'
                 type='submit'
-                className={`font-notoSansKr fixed w-default bottom-1/4 box-border ${!isFormValid ? 'bg-gray-400' : ''}`}
+                className={`fixed mt-5 bottom-[60px] ${!isFormValid ? 'bg-gray-400' : ''}`}
                 variant='default'
                 size='fixed'
                 disabled={!isFormValid}>
