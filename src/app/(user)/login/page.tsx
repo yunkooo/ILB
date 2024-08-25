@@ -193,7 +193,7 @@ export default function Login() {
                     variant='icon'
                     formAction={signInWithDiscord}>
                     <Image
-                        src='/icon/icon_discord.webp'
+                        src='/icon/icon_discord.svg'
                         alt='디스코드 로그인'
                         width={60}
                         height={60}
