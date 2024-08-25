@@ -1,3 +1,5 @@
+'use client';
+
 import { useFormContext } from 'react-hook-form';
 import {
     FormControl,
@@ -7,28 +9,14 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useEffect, useState } from 'react';
-import { actionUserData } from '@/data/actions/userAction';
+import { UserData } from '@/types';
 
-export default function EditForm() {
+type Props = {
+    userData: UserData;
+};
+
+export default function EditForm({ userData }: Props) {
     const form = useFormContext();
-
-    const [providerId, setProviderId] = useState('');
-
-    useEffect(() => {
-        function fetchUserData() {
-            actionUserData()
-                .then(res => {
-                    console.log(res);
-                    setProviderId(res?.item.extra.providerAccountId);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
-        fetchUserData();
-    }, []);
-
     return (
         <>
             <FormField
@@ -85,7 +73,7 @@ export default function EditForm() {
                     </FormItem>
                 )}
             />
-            {!providerId && (
+            {!userData.extra.providerAccountId && (
                 <>
                     <FormField
                         control={form.control}

@@ -24,7 +24,7 @@ export default async function MyPage() {
                         />
                     </div>
                 </div>
-                {user?.extra?.baby && (
+                {baby && (
                     <div>
                         <h3 className='text-lg font-bold'>
                             {user?.name}
