@@ -7,7 +7,7 @@ export default function Footer() {
                 className='-ml-2.5'
                 width={85}
                 height={85}
-                src='/logo_color.svg'
+                src='/logo/logo_color.svg'
                 alt=''
             />
             <div className='flex flex-col gap-[2px]'>

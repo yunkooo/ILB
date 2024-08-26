@@ -28,7 +28,7 @@ export default function PaymentInfo() {
                     <div className='flex'>
                         <div className='flex items-center'>
                             <Image
-                                src='/toss_logo.svg'
+                                src='/logo/logo_toss.svg'
                                 height={24}
                                 width={24}
                                 alt='toss logo'

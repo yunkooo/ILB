@@ -8,7 +8,7 @@ export const metadata: Metadata = {
         description: '초보 육아러들을 위한 따뜻한 서비스',
         url: '/signup',
         images: {
-            url: '/logo_bg.svg',
+            url: '/logo/logo_bg.svg',
         },
     },
 };
