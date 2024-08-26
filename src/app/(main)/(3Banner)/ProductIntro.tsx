@@ -21,12 +21,12 @@ export default function ProductIntro() {
                 <Image
                     className='absolute -top-[10px] left-0'
                     src='/mobile.png'
-                    layout='fill'
-                    objectFit='contain'
+                    fill
+                    style={{ objectFit: 'contain' }}
                     alt='moble image'
                 />
             </div>
-            <Link href='/list' className='w-full text-center'>
+            <Link href='/list' className='w-full text-center' scroll={false}>
                 <Button
                     variant='linkToList'
                     size='lg'

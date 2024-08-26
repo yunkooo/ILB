@@ -5,6 +5,7 @@ import HeaderSelector from '@/components/layout/HeaderSelector';
 import AuthSession from './AuthSession';
 import { Toaster } from '@/components/ui/toaster';
 import { QueryProviders } from './QueryProvider';
+import SessionHandler from './SessionHandler';
 
 const notoSansKr = Noto_Sans_KR({
     preload: false,
@@ -28,6 +29,7 @@ export default function RootLayout({
             <body className={notoSansKr.className}>
                 <AuthSession>
                     <QueryProviders>
+                        <SessionHandler />
                         <HeaderSelector />
                         {children}
                         <Toaster />
