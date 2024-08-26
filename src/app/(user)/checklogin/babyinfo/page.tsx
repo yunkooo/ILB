@@ -15,8 +15,17 @@ import BabyName from '../../signup/(baby)/BabyName';
 import BabyGender from '../../signup/(baby)/BabyGender';
 import BabyBirth from '../../signup/(baby)/BabyBirth';
 import BabyBody from '../../signup/(baby)/BabyBody';
+import BabyProfile from '../../signup/(baby)/BabyProfile';
 
-const steps = ['BabyName', 'BabyGender', 'BabyBirth', 'BabyBody'];
+const steps = [
+    'BabyName',
+    'BabyGender',
+    'BabyBirth',
+    'BabyProfile',
+    'BabyBody',
+];
+
+const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 
 export default function BabyInfo() {
     const router = useRouter();
@@ -34,6 +43,7 @@ export default function BabyInfo() {
             birth: '',
             height: '',
             weight: '',
+            attach: '',
             gender: 'boy',
         },
         mode: 'onChange',
@@ -44,6 +54,8 @@ export default function BabyInfo() {
 
     // 회원가입시 formData 전송
     async function onSubmit(formData: BabyInputForm) {
+        const userData = new FormData();
+
         // 버튼이 'submit'이지만 마지막 BabyBody step에서만 전송이 가능하다.
         // 나머지는 다음 페이지로 넘어가는 버튼으로 작동
         if (step !== 'BabyBody') return;
@@ -52,9 +64,11 @@ export default function BabyInfo() {
 
         try {
             // passwordCheck 데이터를 제외를 위한 객체복사
-            const { babyName, birth, height, weight, gender } = formData;
+            const { babyName, birth, height, weight, gender, attach } =
+                formData;
 
             const remakeData = {
+                attach,
                 extra: {
                     providerAccountId,
                     baby: {
@@ -76,12 +90,69 @@ export default function BabyInfo() {
                 },
             };
 
-            const resData = await actionDataFetch(
-                'PATCH',
-                userId,
-                accessToken,
-                remakeData,
-            );
+            //# const resData = await actionDataFetch(
+            //     'PATCH',
+            //     userId,
+            //     accessToken,
+            //     remakeData,
+            // );
+
+            Object.entries(formData).forEach(([key, value]) => {
+                if (key !== 'attach') {
+                    userData.append(key, value as string);
+                }
+            });
+            if (formData.attach) {
+                console.log('여기 잡히냐?');
+                userData.append('attach', formData.attach[0]);
+            }
+
+            // 이미지 업로드
+            if (
+                remakeData.attach !== undefined &&
+                remakeData.attach.length > 0
+            ) {
+                const body = new FormData();
+                console.log('remakeData.attach[0]', remakeData.attach[0]);
+                body.append('attach', remakeData.attach[0]);
+                console.log('body', body);
+                const fileRes = await fetch(`${SERVER}/files`, {
+                    method: 'POST',
+                    headers: {
+                        'client-id': '05-ILB',
+                    },
+                    body,
+                });
+
+                const resJson = await fileRes.json();
+
+                if (!resJson.ok) {
+                    throw new Error('파일 업로드 실패.');
+                }
+
+                remakeData.profileImage = resJson.item[0].path;
+            }
+            delete remakeData.attach;
+
+            //# const resData = await actionDataFetch(
+            //     'PATCH',
+            //     userId,
+            //     accessToken,
+            //     remakeData,
+            // );
+
+            // 소셜 회원 가입
+            const res = await fetch(`${SERVER}/users/${userId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'client-id': '05-ILB',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify(remakeData),
+            });
+
+            const resData = await res.json();
 
             if (resData.ok) {
                 localStorage.setItem(
@@ -128,6 +199,9 @@ export default function BabyInfo() {
                             </Funnel.Step>
                             <Funnel.Step name='BabyBirth'>
                                 <BabyBirth />
+                            </Funnel.Step>
+                            <Funnel.Step name='BabyProfile'>
+                                <BabyProfile />
                             </Funnel.Step>
                             <Funnel.Step name='BabyBody'>
                                 <BabyBody />

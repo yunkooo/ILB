@@ -4,6 +4,7 @@ export interface BabyInputForm {
     birth: string;
     height: string;
     weight: string;
+    attach: string;
     gender: Gender;
 }
 
