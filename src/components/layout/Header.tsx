@@ -28,14 +28,14 @@ export default function Header() {
                 <Link href='/'>
                     {!scrollPosition && isMatchMain ? (
                         <Image
-                            src='/logo_icon_w.svg'
+                            src='/logo/logo_icon_w.svg'
                             alt='logo'
                             width={36}
                             height={36}
                         />
                     ) : (
                         <Image
-                            src='/logo_icon.svg'
+                            src='/logo/logo_icon.svg'
                             alt='logo'
                             width={36}
                             height={36}

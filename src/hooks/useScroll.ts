@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 
 export default function useScrollPosition() {
-    const [scrollPosition, setScrollPosition] = useState(false);
+    // 스크롤의 상태를 표시하기 위한 useState
+    const [scrollPosition, setScrollPosition] = useState<boolean>(false);
 
     // scroll 위치에 따른 상태 관리
     const handleScroll = () => {
@@ -14,6 +15,7 @@ export default function useScrollPosition() {
         }
     };
 
+    // 상태에 따라 이벤트를 등록하고 삭제한다.
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
 

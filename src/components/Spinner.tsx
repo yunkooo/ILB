@@ -17,7 +17,7 @@ export function FullScreen() {
                 <div className='relative flex justify-center items-center h-[200px]'>
                     <PuffLoader color='#FFC2C5' size={200} />
                     <Image
-                        src='/baby/baby_2.svg'
+                        src='/loading_spinner.gif'
                         alt='ILB'
                         width={110}
                         height={110}

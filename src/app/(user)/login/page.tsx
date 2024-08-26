@@ -94,7 +94,7 @@ export default function Login() {
     return (
         <section>
             <Image
-                src='/logo_M.svg'
+                src='/logo/logo_M.svg'
                 alt='ILB'
                 width={60}
                 height={60}
