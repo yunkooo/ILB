@@ -8,6 +8,7 @@ export default function BannerItem({ img }: { img: string }) {
                 width={430}
                 height={932}
                 alt='banner image'
+                priority={true}
             />
         </div>
     );
