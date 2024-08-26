@@ -52,154 +52,50 @@
 
 # 폴더 구조
 
-├── src
-│ ├── app
-│ │ ├── (main)
-│ │ │ ├── (1Banner)
-│ │ │ │ ├── Banner.tsx
-│ │ │ │ ├── BannerItem.tsx
-│ │ │ │ └── Carousel.tsx
-│ │ │ ├── (2Banner)
-│ │ │ │ └── ProductBannerIntro.tsx
-│ │ │ ├── (3Banner)
-│ │ │ │ └── ProductIntro.tsx
-│ │ │ ├── (4Banner)
-│ │ │ │ └── ProductTutorial.tsx
-│ │ │ ├── (5Banner)
-│ │ │ │ └── ProductCertification.tsx
-│ │ │ ├── (footer)
-│ │ │ │ └── Footer.tsx
-│ │ │ └── page.tsx
-│ │ ├── (products)
-│ │ │ ├── list
-│ │ │ │ ├── (stepList)
-│ │ │ │ │ ├── (stepCard)
-│ │ │ │ │ │ ├── StepAvatar.tsx
-│ │ │ │ │ │ ├── StepCard.tsx
-│ │ │ │ │ │ ├── StepChecker.tsx
-│ │ │ │ │ │ └── StepText.tsx
-│ │ │ │ │ └── StepList.tsx
-│ │ │ │ └── page.tsx
-│ │ │ └── order
-│ │ │ ├── complete
-│ │ │ │ └── page.tsx
-│ │ │ ├── delivery
-│ │ │ │ └── page.tsx
-│ │ │ ├── fail
-│ │ │ │ └── page.tsx
-│ │ │ ├── layout.tsx
-│ │ │ ├── page.tsx
-│ │ │ └── payment
-│ │ │ ├── PaymentButton.tsx
-│ │ │ ├── check
-│ │ │ │ └── page.tsx
-│ │ │ └── page.tsx
-│ │ ├── (user)
-│ │ │ ├── checklogin
-│ │ │ │ ├── babyinfo
-│ │ │ │ │ └── page.tsx
-│ │ │ │ ├── layout.tsx
-│ │ │ │ └── page.tsx
-│ │ │ ├── login
-│ │ │ │ ├── layout.tsx
-│ │ │ │ └── page.tsx
-│ │ │ ├── mypage
-│ │ │ │ ├── ChartCard.tsx
-│ │ │ │ ├── DeliveryCard.tsx
-│ │ │ │ ├── DeliveryStatusItems.tsx
-│ │ │ │ ├── LinkCard.tsx
-│ │ │ │ ├── editprofile
-│ │ │ │ │ ├── EditForm.tsx
-│ │ │ │ │ └── page.tsx
-│ │ │ │ ├── layout.tsx
-│ │ │ │ ├── page.tsx
-│ │ │ │ ├── subscribe
-│ │ │ │ │ ├── NotSubscriber.tsx
-│ │ │ │ │ ├── Subcriber.tsx
-│ │ │ │ │ └── page.tsx
-│ │ │ │ └── updatebody
-│ │ │ │ └── page.tsx
-│ │ │ └── signup
-│ │ │ ├── (baby)
-│ │ │ │ ├── BabyBirth.tsx
-│ │ │ │ ├── BabyBody.tsx
-│ │ │ │ ├── BabyGender.tsx
-│ │ │ │ └── BabyName.tsx
-│ │ │ ├── (user)
-│ │ │ │ └── SignupForm.tsx
-│ │ │ ├── layout.tsx
-│ │ │ ├── loading.tsx
-│ │ │ └── page.tsx
-│ │ ├── AuthSession.tsx
-│ │ ├── QueryProvider.tsx
-│ │ ├── api
-│ │ │ └── auth
-│ │ │ └── [...nextauth]
-│ │ │ └── route.ts
-│ │ ├── global-error.tsx
-│ │ ├── globals.css
-│ │ ├── layout.tsx
-│ │ ├── loading.tsx
-│ │ └── not-found.tsx
-│ ├── auth.ts
-│ ├── components
-│ │ ├── LogoutButton.tsx
-│ │ ├── ProductItem.tsx
-│ │ ├── Spinner.tsx
-│ │ ├── layout
-│ │ │ ├── BackHeader.tsx
-│ │ │ ├── Header.tsx
-│ │ │ ├── HeaderSelector.tsx
-│ │ │ ├── SideBar.tsx
-│ │ │ └── StepHeader.tsx
-│ │ ├── subscribe
-│ │ │ ├── SubButton.tsx
-│ │ │ ├── SubDescription.tsx
-│ │ │ └── SubItemList.tsx
-│ │ └── ui
-│ │ ├── Accordion.tsx
-│ │ ├── button.tsx
-│ │ ├── card.tsx
-│ │ ├── chart.tsx
-│ │ ├── checkbox.tsx
-│ │ ├── form.tsx
-│ │ ├── input.tsx
-│ │ ├── label.tsx
-│ │ ├── skeleton.tsx
-│ │ ├── toast.tsx
-│ │ ├── toaster.tsx
-│ │ └── use-toast.ts
-│ ├── data
-│ │ └── actions
-│ │ ├── authAction.ts
-│ │ ├── babyAction.ts
-│ │ ├── fetchAction.ts
-│ │ ├── payAction.ts
-│ │ ├── productsAction.ts
-│ │ ├── sessionAction.ts
-│ │ └── userAction.ts
-│ ├── hooks
-│ │ └── useScroll.ts
-│ ├── lib
-│ │ ├── funnel
-│ │ │ ├── Funnel.tsx
-│ │ │ ├── Step.tsx
-│ │ │ └── useFunnel.tsx
-│ │ └── utils.ts
-│ ├── middleware.ts
-│ ├── types
-│ │ ├── api.ts
-│ │ ├── baby.ts
-│ │ ├── index.ts
-│ │ ├── product.ts
-│ │ └── user.ts
-│ ├── util
-│ │ ├── calculate.ts
-│ │ └── dateCalc.ts
-│ └── zustand
-│ └── menuStore.ts
-├── tailwind.config.ts
-└── tsconfig.json
+```
+├── app
+│   ├── (main)
+│   │   ├── (Banner)
+│   │   └── (footer)
+│   ├── (products)
+│   │   ├── list
+│   │   │   └── (stepList)
+│   │   │   └── (stepCard)
+│   │   └── order
+│   │   ├── complete
+│   │   ├── delivery
+│   │   ├── fail
+│   │   └── payment
+│   │   └── check
+│   ├── (user)
+│   │   ├── checklogin
+│   │   │   └── babyinfo
+│   │   ├── login
+│   │   ├── mypage
+│   │   │   ├── editprofile
+│   │   │   ├── subscribe
+│   │   │   └── updatebody
+│   │   ├── signup
+│   │   ├── (baby)
+│   │   └── (user)
+│   ├── api
+│   │   ├── auth
+│   │   ├── [...nextauth]
+│   │   └── route.ts
+│   └── globals.css
+├── auth.ts
+├── components
+│   ├── layout
+│   ├── subscribe
+│   └── ui
+├── data
+├── hooks
+├── lib
+├── middleware.ts
+├── types
+├── util
+└── zustand
+```
 
 # 주요 기능 (페이지 시연, 기능 소개)
 
@@ -213,4 +109,15 @@
 
 # 주요 코드
 
--   짜잔
+-   짜잔.tsx
+
+```
+export default function 짜잔() {
+	유즈라우터();
+	return (
+		<div className='bg-white'>
+			예시 컴포넌트
+		</div>
+	)
+}
+```
