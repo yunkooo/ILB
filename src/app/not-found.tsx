@@ -8,7 +8,7 @@ export default function notFound() {
     return (
         <div className='py-20 bg-white text-black p-4 flex flex-col items-center space-y-2 h-screen'>
             <h1 className='text-lg font-semibold mt-20 text-center'>
-                페이지가 없습니다.
+                페이지를 찾을 수 없습니다.
             </h1>
             <Image
                 src={'/not-found.webp'}
