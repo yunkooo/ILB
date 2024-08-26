@@ -29,7 +29,6 @@ const steps = [
 ];
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
-const CLIENT_ID = process.env.DB_NAME;
 
 export default function Signup() {
     const router = useRouter();
@@ -122,13 +121,10 @@ export default function Signup() {
 
             Object.entries(formData).forEach(([key, value]) => {
                 if (key !== 'attach') {
-                    console.log('key', key);
-                    console.log('value', value);
                     userData.append(key, value as string);
                 }
             });
             if (formData.attach) {
-                console.log('formData.attach', formData.attach);
                 userData.append('attach', formData.attach[0]);
             }
 
@@ -153,7 +149,6 @@ export default function Signup() {
                     },
                 },
             };
-            console.log(remakeData);
 
             //# const resData = await signup(remakeData);
 
@@ -175,7 +170,7 @@ export default function Signup() {
                 });
 
                 const resJson = await fileRes.json();
-                console.log('파일 업로드 됫나영', resJson);
+
                 if (!resJson.ok) {
                     throw new Error('파일 업로드 실패.');
                 }
