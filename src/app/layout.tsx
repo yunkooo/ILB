@@ -14,6 +14,9 @@ const notoSansKr = Noto_Sans_KR({
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://ilovebaby.shop'),
+    icons: {
+        icon: '/logo_favicon.svg',
+    },
 };
 
 export default function RootLayout({
