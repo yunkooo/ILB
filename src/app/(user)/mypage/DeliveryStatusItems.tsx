@@ -1,4 +1,5 @@
 import { differenceInDays, parse } from 'date-fns';
+import React from 'react';
 import {
     CiCreditCard1,
     CiShoppingCart,
@@ -61,7 +62,7 @@ export default function DeliveryStatusItems({ subscribeDate }: Props) {
         <div
             className={`flex justify-between py-3 px-[29px] mb-8 w-full bg-card rounded-2xl`}>
             {deliveryStatuses.map((status, i) => (
-                <>
+                <React.Fragment key={i}>
                     <div
                         key={i}
                         className={`flex flex-col justify-between items-center gap-[3px] ${status.isActive ? '' : 'text-txt-foreground'}`}>
@@ -73,7 +74,7 @@ export default function DeliveryStatusItems({ subscribeDate }: Props) {
                     {i < deliveryStatuses.length - 1 && (
                         <GoChevronRight className='mt-2.5 text-[#CED4DA]' />
                     )}
-                </>
+                </React.Fragment>
             ))}
         </div>
     );
