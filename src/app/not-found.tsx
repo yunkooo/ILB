@@ -6,22 +6,27 @@ import React from 'react';
 
 export default function notFound() {
     return (
-        <div className='py-20 bg-white text-black p-4 flex flex-col items-center space-y-2 h-screen'>
-            <h1 className='text-lg font-semibold mt-20 text-center'>
-                페이지를 찾을 수 없습니다.
+        <div className='flex flex-col items-center py-20 bg-white text-txt p-4 space-y-2 h-screen'>
+            <h1 className='text-2xl font-medium mt-[8%] text-center'>
+                페이지를 찾을 수 없어요!
             </h1>
             <Image
                 src={'/not-found.webp'}
                 alt='에러 페이지'
                 width={200}
                 height={200}
-                className='absolute top-[32%]'
+                className='py-[10%]'
             />
-            <Link
-                href='/'
-                className='absolute bottom-1/4 border-2 w-1/2  text-center text-black py-2 px-4 rounded-3xl border-red-400 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-400'>
-                🏠 집으로 돌아가기
-            </Link>
+            <p className='text-center break-keep'>
+                걱정하지 마세요, 다른 유용한 정보로 안내해 드릴게요.
+            </p>
+            <div className='fixed p-[2px] bottom-[60px] max-w-default w-default h-default text-center bg-gradient-to-r from-[#FF8087] to-[#FFAD6E] rounded-default'>
+                <Link
+                    href='/'
+                    className='flex justify-center items-center bg-white w-full h-14 rounded-default hover:bg-gradient-to-r from-[#FF8087] to-[#FFAD6E]'>
+                    🏠 집으로 돌아가기
+                </Link>
+            </div>
         </div>
     );
 }

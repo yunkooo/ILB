@@ -27,9 +27,9 @@ export default async function CompletePage() {
                     </Link>
                 </div>
             </article>
-            <article className='px-5 pt-[30px] pb-[36px] bg-white mt-[3px] border-b-[1px] border-[#DDDDDD] w-full max-w-xl'>
-                <h2 className='pb-[18px] font-bold text-lg'>배송정보</h2>
-                <div className='w-full bg-[#F7EFEF] h-[1px]' />
+            <article className='w-full max-w-xl px-5 pt-[30px] pb-[36px]  mt-[4px] border-b-[1px] bg-white border-[#DDDDDD]'>
+                <h2 className='pb-[18px] font-bold  text-2xl'>배송정보</h2>
+                <hr className='border-[#CDC5C5] border-dashed' />
 
                 <div className='flex mt-6'>
                     <p className=' text-txt-foreground'>수령인</p>
@@ -44,8 +44,8 @@ export default async function CompletePage() {
                     <p className='ml-[46px]'>{`${userData.roadAddress}, ${userData.detailAddress}`}</p>
                 </div>
             </article>
-            <article className='mt-[3px] pb-[100px] px-6 items-center text-center bg-receipt-bg-image bg-contain bg-no-repeat w-full max-w-xl'>
-                <h2 className='pt-[24px] pb-[17px] font-bold text-lg'>
+            <article className='mt-[3px] mb-20 pb-[100px] px-6 bg-receipt-bg-image bg-cover bg-center bg-no-repeat w-full'>
+                <h2 className='pt-[24px] pb-[17px] font-bold text-2xl'>
                     결제정보
                 </h2>
                 <hr className='border-[#CDC5C5] border-dashed' />
