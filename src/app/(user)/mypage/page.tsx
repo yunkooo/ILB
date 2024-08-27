@@ -66,8 +66,7 @@ export default async function MyPage() {
                     </div>
                 )}
             </div>
-
-            <ChartCard />
+            {baby && <ChartCard growData={baby.grow} />}
             {subscribe && <DeliveryCard subscribeDate={subscribe.date} />}
 
             <LinkCard title='내정보 수정' link='/mypage/editprofile' />
