@@ -7,7 +7,7 @@ export interface UserData {
     phone?: string;
     address?: string;
     type: 'user' | 'seller' | 'admin';
-    loginType?: 'email' | 'kakao' | 'google' | 'naver';
+    loginType?: 'email' | 'github' | 'google' | 'discord';
     profileImage?: string;
     profile?: string;
     extra: {
@@ -59,6 +59,9 @@ export interface UserSignUpForm {
     height: string;
     weight: string;
     gender: 'boy' | 'girl';
+    profile: string;
+    attach?: string | string[];
+    profileImage: string;
 }
 
 // 회원가입시 fetch 전송 할때 사용하는 formData
@@ -71,6 +74,8 @@ export interface UserForm {
     zoneCode: string;
     roadAddress: string;
     detailAddress: string;
+    attach?: string | string[];
+    profileImage?: string;
     extra: {
         baby: BabyInfoData;
         subscribe: {

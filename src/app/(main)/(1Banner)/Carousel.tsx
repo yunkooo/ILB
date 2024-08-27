@@ -29,11 +29,9 @@ type Props = {
 
 const CustomDot = ({ onClick, active }: DotProps) => {
     return (
-        <li
-            className='mx-[8px] my-[8px] inline-block cursor-pointer'
-            onClick={onClick}>
+        <li className='mx-2 my-6 inline-block cursor-pointer' onClick={onClick}>
             <div
-                className={`w-[12px] h-[12px] rounded-full ${active ? 'bg-[#FF8087]' : 'bg-[#FFA2A2] opacity-30'}`}
+                className={`w-[14px] h-[14px] rounded-full ${active ? 'bg-white' : 'bg-white opacity-30'}`}
             />
         </li>
     );

@@ -1,10 +1,10 @@
 import NextAuth, { CredentialsSignin } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import google from 'next-auth/providers/google';
-import NaverProvider from 'next-auth/providers/naver';
-import KakaoProvider from 'next-auth/providers/kakao';
-import { BabyInfoData, OAuthUser, UserData } from './types';
+import DiscordProvider from 'next-auth/providers/discord';
+import googleProvider from 'next-auth/providers/google';
+import GithubProvider from 'next-auth/providers/github';
 import { loginOAuth, signupWithOAuth } from './data/actions/authAction';
+import { BabyInfoData, OAuthUser, UserData } from './types';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 const CLIENT_ID = process.env.DB_NAME;
@@ -53,17 +53,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 return null;
             },
         }),
-        google({
+        googleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
-        NaverProvider({
-            clientId: process.env.NAVER_CLIENT_ID,
-            clientSecret: process.env.NAVER_CLIENT_SECRET,
+        GithubProvider({
+            clientId: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
         }),
-        KakaoProvider({
-            clientId: process.env.KAKAO_CLIENT_ID,
-            clientSecret: process.env.KAKAO_CLIENT_SECRET,
+        DiscordProvider({
+            clientId: process.env.DISCORD_CLIENT_ID,
+            clientSecret: process.env.DISCORD_CLIENT_SECRET,
         }),
     ],
     session: {
@@ -85,8 +85,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 case 'credentials':
                     break;
                 case 'google':
-                case 'naver':
-                case 'kakao':
+                case 'github':
+                case 'discord':
                     // DB에서 id를 조회해서 있으면 로그인 처리를 없으면 자동 회원 가입 후 로그인 처리
                     let userInfo: UserData | null = null;
 
@@ -146,6 +146,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.accessToken = user.accessToken;
                 token.refreshToken = user.refreshToken;
                 token.providerAccountId = user.providerAccountId ?? null;
+                token.image = user.image;
             }
 
             return token;
@@ -160,6 +161,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.email = token.email as string;
                 session.user.phone = token.phone as string;
                 session.user.address = token.address as string;
+                session.user.image = token.image as string;
                 const extra = token.extra as {
                     baby: BabyInfoData;
                     subscribe: boolean;

@@ -57,7 +57,7 @@ export default function StepCard({
                             ))}
                     </ul>
                 </div>
-                <ChevronDown className='text-[#FF999E] self-center h-6 w-6  animation-bounce' />
+                <ChevronDown className='text-[#FF999E] self-center h-6 w-6 animation-bounce' />
             </AccordionTrigger>
             <AccordionContent className='px-2.5 py-2.5'>
                 <span className='text-txt-foreground'>

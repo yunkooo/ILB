@@ -80,6 +80,7 @@ const config = {
             },
             backgroundImage: {
                 'main-bg-image': "url('/main_bg.webp')",
+                'receipt-bg-image': "url('/receipt_bg.svg')",
             },
         },
     },

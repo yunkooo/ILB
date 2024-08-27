@@ -1,7 +1,3 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { UserData } from '@/types';
 import { actionUserData } from '@/data/actions/userAction';
 import { getDayNumbers, getStepNumber } from '@/util/dateCalc';
 import Image from 'next/image';
@@ -9,35 +5,39 @@ import LinkCard from './LinkCard';
 import DeliveryCard from './DeliveryCard';
 import ChartCard from './ChartCard';
 
-export default function MyPage() {
-    const [user, setUser] = useState<UserData>();
-    // 회원 정보 불러오기
-    useEffect(() => {
-        async function fetchUserData() {
-            const { item: userData } = await actionUserData();
-            setUser(userData);
-        }
+const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 
-        fetchUserData();
-    }, []);
+export default async function MyPage() {
+    const { item: user } = await actionUserData();
 
     const baby = user?.extra?.baby;
     const subscribe = user?.extra?.subscribe;
+    const profile = user?.profileImage;
+    console.log('user', user);
 
     return (
         <section className='py-7'>
             <div className='flex gap-5 items-center mb-14'>
                 <div className='w-[90px]'>
                     <div className='flex justify-center items-center w-[90px] h-[90px] rounded-full'>
-                        <Image
-                            src='/baby/baby_avatar.svg'
-                            width={60}
-                            height={60}
-                            alt='baby_profile_img'
-                        />
+                        {profile.slice(0, 6) === '/files' ? (
+                            <Image
+                                src={`${SERVER}${profile}`}
+                                width={60}
+                                height={60}
+                                alt='baby_profile_img'
+                            />
+                        ) : (
+                            <Image
+                                src={`${profile}`}
+                                width={60}
+                                height={60}
+                                alt='baby_profile_img'
+                            />
+                        )}
                     </div>
                 </div>
-                {user?.extra?.baby && (
+                {baby && (
                     <div>
                         <h3 className='text-lg font-bold'>
                             {user?.name}
@@ -67,16 +67,11 @@ export default function MyPage() {
                 )}
             </div>
 
-            {baby && <ChartCard growData={baby.grow} />}
+            <ChartCard />
             {subscribe && <DeliveryCard subscribeDate={subscribe.date} />}
 
             <LinkCard title='내정보 수정' link='/mypage/editprofile' />
-
-            {subscribe?.status === 'true' ? (
-                <LinkCard title='구독 상품 조회' link='/mypage/subscribe' />
-            ) : (
-                <LinkCard title='구독 상품 조회' link='/order' />
-            )}
+            <LinkCard title='구독 상품 조회' link='/mypage/subscribe' />
         </section>
     );
 }

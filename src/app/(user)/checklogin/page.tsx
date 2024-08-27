@@ -1,26 +1,32 @@
 'use client';
 
-import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getBabyData } from '@/data/actions/babyAction';
 import { FullScreen } from '@/components/Spinner';
+import { actionUserData } from '@/data/actions/userAction';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
+async function fetchUserData() {
+    const { item: userData } = await actionUserData();
+    return userData;
+}
 export default function Loading() {
     const router = useRouter();
 
-    useEffect(() => {
-        async function fetchUserData() {
-            const res = await getBabyData();
+    const { isSuccess, data: userData } = useQuery({
+        queryKey: ['userData'],
+        queryFn: fetchUserData,
+    });
 
-            // user 데이터에 baby 값이 들어있으면 메인 페이지, 없다면 babyinfo 페이지로 이동
-            if (res.item.extra.baby) {
+    useEffect(() => {
+        if (isSuccess) {
+            if (userData.extra.baby) {
                 router.push('/');
             } else {
                 router.push('/checklogin/babyinfo');
             }
         }
-        fetchUserData();
-    }, [router]);
+    }, [isSuccess, userData, router]);
 
     return <FullScreen />;
 }

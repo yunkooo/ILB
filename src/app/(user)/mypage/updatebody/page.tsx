@@ -62,7 +62,7 @@ export default function UpdateBodyInfo() {
     return (
         <section>
             <Image
-                src='/logo_M.svg'
+                src='/logo/logo_M.svg'
                 alt='ILB'
                 width={60}
                 height={60}
@@ -122,7 +122,7 @@ export default function UpdateBodyInfo() {
                 )}
                 <Button
                     type='submit'
-                    className='font-notoSansKr my-[60px] box-border bottom-0'
+                    className='my-[60px] bottom-0'
                     variant='default'
                     disabled={!isValid}>
                     저장하기

@@ -4,6 +4,7 @@ import { GoChevronRight } from 'react-icons/go';
 import { FaArrowLeft } from 'react-icons/fa6';
 import useScrollPosition from '@/hooks/useScroll';
 import { usePathname } from 'next/navigation';
+import React from 'react';
 
 interface PaymentStatus {
     pathname: string;
@@ -16,7 +17,7 @@ const PaymentStatuses: PaymentStatus[] = [
         component: <p>아이정보</p>,
     },
     {
-        pathname: '/order/checkdelivery',
+        pathname: '/order/delivery',
         component: <p>배송정보</p>,
     },
     {
@@ -43,16 +44,15 @@ export default function StepHeader() {
                 </button>
                 <div className='ml-[23px] flex justify-center items-center gap-2.5 w-full'>
                     {PaymentStatuses.map((status, i) => (
-                        <>
+                        <React.Fragment key={i}>
                             <div
-                                key={i}
                                 className={`${status.pathname === pathname ? 'font-bold' : 'text-txt-foreground'}`}>
                                 {status.component}
                             </div>
                             {i < PaymentStatuses.length - 1 && (
                                 <GoChevronRight className='text-txt-foreground' />
                             )}
-                        </>
+                        </React.Fragment>
                     ))}
                 </div>
             </nav>

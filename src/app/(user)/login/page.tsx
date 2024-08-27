@@ -13,9 +13,9 @@ import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import {
     signInWithCredentials,
+    signInWithDiscord,
+    signInWithGithub,
     signInWithGoogle,
-    signInWithKakao,
-    signInWithNaver,
 } from '@/data/actions/authAction';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
@@ -94,7 +94,7 @@ export default function Login() {
     return (
         <section>
             <Image
-                src='/logo_M.svg'
+                src='/logo/logo_M.svg'
                 alt='ILB'
                 width={60}
                 height={60}
@@ -139,16 +139,17 @@ export default function Login() {
                             </FormItem>
                         )}
                     />
-                    <Button
-                        type='submit'
-                        className='font-notoSansKr mt-[60px] box-border'>
+                    <Button type='submit' className='mt-[60px]'>
                         로그인
                     </Button>
                 </form>
             </Form>
             <p className='text-txt-foreground text-center mt-[18px] text-xs'>
                 아직 회원이 아니신가요?{' '}
-                <Link href='/signup' className='text-txt font-normal'>
+                <Link
+                    href='/signup'
+                    className='text-txt font-medium'
+                    scroll={false}>
                     회원가입
                 </Link>
             </p>
@@ -166,10 +167,11 @@ export default function Login() {
                     type='submit'
                     className='bg-white'
                     size='xs'
-                    formAction={signInWithKakao}>
+                    variant='icon'
+                    formAction={signInWithGithub}>
                     <Image
-                        src='/icon/icon_kakao.svg'
-                        alt='카카오톡 로그인'
+                        src='/icon/icon_github.svg'
+                        alt='깃허브 로그인'
                         width={60}
                         height={60}
                     />
@@ -178,6 +180,7 @@ export default function Login() {
                     type='submit'
                     className='bg-white'
                     size='xs'
+                    variant='icon'
                     formAction={signInWithGoogle}>
                     <Image
                         src='/icon/icon_google.svg'
@@ -190,10 +193,11 @@ export default function Login() {
                     type='submit'
                     className='bg-white'
                     size='xs'
-                    formAction={signInWithNaver}>
+                    variant='icon'
+                    formAction={signInWithDiscord}>
                     <Image
-                        src='/icon/icon_naver.svg'
-                        alt='네이버 로그인'
+                        src='/icon/icon_discord.svg'
+                        alt='디스코드 로그인'
                         width={60}
                         height={60}
                     />

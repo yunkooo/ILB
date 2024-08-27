@@ -4,40 +4,44 @@ import Image from 'next/image';
 import PaymentButton from './PaymentButton';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
+import { addMonths, format } from 'date-fns';
 
 export default function PaymentInfo() {
     const [checkState1, setCheckState1] = useState<boolean>(false);
     const [checkState2, setCheckState2] = useState<boolean>(false);
     const [checkState3, setCheckState3] = useState<boolean>(false);
+
+    const formattedDate = format(addMonths(new Date(), 1), 'yyyy.MM.dd');
+
     return (
         <section>
             <h1 className='pt-7 font-bold text-[28px]'>월간 이용권</h1>
-            <h2 className='mt-[26px] font-bold text-[20px]'>
-                월 49,000원 정기결제
+            <h2 className='mt-[26px] font-medium text-[20px]'>
+                월 <span className='font-bold'>69,000원</span> 정기결제
             </h2>
 
             <div className='mt-[54px] border px-5 py-[22px] flex flex-col gap-[22px] rounded-2xl'>
                 <div className='flex justify-between'>
-                    <p className='font-bold text-[16px] text-[#968F8F]'>
+                    <p className='font-medium text-[16px] text-txt-foreground'>
                         다음 결제 예정일
                     </p>
-                    <p className='font-bold'>2024.09.23</p>
+                    <p className='font-bold'>{formattedDate}</p>
                 </div>
                 <hr />
                 <div className='flex justify-between'>
                     <div className='flex'>
                         <div className='flex items-center'>
                             <Image
-                                src='/toss_logo.svg'
+                                src='/logo/logo_toss.svg'
                                 height={24}
                                 width={24}
                                 alt='toss logo'
                             />
-                            <p className='font-bold align-top text-base'>
+                            <p className='mr-1 font-bold align-top text-base'>
                                 toss
                             </p>
                         </div>
-                        <p className='font-bold text-base text-[#968F8F]'>
+                        <p className='font-medium text-base text-txt-foreground'>
                             결제 수단
                         </p>
                     </div>

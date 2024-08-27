@@ -1,24 +1,6 @@
 import { Product } from '@/types';
 import Image from 'next/image';
 
-// type Props = {
-//     item: {
-//         _id: number;
-//         name: string;
-//         mainImages: [{ path: string }];
-//         category: string[];
-//         quantity: number;
-//         seller_id: number;
-//         price: number;
-//         show: boolean;
-//         active: boolean;
-//         seller: {};
-//         replies: number;
-//         bookmarks: number;
-//         options: number;
-//     };
-// };
-
 type Props = {
     item: Product;
 };

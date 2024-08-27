@@ -205,7 +205,7 @@ export default function SignupForm() {
                                 />
                                 <Button
                                     type='button'
-                                    className='font-notoSansKr right-0 bottom-[0.0625rem]'
+                                    className='right-0 bottom-[0.0625rem]'
                                     size='sm'
                                     fontSize='sm'
                                     fontWeight='sm'

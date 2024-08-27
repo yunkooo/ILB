@@ -18,7 +18,6 @@ export default function HeaderSelector() {
     useEffect(() => {
         const toastMessage = localStorage.getItem('toastMessage');
         if (toastMessage) {
-            console.log(toastMessage);
             toast({ title: toastMessage, duration: 1000 });
             localStorage.removeItem('toastMessage');
         }
