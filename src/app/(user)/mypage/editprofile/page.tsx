@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { toast } from '@/components/ui/use-toast';
 import { FilteredForm, UserEdit } from '@/types';
 import {
     actionUserData,
@@ -68,10 +67,6 @@ export default function EditProfile() {
                     '회원정보 수정이 완료되었습니다.',
                 );
                 router.push('/mypage');
-                toast({
-                    title: '회원정보 수정이 완료되었습니다.',
-                    duration: 3000,
-                });
             }
         } catch (error) {
             // API 서버의 에러 메시지 처리
