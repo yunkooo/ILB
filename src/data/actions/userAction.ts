@@ -3,6 +3,7 @@
 import { DeliveryForm, FilteredForm, UserForm } from '@/types';
 import { auth } from '@/auth';
 import { actionDataFetch } from './fetchAction';
+import { revalidatePath } from 'next/cache';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 const CLIENT_ID = process.env.DB_NAME;
@@ -69,5 +70,6 @@ export async function actionUserDataModify(
         session?.accessToken,
         formData,
     );
+    revalidatePath(`/users/${userId}`);
     return resData;
 }

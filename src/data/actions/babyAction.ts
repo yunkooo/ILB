@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { auth } from '@/auth';
 import { BabyBody, RemakeBabyForm } from '@/types/baby';
 import { actionDataFetch } from './fetchAction';
+import { revalidatePath } from 'next/cache';
 
 const SERVER = process.env.NEXT_PUBLIC_API_SERVER;
 
@@ -70,6 +71,7 @@ export async function actionBabyBodyInfo(formData: BabyBody) {
         session?.accessToken,
         remakeFormData,
     );
+    revalidatePath(`/users/${userId}`);
     return resData;
 }
 
