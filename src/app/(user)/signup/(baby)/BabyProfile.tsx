@@ -3,10 +3,7 @@ import { Label } from '@/components/ui/label';
 import { useFormContext } from 'react-hook-form';
 
 export default function BabyProfile() {
-    const {
-        register,
-        formState: { errors },
-    } = useFormContext();
+    const { register } = useFormContext();
 
     return (
         <>

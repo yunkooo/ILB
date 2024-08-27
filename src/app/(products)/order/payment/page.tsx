@@ -4,16 +4,20 @@ import Image from 'next/image';
 import PaymentButton from './PaymentButton';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
+import { addMonths, format } from 'date-fns';
 
 export default function PaymentInfo() {
     const [checkState1, setCheckState1] = useState<boolean>(false);
     const [checkState2, setCheckState2] = useState<boolean>(false);
     const [checkState3, setCheckState3] = useState<boolean>(false);
+
+    const formattedDate = format(addMonths(new Date(), 1), 'yyyy.MM.dd');
+
     return (
         <section>
             <h1 className='pt-7 font-bold text-[28px]'>월간 이용권</h1>
             <h2 className='mt-[26px] font-medium text-[20px]'>
-                월 <span className='font-bold'>49,000원</span> 정기결제
+                월 <span className='font-bold'>69,000원</span> 정기결제
             </h2>
 
             <div className='mt-[54px] border px-5 py-[22px] flex flex-col gap-[22px] rounded-2xl'>
@@ -21,7 +25,7 @@ export default function PaymentInfo() {
                     <p className='font-medium text-[16px] text-txt-foreground'>
                         다음 결제 예정일
                     </p>
-                    <p className='font-bold'>2024.09.23</p>
+                    <p className='font-bold'>{formattedDate}</p>
                 </div>
                 <hr />
                 <div className='flex justify-between'>

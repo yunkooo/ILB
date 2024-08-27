@@ -5,7 +5,6 @@ import Banner from './(1Banner)/Banner';
 import ProductBannerIntro from './(2Banner)/ProductBannerIntro';
 import ProductCertification from './(5Banner)/ProductCertification';
 import { Metadata } from 'next';
-import Error from '../global-error';
 
 export const metadata: Metadata = {
     title: '🧸ILB',
