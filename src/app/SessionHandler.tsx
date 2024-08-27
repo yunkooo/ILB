@@ -22,10 +22,13 @@ export default function SessionHandler() {
     });
 
     useEffect(() => {
+        console.log('useEffect refetch');
         refetch();
     }, [pathname, refetch]);
 
     useEffect(() => {
+        console.log('useEffect set, userData');
+
         if (userData) {
             setUser({ id: userData.id, name: userData.name });
         } else {
