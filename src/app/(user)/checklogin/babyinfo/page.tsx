@@ -10,12 +10,33 @@ import useFunnel from '@/lib/funnel/useFunnel';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { BabyInputForm, ResError } from '@/types';
-import { actionDataFetch } from '@/data/actions/fetchAction';
 import BabyName from '../../signup/(baby)/BabyName';
 import BabyGender from '../../signup/(baby)/BabyGender';
 import BabyBirth from '../../signup/(baby)/BabyBirth';
 import BabyBody from '../../signup/(baby)/BabyBody';
 import BabyProfile from '../../signup/(baby)/BabyProfile';
+
+interface RemakeData {
+    attach?: string;
+    profileImage?: string;
+    extra: {
+        providerAccountId: string | null | undefined;
+        baby: {
+            name: string;
+            gender: 'boy' | 'girl';
+            birth: string;
+            grow: {
+                weight: string;
+                height: string;
+                date: string;
+            }[];
+        };
+        subscribe: {
+            status: string;
+            date: string;
+        };
+    };
+}
 
 const steps = [
     'BabyName',
@@ -67,7 +88,7 @@ export default function BabyInfo() {
             const { babyName, birth, height, weight, gender, attach } =
                 formData;
 
-            const remakeData = {
+            const remakeData: RemakeData = {
                 attach,
                 extra: {
                     providerAccountId,

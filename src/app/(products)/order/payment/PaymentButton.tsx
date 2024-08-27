@@ -39,7 +39,7 @@ export default function PaymentButton({ disabled }: Props) {
                     pay_method: 'card',
                     merchant_uid: `payment-${generateRandomString()}`,
                     name: '테스트 결제',
-                    amount: 49000,
+                    amount: 69000,
                     buyer_name: 'ILB',
                     buyer_tel: '010-0000-0000',
                     m_redirect_url: `${BASE_URL}/order/payment/check`,
